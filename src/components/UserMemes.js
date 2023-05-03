@@ -97,7 +97,6 @@ export default function UserMemes(props) {
 
   return (
     <>
-      <h1> Under construction </h1>
       {imgSrc ? (
         <div className="bg-cream inline-grid my-3 p-4">
           {!toggleEdit ? (

@@ -27,13 +27,7 @@ export default function MemesView() {
     : getCreatedMemes();
 
   return mappedMemes ? (
-    <div className="grid grid-cols-2 mx-auto pt-12 pb-16">
-      {mappedMemes}
-      <p className="p-2 text-center text-xs font-mono text-blue-300">
-        {" "}
-        Quinnton Carter 2021{" "}
-      </p>
-    </div>
+    <div className="grid grid-cols-2 mx-auto pt-12 pb-16">{mappedMemes}</div>
   ) : (
     <h4> Memes will display here </h4>
   );

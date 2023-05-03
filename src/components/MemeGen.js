@@ -12,8 +12,6 @@ const initInputs = { topText: "", bottomText: "" };
 
 export default function MemeGenerator() {
   const {
-    // all memes from DB
-    allMemes,
     // all current user's memes
     userMemes,
     setUserMemes,
@@ -46,27 +44,9 @@ export default function MemeGenerator() {
       },
     ]);
     // sets randomMeme key values to match default image's
-    // setRandomMeme({
-    //   name: randomMeme.name,
-    //   imgSrc: randomMeme.initialUrl,
-    //   initialUrl: randomMeme.initialUrl,
-    //   id: randomMeme.id,
-    // });
     setRandomMeme((prevState) => prevState);
     // reset inputs to init
     setInputs(initInputs);
-  }
-
-  function getRandom(e) {
-    e.preventDefault();
-    const randomMeme = allMemes[Math.floor(Math.random() * allMemes.length)];
-    setRandomMeme({
-      name: randomMeme?.name,
-      imgSrc: randomMeme?.url,
-      initialUrl: randomMeme?.url,
-      id: randomMeme?.id,
-      boxes: randomMeme?.box_count,
-    });
   }
 
   const mappedMemes =
@@ -89,6 +69,7 @@ export default function MemeGenerator() {
       .reverse();
 
   useEffect(() => {
+    // grabs edited image source from DB
     axios(REACT_APP_POST_URL, {
       method: "POST",
       params: {
@@ -104,32 +85,22 @@ export default function MemeGenerator() {
         // sets preview img url to randomMeme imgSrc
         setRandomMeme((prevInputs) => ({
           ...prevInputs,
-          name: randomMeme.name,
-          imgSrc: res.data.data ? res.data.data.url : randomMeme.imgSrc,
+          name: prevInputs.name,
+          imgSrc: res.data.data ? res.data.data.url : prevInputs.imgSrc,
           tempID: res.data.data ? res.data.data.page_url.slice(22) : "",
-          initialUrl: randomMeme.initialUrl,
-          id: randomMeme.id,
+          initialUrl: prevInputs.initialUrl,
+          id: prevInputs.id,
         }))
       )
       .catch((err) => console.error(err));
   }, [inputs.topText, inputs.bottomText]);
 
-  useEffect(() => {
-    let render = 0;
-    console.log("meme gen page rendered", ++render);
-  }, []);
-
   return (
     <div className="flex flex-col pb-12 pt-16 overflow-scroll bg-blue-200 w-screen p-3">
-      {/* <h1> under construction </h1>
-      <p className="pt-14 text-center text-xs font-mono text-blue-300">
-        Quinnton Carter 2023
-      </p> */}
       <MemeForm
         inputs={inputs}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        getRandom={getRandom}
       />
       {userMemes ? mappedMemes : null}
       <p className="pt-14 text-center text-xs font-mono text-blue-300">
