@@ -159,17 +159,21 @@ export default function UserMemes(props) {
                       {" "}
                       submit{" "}
                     </button>
-                    <input
-                      className="col-span-4 text-sm"
-                      type="text"
-                      maxLength="18"
-                      pattern="[A-Za-z0-9]"
-                      onChange={(e) => setAlias(e.target.value)}
-                      title="Allowed: A-Z and 0-9"
-                      placeholder={`${
-                        alias || `Optional alias (press submit to skip)`
-                      }`}
-                    />
+                    <label>
+                      {" "}
+                      Enter username to save with image
+                      <input
+                        className="col-span-4 text-sm"
+                        type="text"
+                        maxLength="18"
+                        pattern="[A-Za-z0-9]"
+                        onChange={(e) => setAlias(e.target.value)}
+                        title="Attach alias/username to image or press enter to skip"
+                        placeholder={`${
+                          alias || `A-Z and 0-9 (press submit to skip)`
+                        }`}
+                      />
+                    </label>
                   </>
                 )}
               </div>
