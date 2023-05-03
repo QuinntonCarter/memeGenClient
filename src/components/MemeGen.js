@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import UserMemes from "./UserMemes.js";
 import MemeForm from "../forms/MemeForm.js";
 import { AppContext } from "../context/appContext.js";
+import moment from "moment";
 import axios from "axios";
 
 const { REACT_APP_POST_URL, REACT_APP_USERNAME, REACT_APP_PASSWORD } =
@@ -11,8 +12,6 @@ const initInputs = { topText: "", bottomText: "" };
 
 export default function MemeGenerator() {
   const {
-    // all memes from DB
-    allMemes,
     // all current user's memes
     userMemes,
     setUserMemes,
@@ -32,9 +31,7 @@ export default function MemeGenerator() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const createdDate = JSON.stringify(new Date())
-      .slice(1, 11)
-      .replace('"', "");
+    const createdDate = moment().format("LL LTS");
     // sends inputs through as params to endpoint to complete meme creation
     setUserMemes((prevState) => [
       ...prevState,
@@ -47,33 +44,14 @@ export default function MemeGenerator() {
       },
     ]);
     // sets randomMeme key values to match default image's
-    setRandomMeme({
-      name: randomMeme.name,
-      imgSrc: randomMeme.initialUrl,
-      initialUrl: randomMeme.initialUrl,
-      id: randomMeme.id,
-    });
+    setRandomMeme((prevState) => prevState);
     // reset inputs to init
     setInputs(initInputs);
   }
 
-  const getRandom = (e) => {
-    e.preventDefault();
-    const randomMeme = allMemes[Math.floor(Math.random() * (73 - 1) + 1)];
-    if (!randomMeme) {
-      setRandomMeme({
-        name: randomMeme.name,
-        imgSrc: randomMeme.url,
-        initialUrl: randomMeme.url,
-        id: randomMeme.id,
-        boxes: randomMeme.box_count,
-      });
-    }
-    return;
-  };
-
-  const mappedMemes = (memeObj) =>
-    memeObj
+  const mappedMemes =
+    userMemes &&
+    userMemes
       .map((meme) => (
         <UserMemes
           key={meme.tempID}
@@ -91,6 +69,7 @@ export default function MemeGenerator() {
       .reverse();
 
   useEffect(() => {
+    // grabs edited image source from DB
     axios(REACT_APP_POST_URL, {
       method: "POST",
       params: {
@@ -106,11 +85,11 @@ export default function MemeGenerator() {
         // sets preview img url to randomMeme imgSrc
         setRandomMeme((prevInputs) => ({
           ...prevInputs,
-          name: randomMeme.name,
-          imgSrc: res.data.data ? res.data.data.url : randomMeme.imgSrc,
+          name: prevInputs.name,
+          imgSrc: res.data.data ? res.data.data.url : prevInputs.imgSrc,
           tempID: res.data.data ? res.data.data.page_url.slice(22) : "",
-          initialUrl: randomMeme.initialUrl,
-          id: randomMeme.id,
+          initialUrl: prevInputs.initialUrl,
+          id: prevInputs.id,
         }))
       )
       .catch((err) => console.error(err));
@@ -118,17 +97,12 @@ export default function MemeGenerator() {
 
   return (
     <div className="flex flex-col pb-12 pt-16 overflow-scroll bg-blue-200 w-screen p-3">
-      {/* <h1> under construction </h1>
-      <p className="pt-14 text-center text-xs font-mono text-blue-300">
-        Quinnton Carter 2023
-      </p> */}
       <MemeForm
         inputs={inputs}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        getRandom={getRandom}
       />
-      {userMemes ? mappedMemes(userMemes) : null}
+      {userMemes ? mappedMemes : null}
       <p className="pt-14 text-center text-xs font-mono text-blue-300">
         {" "}
         Quinnton Carter 2023{" "}

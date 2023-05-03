@@ -1,45 +1,93 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { BeakerIcon } from "@heroicons/react/outline";
 import { SwitchHorizontalIcon } from "@heroicons/react/outline";
 import LoadingComp from "../components/Loading";
 import { AppContext } from "../context/appContext";
+import axios from "axios";
+const { REACT_APP_GET_URL } = process.env;
 
 export default function MemeForm(props) {
-  const { randomMeme, getMemes } = useContext(AppContext);
+  const { randomMeme, setRandomMeme, setAllMemes, allMemes } =
+    useContext(AppContext);
+  const { handleSubmit, handleChange, inputs } = props;
+  const [error, setError] = useState();
+  const memeRef = useRef(null);
+  const imgSrcSync =
+    memeRef.current?.url === randomMeme?.imgSrc
+      ? memeRef.current?.url
+      : randomMeme?.imgSrc;
 
-  const { handleSubmit, handleChange, inputs, getRandom } = props;
+  async function getMemes() {
+    try {
+      const {
+        data: {
+          data: { memes },
+        },
+      } = await axios.get(REACT_APP_GET_URL);
+      const memesFit = memes.filter((memes) => memes.box_count <= 2);
+      setAllMemes(memesFit);
+      const randomizedMeme =
+        memesFit[Math.floor(Math.random() * memesFit.length)];
+      memeRef.current = randomizedMeme;
+      setRandomMeme({
+        name: randomizedMeme?.name,
+        imgSrc: randomizedMeme?.url,
+        initialUrl: randomizedMeme?.url,
+        id: randomizedMeme?.id,
+        boxes: randomizedMeme?.box_count,
+      });
+    } catch (err) {
+      setError("Error, please reload and try again");
+    }
+  }
+
+  function getRandom(e) {
+    e.preventDefault();
+    const randomMeme = allMemes[Math.floor(Math.random() * allMemes.length)];
+    memeRef.current = randomMeme;
+    setRandomMeme({
+      name: randomMeme?.name,
+      imgSrc: randomMeme?.url,
+      initialUrl: randomMeme?.url,
+      id: randomMeme?.id,
+      boxes: randomMeme?.box_count,
+    });
+  }
 
   useEffect(() => {
-    if (!randomMeme.imgSrc) {
+    if (!memeRef.current) {
       getMemes();
     }
   }, []);
 
   return (
     <>
-      {randomMeme.imgSrc ? (
+      {memeRef.current?.url ? (
         <div className="rounded pt-3 px-3">
           <h1 className="border-solid border-2 border-navy p-2 text-center bg-white rounded font-normal text-navy">
-            {randomMeme.name}
+            {memeRef.current.name}
           </h1>
-          <div className="grid pt-2 grid-cols-4 ">
+          <form
+            className="grid pt-2 grid-cols-4"
+            onSubmit={handleSubmit}
+          >
             <button
               className="col-span-2 text-xs px-4 p-1 m-1 mx-auto font-medium rounded-full w-auto bg-cream border-b-4 border-yellow-400 text-indigo-800 inline-flex items-center"
-              onClick={handleSubmit}
+              type="submit"
             >
-              <span> Generate </span>
+              Generate
               <BeakerIcon className="w-5" />
             </button>
             <button
               className="col-span-2 text-xs px-4 p-1 m-1 mx-auto rounded-full font-medium w-auto bg-babyBlue text-indigo-800 border-b-4 border-blue-400 inline-flex items-center"
               onClick={getRandom}
             >
-              <span> Randomize </span>
+              Randomize
               <SwitchHorizontalIcon className="w-5" />
             </button>
             <img
               className="col-span-4 max-h-auto mx-auto rounded border-white border-4 m-3"
-              src={randomMeme.imgSrc}
+              src={imgSrcSync}
               alt="initial-meme"
             />
             <input
@@ -49,7 +97,7 @@ export default function MemeForm(props) {
               name="topText"
               placeholder="First text"
               value={inputs.topText}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
             />
             <input
               required
@@ -58,9 +106,10 @@ export default function MemeForm(props) {
               name="bottomText"
               placeholder="Second text"
               value={inputs.bottomText}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
             />
-          </div>
+          </form>
+          {error && error}
         </div>
       ) : (
         <LoadingComp />

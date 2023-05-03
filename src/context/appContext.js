@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const { REACT_APP_GET_URL, REACT_APP_SERVER_URL } = process.env;
+const { REACT_APP_SERVER_URL } = process.env;
 
 export const AppContext = React.createContext();
 
@@ -16,10 +16,6 @@ export default function AppProvider(props) {
   // initial meme for editing
   const [randomMeme, setRandomMeme] = useState({});
 
-  // function handleDBError(errMsg){
-  //   setErrMsg(errMsg)
-  // };
-
   // GET memes from DB
   function getCreatedMemes() {
     axios
@@ -28,29 +24,6 @@ export default function AppProvider(props) {
         setMemes(res.data);
       })
       .catch((err) => console.log("error", err));
-  }
-
-  // FETCH/GET memes for editing
-  function getMemes() {
-    axios
-      .get(REACT_APP_GET_URL)
-      .then((response) => {
-        const { memes } = response.data.data;
-        const memesFit = memes.filter((memes) => memes.box_count <= 2);
-        setAllMemes(memesFit);
-        const randomMeme = memesFit[Math.floor(Math.random() * (73 - 1) + 1)];
-        if (!randomMeme?.id) {
-          setRandomMeme({
-            name: randomMeme?.name,
-            imgSrc: randomMeme?.url,
-            initialUrl: randomMeme?.url,
-            id: randomMeme?.id,
-            boxes: randomMeme?.box_count,
-          });
-        }
-        return;
-      })
-      .catch((err) => console.log(err));
   }
 
   // refactor this into submit to db function:
@@ -84,7 +57,6 @@ export default function AppProvider(props) {
         setRandomMeme,
         // for submit meme to DB
         submitMeme,
-        getMemes,
         // all memes from DB
         memes,
         setMemes,
