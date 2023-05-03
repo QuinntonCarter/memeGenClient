@@ -30,6 +30,7 @@ export default function AppProvider(props) {
       .catch((err) => console.log("error", err));
   }
 
+  // ** fix
   // FETCH/GET memes for editing
   function getMemes() {
     axios
@@ -39,16 +40,16 @@ export default function AppProvider(props) {
         const memesFit = memes.filter((memes) => memes.box_count <= 2);
         setAllMemes(memesFit);
         const randomMeme = memesFit[Math.floor(Math.random() * (73 - 1) + 1)];
-        if (!randomMeme?.id) {
-          setRandomMeme({
-            name: randomMeme?.name,
-            imgSrc: randomMeme?.url,
-            initialUrl: randomMeme?.url,
-            id: randomMeme?.id,
-            boxes: randomMeme?.box_count,
-          });
-        }
-        return;
+        // if (!randomMeme?.id) {
+        setRandomMeme({
+          name: randomMeme?.name,
+          imgSrc: randomMeme?.url,
+          initialUrl: randomMeme?.url,
+          id: randomMeme?.id,
+          boxes: randomMeme?.box_count,
+        });
+        // }
+        // return;
       })
       .catch((err) => console.log(err));
   }

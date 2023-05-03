@@ -27,7 +27,7 @@ export default function MemesView() {
     : getCreatedMemes();
 
   return mappedMemes ? (
-    <div className="grid-cols-2 mx-auto pt-12 pb-16">
+    <div className="grid grid-cols-2 mx-auto pt-12 pb-16">
       {mappedMemes}
       <p className="p-2 text-center text-xs font-mono text-blue-300">
         {" "}
