@@ -1,3 +1,5 @@
 # Meme Generator
 
-### Client code; Tailwindcss, ReactJS, AxiosJS
+### Client code: ChakraUI, ReactJS, AxiosJS
+
+### Server: NodeJS, ExpressJS, MongooseJS, MongoDB

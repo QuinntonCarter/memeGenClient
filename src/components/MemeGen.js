@@ -5,8 +5,7 @@ import { AppContext } from "../context/appContext.js";
 import moment from "moment";
 import axios from "axios";
 
-const { REACT_APP_POST_URL, REACT_APP_USERNAME, REACT_APP_PASSWORD } =
-  process.env;
+const { REACT_APP_POST, REACT_APP_USERNAME, REACT_APP_PASSWORD } = process.env;
 
 const initInputs = { topText: "", bottomText: "" };
 
@@ -70,7 +69,7 @@ export default function MemeGenerator() {
 
   useEffect(() => {
     // grabs edited image source from DB
-    axios(REACT_APP_POST_URL, {
+    axios(REACT_APP_POST, {
       method: "POST",
       params: {
         username: REACT_APP_USERNAME,
@@ -96,17 +95,14 @@ export default function MemeGenerator() {
   }, [inputs.topText, inputs.bottomText]);
 
   return (
-    <div className="flex flex-col pb-12 pt-16 overflow-scroll bg-blue-200 w-screen p-3">
+    <div className="">
       <MemeForm
         inputs={inputs}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
       {userMemes ? mappedMemes : null}
-      <p className="pt-14 text-center text-xs font-mono text-blue-300">
-        {" "}
-        Quinnton Carter 2023{" "}
-      </p>
+      <p className=""> Quinnton Carter 2023 </p>
     </div>
   );
 }

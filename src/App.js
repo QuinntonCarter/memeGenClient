@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar.js";
 
 export default function App() {
   return (
-    <div className="h-screen flex flex-col bg-blue-200">
+    <div className="">
       <Header />
       <Routes>
         <Route
@@ -18,10 +18,7 @@ export default function App() {
           element={<MemesView />}
         />
       </Routes>
-      <p className=" text-center text-xs font-mono text-blue-300">
-        {" "}
-        Quinnton Carter 2021{" "}
-      </p>
+      <p className=""> quinnton carter 2023 </p>
       <Navbar />
     </div>
   );
