@@ -1,7 +1,7 @@
 const Header = () => {
   return (
     <div
-      title="quinnton carter 2023"
+      title="Whatchumeme? Banner"
       className=""
     >
       <h1 className=""> Whatchumeme? </h1>

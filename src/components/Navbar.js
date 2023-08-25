@@ -10,14 +10,12 @@ export default function Navbar() {
         className=""
       >
         <span> Create </span>
-        {/* <PlusCircleIcon className="" /> */}
       </Link>
       <Link
         to="/memes"
         className=""
       >
         <span> View All </span>
-        {/* <ViewListIcon className="" /> */}
       </Link>
     </nav>
   );

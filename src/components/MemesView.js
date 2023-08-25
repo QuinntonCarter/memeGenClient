@@ -1,34 +1,35 @@
 import { useContext } from "react";
 import { AppContext } from "../context/appContext";
+import { HStack, Text } from "@chakra-ui/react";
+import DBMemes from "./memes/DBMemes";
+import moment from "moment";
 
 export default function MemesView() {
   const { getCreatedMemes, memes } = useContext(AppContext);
   console.log("meme date", memes.created);
+  // turn to component **
   const mappedMemes = memes
     ? memes
-        .map((meme) => (
-          <div
-            className=""
-            key={meme._id}
-          >
-            <h5 className="">
-              {" "}
-              Created {meme.created.slice(0, 10)} by '
-              {meme.alias || meme._id.slice(14)}'
-            </h5>
-            <img
-              className=""
-              src={meme.imgSrc}
-              alt={`user meme: ${meme._id}`}
-            />
-          </div>
+        .map((meme, i) => (
+          <DBMemes
+            {...meme}
+            meme={meme}
+            index={i}
+            created={moment(meme.created).format("MM-DD-YY")}
+          />
         ))
         .reverse()
     : getCreatedMemes();
 
   return mappedMemes ? (
-    <div className="">{mappedMemes}</div>
+    <HStack
+      display={"flex"}
+      flexDir={"row"}
+      flexWrap={"wrap"}
+    >
+      {mappedMemes}
+    </HStack>
   ) : (
-    <h4> Memes will display here </h4>
+    <Text as="p"> Memes will display here </Text>
   );
 }

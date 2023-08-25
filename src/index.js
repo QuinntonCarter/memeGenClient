@@ -5,13 +5,14 @@ import AppProvider from "./context/appContext.js";
 import { ChakraProvider } from "@chakra-ui/react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import { theme } from "./theme";
 
 const app = document.getElementById("root");
 const root = createRoot(app);
 
 root.render(
   <BrowserRouter>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <AppProvider>
         <App />
       </AppProvider>

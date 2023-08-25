@@ -1,16 +1,7 @@
-import { Image } from "@chakra-ui/react";
-import Trollface from "../images/Trollface.js";
+import { Spinner } from "@chakra-ui/react";
 
 const LoadingComp = () => {
-  return (
-    <div className="">
-      <Image
-        className=""
-        alt="Loading..."
-        src={Trollface}
-      />
-    </div>
-  );
+  return <Spinner />;
 };
 
 export default LoadingComp;

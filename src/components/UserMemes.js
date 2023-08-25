@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import LoadingComp from "./Loading";
 import axios from "axios";
 import { AppContext } from "../context/appContext";
+import { Box, Button, Image, Text } from "@chakra-ui/react";
 
 const { REACT_APP_POST_URL, REACT_APP_USERNAME, REACT_APP_PASSWORD } =
   process.env;
@@ -94,25 +95,25 @@ export default function UserMemes(props) {
       )
       .catch((err) => console.log(err));
   }, [inputs.topText, inputs.bottomText]);
-
+  // each on should be reuseable component
   return (
     <>
       {imgSrc ? (
-        <div className="">
+        <Box className="">
           {!toggleEdit ? (
-            <div className="">
-              <p className="">
+            <Box className="">
+              <Text className="">
                 {" "}
                 Local ID: '{tempID}' created: {created}{" "}
-              </p>
-              <img
+              </Text>
+              <Image
                 src={imgSrc}
                 alt={`user meme: ${tempID}`}
               />
-              <div className="">
+              <Box className="">
                 {!toggleSave ? (
                   <>
-                    <button
+                    <Button
                       className=""
                       onClick={() => {
                         setToggleEdit((prevState) => !prevState);
@@ -120,15 +121,15 @@ export default function UserMemes(props) {
                     >
                       {" "}
                       edit{" "}
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       className=""
                       onClick={() => deleteMeme(tempID)}
                     >
                       {" "}
                       delete{" "}
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       className=""
                       onClick={() => {
                         setToggleSave((prevState) => !prevState);
@@ -136,11 +137,11 @@ export default function UserMemes(props) {
                     >
                       {" "}
                       submit{" "}
-                    </button>
+                    </Button>
                   </>
                 ) : (
                   <>
-                    <button
+                    <Button
                       className=""
                       onClick={() => {
                         setToggleSave((prevState) => !prevState);
@@ -148,8 +149,8 @@ export default function UserMemes(props) {
                     >
                       {" "}
                       cancel{" "}
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       className=""
                       onClick={() => {
                         saveMeme(imgSrc, initialUrl, _api_id, alias);
@@ -157,7 +158,7 @@ export default function UserMemes(props) {
                     >
                       {" "}
                       submit{" "}
-                    </button>
+                    </Button>
                     <label>
                       {" "}
                       Enter username to save with image
@@ -175,8 +176,8 @@ export default function UserMemes(props) {
                     </label>
                   </>
                 )}
-              </div>
-            </div>
+              </Box>
+            </Box>
           ) : (
             <div className="">
               <p className="">
@@ -188,27 +189,27 @@ export default function UserMemes(props) {
                 alt="editableImage"
               />
               <span className="">
-                <button
+                <Button
                   className=""
                   onClick={() => setToggleEdit((prevState) => !prevState)}
                 >
                   {" "}
                   cancel{" "}
-                </button>
-                <button
+                </Button>
+                <Button
                   className=""
                   onClick={(e) => handleEdit(e, tempID)}
                 >
                   {" "}
                   save{" "}
-                </button>
-                <button
+                </Button>
+                <Button
                   className=""
                   onClick={() => deleteMeme(tempID)}
                 >
                   {" "}
                   delete{" "}
-                </button>
+                </Button>
                 <input
                   required
                   className=""
@@ -228,7 +229,7 @@ export default function UserMemes(props) {
               </span>
             </div>
           )}
-        </div>
+        </Box>
       ) : (
         <LoadingComp />
       )}

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import UserMemes from "./UserMemes.js";
 import MemeForm from "../forms/MemeForm.js";
-import { AppContext } from "../context/appContext.js";
+import { AppContext, imgFlipAxios } from "../context/appContext.js";
 import moment from "moment";
-import axios from "axios";
+import { VStack } from "@chakra-ui/react";
 
 const { REACT_APP_POST, REACT_APP_USERNAME, REACT_APP_PASSWORD } = process.env;
 
@@ -69,7 +69,7 @@ export default function MemeGenerator() {
 
   useEffect(() => {
     // grabs edited image source from DB
-    axios(REACT_APP_POST, {
+    imgFlipAxios(REACT_APP_POST, {
       method: "POST",
       params: {
         username: REACT_APP_USERNAME,
@@ -80,7 +80,7 @@ export default function MemeGenerator() {
         template_id: randomMeme.id,
       },
     })
-      .then((res) =>
+      .then((res) => {
         // sets preview img url to randomMeme imgSrc
         setRandomMeme((prevInputs) => ({
           ...prevInputs,
@@ -89,20 +89,20 @@ export default function MemeGenerator() {
           tempID: res.data.data ? res.data.data.page_url.slice(22) : "",
           initialUrl: prevInputs.initialUrl,
           id: prevInputs.id,
-        }))
-      )
+        }));
+      })
       .catch((err) => console.error(err));
   }, [inputs.topText, inputs.bottomText]);
 
   return (
-    <div className="">
+    <>
       <MemeForm
         inputs={inputs}
+        setInputs={setInputs}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
       {userMemes ? mappedMemes : null}
-      <p className=""> Quinnton Carter 2023 </p>
-    </div>
+    </>
   );
 }

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const { REACT_APP_SERVER_URL } = process.env;
+const { REACT_APP_SERVER_URL, REACT_APP_IMGFLIP_URL } = process.env;
 
 export const AppContext = React.createContext();
-
+export const imgFlipAxios = axios.create();
+imgFlipAxios.interceptors.request.use((config) => {
+  config.baseURL = REACT_APP_IMGFLIP_URL;
+  return config;
+});
 export default function AppProvider(props) {
   // const [ errMsg, setErrMsg ] = useState('')
   // all memes from the app's DB
@@ -15,6 +19,7 @@ export default function AppProvider(props) {
   const [userMemes, setUserMemes] = useState([]);
   // initial meme for editing
   const [randomMeme, setRandomMeme] = useState({});
+  const [error, setError] = useState();
 
   // GET memes from DB
   function getCreatedMemes() {
@@ -28,21 +33,24 @@ export default function AppProvider(props) {
 
   // refactor this into submit to db function:
   function submitMeme(source, url, id, alias) {
-    // generates object for send to backend
-    const submittedMeme = {
-      imgSrc: source,
-      initialUrl: url,
-      _api_id: id,
-      alias: alias,
-    };
-    axios
-      .post(`${REACT_APP_SERVER_URL}/db`, submittedMeme)
-      .then((res) =>
-        // adds to db and returns response from db, push res obj to array
-        setMemes((prevState) => [...prevState, res.data])
-      )
-      .catch((err) => console.log(err))
-      .finally(getCreatedMemes());
+    try {
+      // generates object for send to backend
+      const submittedMeme = {
+        imgSrc: source,
+        initialUrl: url,
+        _api_id: id,
+        alias: alias,
+      };
+      axios
+        .post(`${REACT_APP_SERVER_URL}/db`, submittedMeme)
+        .then((res) =>
+          // adds to db and returns response from db, push res obj to array
+          setMemes((prevState) => [...prevState, res.data])
+        )
+        .catch(getCreatedMemes());
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   // gather initial data
@@ -53,6 +61,8 @@ export default function AppProvider(props) {
   return (
     <AppContext.Provider
       value={{
+        error,
+        setError,
         randomMeme,
         setRandomMeme,
         // for submit meme to DB
