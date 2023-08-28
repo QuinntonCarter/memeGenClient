@@ -3,9 +3,20 @@ import { MdOutlineBrokenImage } from "react-icons/md";
 import { useContext } from "react";
 import { AppContext } from "../../context/appContext";
 
-export default function DBMemes({ alias, _id, imgSrc, initialUrl, created }) {
+export default function DBMemes({
+  alias,
+  _id,
+  imgSrc,
+  initialUrl,
+  created,
+  index,
+  setLostMemes,
+}) {
   console.log("meme props", alias, "created", created);
   const { error, setError } = useContext(AppContext);
+  const test = () => {
+    console.log("fallback func called");
+  };
 
   return _id ? (
     <Box
@@ -23,7 +34,7 @@ export default function DBMemes({ alias, _id, imgSrc, initialUrl, created }) {
         className=""
         src={imgSrc}
         alt={`user meme: ${_id}`}
-        onError={() => setError("Image Lost")}
+        onError={() => setLostMemes((prevState) => [...prevState, index])}
         fallback={
           <MdOutlineBrokenImage
             title="Missing Image"
