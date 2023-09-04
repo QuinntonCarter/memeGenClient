@@ -21,6 +21,8 @@ export default function AppProvider(props) {
   const [randomMeme, setRandomMeme] = useState({});
   const [error, setError] = useState();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   // GET memes from DB
   function getCreatedMemes() {
     axios
@@ -77,6 +79,8 @@ export default function AppProvider(props) {
         userMemes,
         setUserMemes,
         getCreatedMemes,
+        isLoading,
+        setIsLoading,
       }}
     >
       {props.children}

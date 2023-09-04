@@ -3,10 +3,10 @@ import { AppContext } from "../context/appContext";
 import { HStack, Text } from "@chakra-ui/react";
 import DBMemes from "./memes/DBMemes";
 import moment from "moment";
+import LoadingComp from "./Loading";
 
 export default function MemesView() {
-  const { getCreatedMemes, memes, setMemes } = useContext(AppContext);
-  // push filtered meme(s) indexes into this array
+  const { memes, setMemes, isLoading, setIsLoading } = useContext(AppContext);
   const [lostMemes, setLostMemes] = useState([]);
   // created memes are removed for now **
   // const mappedMemes = memes
@@ -42,17 +42,21 @@ export default function MemesView() {
       }
     });
     setMemes(filtered);
+    setIsLoading(true);
   }, [lostMemes]);
 
-  // return "hi";
   return mappedMemes ? (
-    <HStack
-      display={"flex"}
-      flexDir={"row"}
-      flexWrap={"wrap"}
-    >
-      {mappedMemes}
-    </HStack>
+    isLoading ? (
+      <LoadingComp />
+    ) : (
+      <HStack
+        display={"flex"}
+        flexDir={"row"}
+        flexWrap={"wrap"}
+      >
+        {mappedMemes}
+      </HStack>
+    )
   ) : (
     <Text as="p"> Memes will display here </Text>
   );

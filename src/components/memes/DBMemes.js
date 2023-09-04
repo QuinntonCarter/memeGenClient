@@ -2,6 +2,7 @@ import { Box, Image, Text } from "@chakra-ui/react";
 import { MdOutlineBrokenImage } from "react-icons/md";
 import { useContext } from "react";
 import { AppContext } from "../../context/appContext";
+import LoadingComp from "../Loading";
 
 export default function DBMemes({
   alias,
@@ -14,9 +15,6 @@ export default function DBMemes({
 }) {
   console.log("meme props", alias, "created", created);
   const { error, setError } = useContext(AppContext);
-  const test = () => {
-    console.log("fallback func called");
-  };
 
   return _id ? (
     <Box
@@ -34,6 +32,7 @@ export default function DBMemes({
         className=""
         src={imgSrc}
         alt={`user meme: ${_id}`}
+        loading={() => <LoadingComp />}
         onError={() => setLostMemes((prevState) => [...prevState, index])}
         fallback={
           <MdOutlineBrokenImage
@@ -45,6 +44,6 @@ export default function DBMemes({
       <Text> {error && error} </Text>
     </Box>
   ) : (
-    <Text> Memes will display here </Text>
+    <LoadingComp />
   );
 }

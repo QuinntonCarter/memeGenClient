@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import {
   Box,
   Button,
@@ -6,7 +6,6 @@ import {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  IconButton,
   Image,
   Input,
   Text,
@@ -24,8 +23,16 @@ export default function MemeForm({
   inputs,
   setInputs,
 }) {
-  const { randomMeme, setRandomMeme, setAllMemes, allMemes, error, setError } =
-    useContext(AppContext);
+  const {
+    randomMeme,
+    setRandomMeme,
+    setAllMemes,
+    allMemes,
+    error,
+    setError,
+    isLoading,
+    setIsLoading,
+  } = useContext(AppContext);
   const memeRef = useRef(null);
   const imgSrcSync = !randomMeme.imgSrc
     ? memeRef.current?.url
@@ -33,15 +40,12 @@ export default function MemeForm({
 
   async function getMemes() {
     try {
+      setIsLoading(true);
       const {
         data: {
           data: { memes },
         },
-      } = await imgFlipAxios.get(REACT_APP_GET, {
-        params: {
-          // boxes: "boxes",
-        },
-      });
+      } = await imgFlipAxios.get(REACT_APP_GET);
       const memesFit = memes.filter((memes) => memes.box_count <= 2);
       // const memesFit = memes;
       setAllMemes(memesFit);
@@ -61,6 +65,7 @@ export default function MemeForm({
         width: memeRef.current?.width,
         height: memeRef.current?.height,
       });
+      setIsLoading(false);
     } catch (err) {
       setError("Error, please reload and try again");
     }
@@ -69,7 +74,6 @@ export default function MemeForm({
   function getRandom(e) {
     e.preventDefault();
     memeRef.current = allMemes[Math.floor(Math.random() * allMemes.length)];
-
     // watch for break **
     setRandomMeme({
       name: memeRef.current?.name,
@@ -91,7 +95,9 @@ export default function MemeForm({
 
   return (
     <>
-      {memeRef.current?.url && memeRef.current?.name === randomMeme.name ? (
+      {memeRef.current?.url &&
+      memeRef.current?.name === randomMeme.name &&
+      !isLoading ? (
         <Box>
           <Text
             as="h2"

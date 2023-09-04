@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import LoadingComp from "./Loading";
 import axios from "axios";
 import { AppContext } from "../context/appContext";
-import { Box, Button, Image, Text } from "@chakra-ui/react";
+import { Box, Button, FormLabel, Image, Input, Text } from "@chakra-ui/react";
 
 const { REACT_APP_POST_URL, REACT_APP_USERNAME, REACT_APP_PASSWORD } =
   process.env;
@@ -159,10 +159,10 @@ export default function UserMemes(props) {
                       {" "}
                       submit{" "}
                     </Button>
-                    <label>
+                    <FormLabel>
                       {" "}
                       Enter username to save with image
-                      <input
+                      <Input
                         className=""
                         type="text"
                         maxLength="18"
@@ -173,7 +173,7 @@ export default function UserMemes(props) {
                           alias || `A-Z and 0-9 (press submit to skip)`
                         }`}
                       />
-                    </label>
+                    </FormLabel>
                   </>
                 )}
               </Box>
