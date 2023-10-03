@@ -13,7 +13,6 @@ export default function DBMemes({
   index,
   setLostMemes,
 }) {
-  console.log("meme props", alias, "created", created);
   const { error, setError } = useContext(AppContext);
 
   return _id ? (
@@ -32,7 +31,6 @@ export default function DBMemes({
         className=""
         src={imgSrc}
         alt={`user meme: ${_id}`}
-        loading={() => <LoadingComp />}
         onError={() => setLostMemes((prevState) => [...prevState, index])}
         fallback={
           <MdOutlineBrokenImage

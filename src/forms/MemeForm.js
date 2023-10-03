@@ -98,14 +98,14 @@ export default function MemeForm({
       {memeRef.current?.url &&
       memeRef.current?.name === randomMeme.name &&
       !isLoading ? (
-        <Box>
-          <Text
-            as="h2"
-            fontWeight={"bold"}
-            textTransform={"capitalize"}
-          >
-            {memeRef.current?.name}
-          </Text>
+        <Box
+          height="100%"
+          width="100%"
+          display="flex"
+          align-content="center"
+          margin="auto"
+          flex-wrap="wrap"
+        >
           <FormControl
             display={"flex"}
             flexDirection={"row"}
@@ -114,9 +114,9 @@ export default function MemeForm({
             onSubmit={handleSubmit}
           >
             <Image
-              maxWidth={"700px"}
+              maxWidth={"600px"}
               width={"100%"}
-              maxHeight={"500px"}
+              margin={"auto"}
               height={"100%"}
               src={imgSrcSync}
               alt="initial-meme"
@@ -125,7 +125,15 @@ export default function MemeForm({
               display={"flex"}
               flexDir={"column"}
               gap={"2"}
+              margin={"auto"}
             >
+              <Text
+                as="h2"
+                fontWeight={"bold"}
+                textTransform={"capitalize"}
+              >
+                {memeRef.current?.name}
+              </Text>
               <FormLabel>Create Meme Form</FormLabel>
               <FormHelperText>
                 Enter text captions to create a meme
@@ -178,6 +186,8 @@ export default function MemeForm({
                   type="button"
                   onClick={getRandom}
                   width={"165px"}
+                  __active={{ backgroundColor: "purple.600", color: "white" }}
+                  __hover={{ backgroundColor: "black", color: "white" }}
                 >
                   <BiShuffle />
                   Randomize

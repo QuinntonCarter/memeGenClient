@@ -45,7 +45,7 @@ export default function MemeGenerator() {
     // sets randomMeme key values to match default image's
     setRandomMeme((prevState) => prevState);
     // reset inputs to init
-    setInputs(initInputs);
+    return setInputs(initInputs);
   }
 
   const mappedMemes =
