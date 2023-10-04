@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import axios from "axios";
 
 const { REACT_APP_SERVER_URL, REACT_APP_IMGFLIP_URL } = process.env;
 
-export const AppContext = React.createContext();
+export const AppContext = createContext();
 export const imgFlipAxios = axios.create();
 imgFlipAxios.interceptors.request.use((config) => {
   config.baseURL = REACT_APP_IMGFLIP_URL;
   return config;
 });
-export default function AppProvider(props) {
+export default function AppProvider({ children }) {
   // const [ errMsg, setErrMsg ] = useState('')
   // all memes from the app's DB
   const [memes, setMemes] = useState([]);
@@ -83,7 +83,7 @@ export default function AppProvider(props) {
         setIsLoading,
       }}
     >
-      {props.children}
+      {children}
     </AppContext.Provider>
   );
 }

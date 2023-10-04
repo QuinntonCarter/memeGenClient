@@ -1,24 +1,31 @@
 // import { PlusCircleIcon } from "@heroicons/react/outline";
 // import { ViewListIcon } from "@heroicons/react/outline";
+import { useEffect } from "react";
 import {
   Box,
   Flex,
   Tab,
   TabList,
+  TabPanel,
+  TabPanels,
   Tabs,
-  VisuallyHidden,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import MemesView from "./MemesView";
+import MemeGenerator from "./MemeGen";
 
-export default function Navbar() {
+export default function Navbar({ routeOne, routeTwo }) {
   const bg = useColorModeValue("white", "gray.800");
+  let { pathname } = useLocation();
+
+  useEffect(() => {
+    console.log("test params", pathname);
+  }, [pathname]);
+
   return (
     <nav className="">
-      <Box
-        shadow="md"
-        bg={bg}
-      >
+      <Box shadow="md" bg={bg}>
         <Flex
           alignItems="center"
           justifyContent="space-between"
@@ -26,11 +33,9 @@ export default function Navbar() {
           borderWidth={0}
           overflowX="auto"
         >
-          <Tabs
-            defaultIndex={0}
-            borderBottomColor="transparent"
-          >
+          <Tabs defaultIndex={0} borderBottomColor="transparent">
             <TabList>
+              {/* <Link to="/" className=""> */}
               <Tab
                 py={4}
                 m={0}
@@ -38,13 +43,10 @@ export default function Navbar() {
                   boxShadow: "none",
                 }}
               >
-                <Link
-                  to="/"
-                  className=""
-                >
-                  Create
-                </Link>
+                Create
               </Tab>
+              {/* </Link> */}
+              {/* <Link to="/memes" className=""> */}
               <Tab
                 py={4}
                 m={0}
@@ -52,14 +54,14 @@ export default function Navbar() {
                   boxShadow: "none",
                 }}
               >
-                <Link
-                  to="/memes"
-                  className=""
-                >
-                  View All
-                </Link>
+                View All
               </Tab>
+              {/* </Link> */}
             </TabList>
+            <TabPanels>
+              <TabPanel>{<MemeGenerator />}</TabPanel>
+              <TabPanel>{<MemesView />}</TabPanel>
+            </TabPanels>
           </Tabs>
         </Flex>
       </Box>

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, memo } from "react";
 import {
   Box,
   Button,
@@ -17,7 +17,7 @@ import { AppContext, imgFlipAxios } from "../context/appContext";
 
 const { REACT_APP_GET } = process.env;
 
-export default function MemeForm({
+export default memo(function MemeForm({
   handleSubmit,
   handleChange,
   inputs,
@@ -47,9 +47,7 @@ export default function MemeForm({
         },
       } = await imgFlipAxios.get(REACT_APP_GET);
       const memesFit = memes.filter((memes) => memes.box_count <= 2);
-      // const memesFit = memes;
       setAllMemes(memesFit);
-      // const randomizedMeme =
       memeRef.current = memesFit[Math.floor(Math.random() * memesFit.length)];
       // console.log("memesfit boxes", randomizedMeme.box_count, randomizedMeme);
       // watch for break **
@@ -67,6 +65,7 @@ export default function MemeForm({
       });
       setIsLoading(false);
     } catch (err) {
+      setIsLoading(false);
       setError("Error, please reload and try again");
     }
   }
@@ -83,12 +82,10 @@ export default function MemeForm({
       boxes: memeRef.current?.box_count,
     });
     setInputs({ topText: "", bottomText: "" });
-    return console.log("random", randomMeme);
   }
 
   useEffect(() => {
     if (!memeRef.current) {
-      console.log("get memes if statement");
       getMemes();
     }
   }, []);
@@ -96,104 +93,103 @@ export default function MemeForm({
   return (
     <>
       {memeRef.current?.url &&
-      memeRef.current?.name === randomMeme.name &&
-      !isLoading ? (
-        <Box
-          height="100%"
-          width="100%"
-          display="flex"
-          align-content="center"
-          margin="auto"
-          flex-wrap="wrap"
-        >
-          <FormControl
-            display={"flex"}
-            flexDirection={"row"}
-            gap={"4"}
-            isInvalid={error}
-            onSubmit={handleSubmit}
+        memeRef.current?.name === randomMeme.name &&
+        !isLoading && (
+          <Box
+            height="100%"
+            width="100%"
+            display="flex"
+            align-content="center"
+            margin="auto"
+            flex-wrap="wrap"
           >
-            <Image
-              maxWidth={"600px"}
-              width={"100%"}
-              margin={"auto"}
-              height={"100%"}
-              src={imgSrcSync}
-              alt="initial-meme"
-            />
-            <Box
+            <FormControl
               display={"flex"}
-              flexDir={"column"}
-              gap={"2"}
-              margin={"auto"}
+              flexDirection={"row"}
+              gap={"4"}
+              isInvalid={error}
+              onSubmit={handleSubmit}
             >
-              <Text
-                as="h2"
-                fontWeight={"bold"}
-                textTransform={"capitalize"}
-              >
-                {memeRef.current?.name}
-              </Text>
-              <FormLabel>Create Meme Form</FormLabel>
-              <FormHelperText>
-                Enter text captions to create a meme
-              </FormHelperText>
+              <Image
+                maxWidth={"600px"}
+                width={"100%"}
+                margin={"auto"}
+                height={"100%"}
+                src={imgSrcSync}
+                alt="initial-meme"
+              />
               <Box
-                as="span"
                 display={"flex"}
                 flexDir={"column"}
-                gap={"1.5"}
-                maxWidth={"360px"}
-                width={"360px"}
-                flexWrap={"wrap"}
+                gap={"2"}
+                margin={"auto"}
               >
-                {/* map boxes */}
-                <FormLabel>
-                  text one
-                  <Input
-                    required
-                    type="text"
-                    name="topText"
-                    placeholder="First text"
-                    value={inputs.topText}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </FormLabel>
-                <FormLabel>
-                  text two
-                  <Input
-                    required
-                    type="text"
-                    name="bottomText"
-                    placeholder="Second text"
-                    value={inputs.bottomText}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </FormLabel>
-              </Box>
-              <Box
-                as="span"
-                display={"flex"}
-                flexDir={"row"}
-                gap={"1.5"}
-                maxWidth={"360px"}
-                width={"360px"}
-                flexWrap={"wrap"}
-                justifyContent={"space-evenly"}
-              >
-                <Button
-                  mt={"1"}
-                  type="button"
-                  onClick={getRandom}
-                  width={"165px"}
-                  __active={{ backgroundColor: "purple.600", color: "white" }}
-                  __hover={{ backgroundColor: "black", color: "white" }}
+                <Text as="h2" fontWeight={"bold"} textTransform={"capitalize"}>
+                  {memeRef.current?.name}
+                </Text>
+                <FormLabel>Create Meme Form</FormLabel>
+                <FormHelperText>
+                  Enter text captions to create a meme
+                </FormHelperText>
+                <Box
+                  as="span"
+                  display={"flex"}
+                  flexDir={"column"}
+                  gap={"1.5"}
+                  maxWidth={"360px"}
+                  width={"360px"}
+                  flexWrap={"wrap"}
                 >
-                  <BiShuffle />
-                  Randomize
-                </Button>
-                {/* reimplement save to screen later */}
-                {/* <Button
+                  {/* map boxes */}
+                  <FormLabel>
+                    text one
+                    <Input
+                      required
+                      type="text"
+                      name="topText"
+                      placeholder="First text"
+                      value={inputs.topText}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </FormLabel>
+                  <FormLabel>
+                    text two
+                    <Input
+                      required
+                      type="text"
+                      name="bottomText"
+                      placeholder="Second text"
+                      value={inputs.bottomText}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </FormLabel>
+                </Box>
+                <Box
+                  as="span"
+                  display={"flex"}
+                  flexDir={"row"}
+                  gap={"1.5"}
+                  maxWidth={"360px"}
+                  width={"360px"}
+                  flexWrap={"wrap"}
+                  justifyContent={"space-evenly"}
+                >
+                  <Button
+                    mt={"1"}
+                    type="button"
+                    onClick={getRandom}
+                    width={"165px"}
+                    __active={{
+                      backgroundColor: "purple.600",
+                      color: "white",
+                    }}
+                    __hover={{ backgroundColor: "black", color: "white" }}
+                  >
+                    <BiShuffle />
+                    Randomize
+                  </Button>
+                  {/* reimplement save to screen later */}
+                  {/* <Button
                   mt={"1"}
                   type="submit"
                   width={"165px"}
@@ -201,24 +197,18 @@ export default function MemeForm({
                   <HiPlus />
                   Generate
                 </Button> */}
-                <Button
-                  mt={"1"}
-                  type="submit"
-                  width={"165px"}
-                >
-                  <BiSave />
-                  Share to DB
-                </Button>
+                  <Button mt={"1"} type="submit" width={"165px"}>
+                    <BiSave />
+                    Share to DB
+                  </Button>
+                </Box>
+                <FormErrorMessage>
+                  Error: {error}, please reload and try again{" "}
+                </FormErrorMessage>
               </Box>
-              <FormErrorMessage>
-                Error: {error}, please reload and try again{" "}
-              </FormErrorMessage>
-            </Box>
-          </FormControl>
-        </Box>
-      ) : (
-        <LoadingComp />
-      )}
+            </FormControl>
+          </Box>
+        )}
     </>
   );
-}
+});

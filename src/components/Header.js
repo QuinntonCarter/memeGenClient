@@ -9,12 +9,8 @@ const Header = () => {
       height="50px"
       alignContent="center"
     >
-      <Text
-        as="h1"
-        className=""
-      >
-        {" "}
-        Whatchumeme?{" "}
+      <Text as="h1" className="">
+        Whatchumeme?
       </Text>
     </Box>
   );

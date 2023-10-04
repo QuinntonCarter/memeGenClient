@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, memo } from "react";
 import LoadingComp from "./Loading";
 import axios from "axios";
 import { AppContext } from "../context/appContext";
@@ -7,13 +7,14 @@ import { Box, Button, FormLabel, Image, Input, Text } from "@chakra-ui/react";
 const { REACT_APP_POST_URL, REACT_APP_USERNAME, REACT_APP_PASSWORD } =
   process.env;
 
-export default function UserMemes(props) {
+export default memo(function UserMemes(props) {
   const { imgSrc, tempID, _api_id, created, initialUrl } = props;
 
   const { setUserMemes, submitMeme, userMemes } = useContext(AppContext);
 
   const [toggleEdit, setToggleEdit] = useState(false);
   const [toggleSave, setToggleSave] = useState(false);
+  // REFACTOR // forData way
   const [inputs, setInputs] = useState({
     topText: "",
     bottomText: "",
@@ -95,7 +96,7 @@ export default function UserMemes(props) {
       )
       .catch((err) => console.log(err));
   }, [inputs.topText, inputs.bottomText]);
-  // each on should be reuseable component
+
   return (
     <>
       {imgSrc ? (
@@ -106,10 +107,7 @@ export default function UserMemes(props) {
                 {" "}
                 Local ID: '{tempID}' created: {created}{" "}
               </Text>
-              <Image
-                src={imgSrc}
-                alt={`user meme: ${tempID}`}
-              />
+              <Image src={imgSrc} alt={`user meme: ${tempID}`} />
               <Box className="">
                 {!toggleSave ? (
                   <>
@@ -122,10 +120,7 @@ export default function UserMemes(props) {
                       {" "}
                       edit{" "}
                     </Button>
-                    <Button
-                      className=""
-                      onClick={() => deleteMeme(tempID)}
-                    >
+                    <Button className="" onClick={() => deleteMeme(tempID)}>
                       {" "}
                       delete{" "}
                     </Button>
@@ -184,10 +179,7 @@ export default function UserMemes(props) {
                 {" "}
                 Local ID: '{tempID}' created: {created}{" "}
               </p>
-              <img
-                src={imgEditable.imgSrc}
-                alt="editableImage"
-              />
+              <img src={imgEditable.imgSrc} alt="editableImage" />
               <span className="">
                 <Button
                   className=""
@@ -196,17 +188,11 @@ export default function UserMemes(props) {
                   {" "}
                   cancel{" "}
                 </Button>
-                <Button
-                  className=""
-                  onClick={(e) => handleEdit(e, tempID)}
-                >
+                <Button className="" onClick={(e) => handleEdit(e, tempID)}>
                   {" "}
                   save{" "}
                 </Button>
-                <Button
-                  className=""
-                  onClick={() => deleteMeme(tempID)}
-                >
+                <Button className="" onClick={() => deleteMeme(tempID)}>
                   {" "}
                   delete{" "}
                 </Button>
@@ -235,4 +221,4 @@ export default function UserMemes(props) {
       )}
     </>
   );
-}
+});

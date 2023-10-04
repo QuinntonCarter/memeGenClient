@@ -3,24 +3,20 @@ import UserMemes from "./UserMemes.js";
 import MemeForm from "../forms/MemeForm.js";
 import { AppContext, imgFlipAxios } from "../context/appContext.js";
 import moment from "moment";
-import { VStack } from "@chakra-ui/react";
+import { Text, VStack } from "@chakra-ui/react";
 
 const { REACT_APP_POST, REACT_APP_USERNAME, REACT_APP_PASSWORD } = process.env;
 
 const initInputs = { topText: "", bottomText: "" };
 
 export default function MemeGenerator() {
-  const {
-    // all current user's memes
-    userMemes,
-    setUserMemes,
-    randomMeme,
-    setRandomMeme,
-  } = useContext(AppContext);
+  const { userMemes, setUserMemes, randomMeme, setRandomMeme } =
+    useContext(AppContext);
 
   const [inputs, setInputs] = useState(initInputs);
 
   function handleChange(e) {
+    // REFACTOR // look into formdata way..?
     const { name, value } = e.target;
     setInputs((prevInputs) => ({
       ...prevInputs,
@@ -47,25 +43,6 @@ export default function MemeGenerator() {
     // reset inputs to init
     return setInputs(initInputs);
   }
-
-  const mappedMemes =
-    userMemes &&
-    userMemes
-      .map((meme) => (
-        <UserMemes
-          key={meme.tempID}
-          {...randomMeme}
-          inputs={inputs}
-          handleEdit={handleSubmit}
-          handleChange={handleChange}
-          tempID={meme.tempID}
-          _api_id={meme._api_id}
-          imgSrc={meme.imgSrc}
-          created={meme.created}
-          initialUrl={meme.initialUrl}
-        />
-      ))
-      .reverse();
 
   useEffect(() => {
     // grabs edited image source from DB
@@ -102,7 +79,23 @@ export default function MemeGenerator() {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
-      {userMemes ? mappedMemes : null}
+      {userMemes &&
+        userMemes
+          .map((meme) => (
+            <UserMemes
+              key={meme.tempID}
+              {...randomMeme}
+              inputs={inputs}
+              handleEdit={handleSubmit}
+              handleChange={handleChange}
+              tempID={meme.tempID}
+              _api_id={meme._api_id}
+              imgSrc={meme.imgSrc}
+              created={meme.created}
+              initialUrl={meme.initialUrl}
+            />
+          ))
+          .reverse()}
     </>
   );
 }
