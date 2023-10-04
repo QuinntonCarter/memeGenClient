@@ -1,27 +1,34 @@
 // import { PlusCircleIcon } from "@heroicons/react/outline";
 // import { ViewListIcon } from "@heroicons/react/outline";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
+  Button,
   Flex,
-  Tab,
+  TabIndicator,
   TabList,
-  TabPanel,
-  TabPanels,
   Tabs,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import MemesView from "./MemesView";
 import MemeGenerator from "./MemeGen";
 
-export default function Navbar({ routeOne, routeTwo }) {
+export default function Navbar() {
   const bg = useColorModeValue("white", "gray.800");
+  const [tabIndex, setTabIndex] = useState();
+  const styles = useColorModeValue(
+    ["red.50", "teal.50", "blue.50"],
+    ["red.900", "teal.900", "blue.900"]
+  );
+  let styleTest = styles[tabIndex];
   let { pathname } = useLocation();
-
+  const navigate = useNavigate();
   useEffect(() => {
     console.log("test params", pathname);
   }, [pathname]);
+  // ** changing the tabs consistently (as far as i can see)
+  // but not changing params to selection on every tab change **
 
   return (
     <nav className="">
@@ -33,35 +40,26 @@ export default function Navbar({ routeOne, routeTwo }) {
           borderWidth={0}
           overflowX="auto"
         >
-          <Tabs defaultIndex={0} borderBottomColor="transparent">
+          <Tabs
+            defaultIndex={0}
+            borderBottomColor="transparent"
+            onChange={(index) => setTabIndex(index)}
+          >
             <TabList>
-              {/* <Link to="/" className=""> */}
-              <Tab
-                py={4}
-                m={0}
-                _focus={{
-                  boxShadow: "none",
-                }}
-              >
+              {/* switched to buttons because <Tab/> 's were setting themselves to negative tabindex and making untabbable */}
+              <Button onClick={() => navigate("/")} py={4} m={0} tabindex={0}>
                 Create
-              </Tab>
-              {/* </Link> */}
-              {/* <Link to="/memes" className=""> */}
-              <Tab
+              </Button>
+              <Button
+                onClick={() => navigate("/memes")}
                 py={4}
                 m={0}
-                _focus={{
-                  boxShadow: "none",
-                }}
+                tabindex={0}
               >
                 View All
-              </Tab>
-              {/* </Link> */}
+              </Button>
             </TabList>
-            <TabPanels>
-              <TabPanel>{<MemeGenerator />}</TabPanel>
-              <TabPanel>{<MemesView />}</TabPanel>
-            </TabPanels>
+            <TabIndicator bg="red.200" />
           </Tabs>
         </Flex>
       </Box>

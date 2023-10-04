@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, useLocation, Link } from "react-router-dom";
 import {
   Box,
@@ -27,10 +27,10 @@ export default function App() {
         <Text as="p" fontSize={13}>
           Quinnton Carter 2023
         </Text>
-        {/* <Routes>
+        <Routes>
           <Route path="/" element={<MemeGenerator />} />
           <Route path="/memes" element={<MemesView />} />
-        </Routes> */}
+        </Routes>
       </VStack>
     </Box>
   );
