@@ -46,18 +46,16 @@ export default function Navbar() {
             onChange={(index) => setTabIndex(index)}
           >
             <TabList>
-              {/* switched to buttons because <Tab/> 's were setting themselves to negative tabindex and making untabbable */}
-              <Button onClick={() => navigate("/")} py={4} m={0} tabindex={0}>
-                Create
-              </Button>
-              <Button
-                onClick={() => navigate("/memes")}
-                py={4}
-                m={0}
-                tabindex={0}
-              >
-                View All
-              </Button>
+              <NavLink to={"/"} tabindex={0}>
+                <Tabs py={4} m={0}>
+                  Create
+                </Tabs>
+              </NavLink>
+              <NavLink to={"memes"} tabindex={0}>
+                <Tabs py={4} m={0}>
+                  View All
+                </Tabs>
+              </NavLink>
             </TabList>
             <TabIndicator bg="red.200" />
           </Tabs>
