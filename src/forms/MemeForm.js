@@ -179,11 +179,12 @@ export default memo(function MemeForm({
                     type="button"
                     onClick={getRandom}
                     width={"165px"}
-                    __active={{
-                      backgroundColor: "purple.600",
-                      color: "white",
+                    backgroundColor={"black"}
+                    color={"white"}
+                    _hover={{
+                      color: "black",
+                      backgroundColor: "yellow",
                     }}
-                    __hover={{ backgroundColor: "black", color: "white" }}
                   >
                     <BiShuffle />
                     Randomize
@@ -197,7 +198,17 @@ export default memo(function MemeForm({
                   <HiPlus />
                   Generate
                 </Button> */}
-                  <Button mt={"1"} type="submit" width={"165px"}>
+                  <Button
+                    mt={"1"}
+                    type="submit"
+                    width={"165px"}
+                    backgroundColor={"black"}
+                    color={"white"}
+                    _hover={{
+                      color: "black",
+                      backgroundColor: "yellow",
+                    }}
+                  >
                     <BiSave />
                     Share to DB
                   </Button>

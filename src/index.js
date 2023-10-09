@@ -12,7 +12,7 @@ const root = createRoot(app);
 
 root.render(
   <BrowserRouter>
-    <ChakraProvider theme={theme}>
+    <ChakraProvider>
       <AppProvider>
         <App />
       </AppProvider>

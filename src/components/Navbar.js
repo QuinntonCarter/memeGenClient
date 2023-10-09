@@ -1,38 +1,26 @@
 // import { PlusCircleIcon } from "@heroicons/react/outline";
 // import { ViewListIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  TabIndicator,
-  TabList,
-  Tabs,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import MemesView from "./MemesView";
-import MemeGenerator from "./MemeGen";
+import { Box, Flex, TabList, Tabs, useColorModeValue } from "@chakra-ui/react";
+import { NavLink, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const bg = useColorModeValue("white", "gray.800");
   const [tabIndex, setTabIndex] = useState();
-  const styles = useColorModeValue(
-    ["red.50", "teal.50", "blue.50"],
-    ["red.900", "teal.900", "blue.900"]
-  );
-  let styleTest = styles[tabIndex];
+
   let { pathname } = useLocation();
-  const navigate = useNavigate();
+
   useEffect(() => {
-    console.log("test params", pathname);
+    if (pathname === "/") {
+      setTabIndex(0);
+    } else if (pathname === "/memes") {
+      setTabIndex(1);
+    }
   }, [pathname]);
-  // ** changing the tabs consistently (as far as i can see)
-  // but not changing params to selection on every tab change **
 
   return (
     <nav className="">
-      <Box shadow="md" bg={bg}>
+      <Box bg={bg}>
         <Flex
           alignItems="center"
           justifyContent="space-between"
@@ -41,23 +29,44 @@ export default function Navbar() {
           overflowX="auto"
         >
           <Tabs
-            defaultIndex={0}
+            defaultIndex={tabIndex}
             borderBottomColor="transparent"
-            onChange={(index) => setTabIndex(index)}
+            onChange={console.log("tab index", tabIndex)}
           >
-            <TabList>
-              <NavLink to={"/"} tabindex={0}>
-                <Tabs py={4} m={0}>
-                  Create
-                </Tabs>
+            <TabList gap={1}>
+              <NavLink
+                to={"/"}
+                tabIndex={0}
+                onMouseOver={() => setTabIndex(0)}
+                onMouseOut={() => setTabIndex(pathname === "/" ? 0 : 1)}
+                onFocus={() => setTabIndex(0)}
+                onBlur={() => setTabIndex(pathname === "/" ? 0 : 1)}
+                style={{
+                  padding: "0.7em",
+                  color: tabIndex === 0 && "white",
+                  backgroundColor: tabIndex === 0 && "black",
+                  transition: "background-color 0.2s, color .2s",
+                }}
+              >
+                Create
               </NavLink>
-              <NavLink to={"memes"} tabindex={0}>
-                <Tabs py={4} m={0}>
-                  View All
-                </Tabs>
+              <NavLink
+                to={"memes"}
+                tabIndex={0}
+                onMouseOver={() => setTabIndex(1)}
+                onMouseOut={() => setTabIndex(pathname === "/memes" ? 1 : 0)}
+                onFocus={() => setTabIndex(1)}
+                onBlur={() => setTabIndex(pathname === "/memes" ? 1 : 0)}
+                style={{
+                  padding: "0.7em",
+                  color: tabIndex === 1 && "white",
+                  backgroundColor: tabIndex === 1 && "black",
+                  transition: "background-color 0.2s, color .2s",
+                }}
+              >
+                View All
               </NavLink>
             </TabList>
-            <TabIndicator bg="red.200" />
           </Tabs>
         </Flex>
       </Box>

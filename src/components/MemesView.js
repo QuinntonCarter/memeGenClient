@@ -22,30 +22,40 @@ export default memo(function MemesView() {
     ))
     .reverse();
 
+  // function filterMemes() {
+  //   console.log("filtering memes *hold music*");
+  // }
+
   useEffect(() => {
     // removes broken memes from map
-    let filtered = memes.filter((meme, index) => !lostMemes.includes(index));
+    let filtered = memes.filter(async(meme, index) => !lostMemes.includes(index));
     function filterMemes() {
-      setMemes(filtered);
-      setIsLoading(false);
+      setTimeout(() => {
+        console.log("is loading", isLoading);
+        setIsLoading(false);
+        setMemes(filtered);
+      }, 5000);
     }
     setIsLoading(true);
     filterMemes();
+    console.log("is loading", isLoading);
   }, [lostMemes]);
 
   return (
-    mappedMemes && (
-      // isLoading ? (
-      // <LoadingComp />
-      // ) : (
+    mappedMemes &&
+    (isLoading ? (
+      <LoadingComp />
+    ) : (
       <Suspense fallback={LoadingComp}>
         <HStack display={"flex"} flexDir={"row"} flexWrap={"wrap"}>
           {mappedMemes}
         </HStack>
       </Suspense>
-      // ) : (
-      //   // )
-      //   <Text as="p"> Memes will display here </Text>
-    )
+      // )
+      // : (
+      // )
+      // <Text as="p"> Memes will display here </Text>
+      // )
+    ))
   );
 });

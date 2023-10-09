@@ -24,13 +24,13 @@ export default function App() {
       <VStack margin="auto">
         <Navbar />
         <Spacer />
-        <Text as="p" fontSize={13}>
-          Quinnton Carter 2023
-        </Text>
         <Routes>
           <Route path="/" element={<MemeGenerator />} />
           <Route path="/memes" element={<MemesView />} />
         </Routes>
+        <Text as="p" fontSize={13}>
+          Quinnton Carter 2023
+        </Text>
       </VStack>
     </Box>
   );
