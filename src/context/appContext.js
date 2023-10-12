@@ -12,7 +12,9 @@ imgFlipAxios.interceptors.request.use((config) => {
 export default function AppProvider({ children }) {
   // const [ errMsg, setErrMsg ] = useState('')
   // all memes from the app's DB
-  const [memes, setMemes] = useState([]);
+  const [memes, setMemes] = useState();
+  // indexes of memes with error response from imgflip API
+  const [lostMemes, setLostMemes] = useState([]);
   // all api memes
   const [allMemes, setAllMemes] = useState([]);
   // all memes created by current user
@@ -25,10 +27,25 @@ export default function AppProvider({ children }) {
 
   // GET memes from DB
   function getCreatedMemes() {
+    // array for grabbing memes still live on the API
+    let liveMemes = [];
     axios
       .get(`${REACT_APP_SERVER_URL}/db`)
-      .then((res) => {
-        setMemes(res.data);
+      .then(async (res) => {
+        for (let meme of res.data) {
+          await fetch(meme.imgSrc)
+            .then((res) => {
+              // if meme doesn't return error => push to liveMemes array
+              if (res.status !== 404 && res.ok) {
+                liveMemes.push(meme);
+              } else {
+                setLostMemes((prevState) => [...prevState, meme]);
+              }
+            })
+            .catch((err) => console.log("error retrieving memes", err));
+        }
+        // set live memes to memes
+        return setMemes(liveMemes);
       })
       .catch((err) => console.log("error", err));
   }
@@ -72,6 +89,7 @@ export default function AppProvider({ children }) {
         // all memes from DB
         memes,
         setMemes,
+        lostMemes,
         // all from api
         allMemes,
         setAllMemes,

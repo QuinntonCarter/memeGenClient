@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Box, Image, Text } from "@chakra-ui/react";
 import { MdOutlineBrokenImage } from "react-icons/md";
 import { useContext, memo } from "react";
@@ -11,10 +12,26 @@ export default memo(function DBMemes({
   initialUrl,
   created,
   index,
-  lostMemes,
+  // lostMemes,
   setLostMemes,
 }) {
-  const { error } = useContext(AppContext);
+  const { error, lostMemes } = useContext(AppContext);
+
+  useEffect(() => {
+    // console.log(lostMemes);
+    //   // removes broken memes from map
+    //   let filtered = memes.filter((meme, index) => !lostMemes.includes(index));
+    //   function filterMemes() {
+    //     setTimeout(async () => {
+    //       console.log("is loading", isLoading);
+    //       setIsLoading(false);
+    //       await setMemes(filtered);
+    //     }, 5000);
+    //   }
+    //   setIsLoading(true);
+    //   filterMemes();
+    //   console.log("is loading", isLoading);
+  }, []);
 
   return _id ? (
     <Box className="" key={_id}>
@@ -26,7 +43,7 @@ export default memo(function DBMemes({
         className=""
         src={imgSrc}
         alt={`user meme: ${_id}`}
-        onError={() => setLostMemes((prevState) => [...prevState, index])}
+        // onError={() => setLostMemes((prevState) => [...prevState, index])}
         fallback={<MdOutlineBrokenImage title="Missing Image" size={"60%"} />}
       />
       <Text> {error && error} </Text>

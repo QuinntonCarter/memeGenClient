@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, Suspense, memo } from "react";
+import { useContext, useEffect, Suspense, memo } from "react";
 import { AppContext } from "../context/appContext";
 import { HStack, Text } from "@chakra-ui/react";
 import DBMemes from "./memes/DBMemes";
@@ -6,43 +6,31 @@ import moment from "moment";
 import LoadingComp from "./Loading";
 
 export default memo(function MemesView() {
-  const { memes, setMemes, isLoading, setIsLoading } = useContext(AppContext);
-  const [lostMemes, setLostMemes] = useState([]);
+  const { memes, setMemes, isLoading, setIsLoading, lostMemes } =
+    useContext(AppContext);
+  // const [lostMemes, setLostMemes] = useState([]);
 
   const mappedMemes = memes
-    .map((meme, i) => (
+    ?.map((meme, i) => (
       <DBMemes
         {...meme}
         memes={memes}
         index={i}
-        lostMemes={lostMemes}
-        setLostMemes={setLostMemes}
+        // lostMemes={lostMemes}
+        // setLostMemes={setLostMemes}
         created={moment(meme.created).format("MM-DD-YY")}
       />
     ))
     .reverse();
 
-  // function filterMemes() {
-  //   console.log("filtering memes *hold music*");
-  // }
-
   useEffect(() => {
-    // removes broken memes from map
-    let filtered = memes.filter(async(meme, index) => !lostMemes.includes(index));
-    function filterMemes() {
-      setTimeout(() => {
-        console.log("is loading", isLoading);
-        setIsLoading(false);
-        setMemes(filtered);
-      }, 5000);
-    }
-    setIsLoading(true);
-    filterMemes();
-    console.log("is loading", isLoading);
-  }, [lostMemes]);
+    console.log(
+      `found ${memes?.length} memes, ${lostMemes?.length} returned error from imgFlip API`
+    );
+  }, [memes]);
 
   return (
-    mappedMemes &&
+    mappedMemes?.length &&
     (isLoading ? (
       <LoadingComp />
     ) : (

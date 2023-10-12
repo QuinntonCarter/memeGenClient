@@ -14,7 +14,7 @@ export default memo(function UserMemes(props) {
 
   const [toggleEdit, setToggleEdit] = useState(false);
   const [toggleSave, setToggleSave] = useState(false);
-  // REFACTOR // forData way
+  // REFACTOR // formData way
   const [inputs, setInputs] = useState({
     topText: "",
     bottomText: "",

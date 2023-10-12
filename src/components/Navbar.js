@@ -51,7 +51,7 @@ export default function Navbar() {
                 Create
               </NavLink>
               <NavLink
-                to={"memes"}
+                to={"/memes"}
                 tabIndex={0}
                 onMouseOver={() => setTabIndex(1)}
                 onMouseOut={() => setTabIndex(pathname === "/memes" ? 1 : 0)}
