@@ -3,7 +3,6 @@ import UserMemes from "./UserMemes.js";
 import MemeForm from "../forms/MemeForm.js";
 import { AppContext, imgFlipAxios } from "../context/appContext.js";
 import moment from "moment";
-import { Text, VStack } from "@chakra-ui/react";
 
 const { REACT_APP_POST, REACT_APP_USERNAME, REACT_APP_PASSWORD } = process.env;
 

@@ -3,12 +3,11 @@ import { Spinner } from "@chakra-ui/react";
 import { AppContext } from "../context/appContext";
 
 const LoadingComp = () => {
-  const { setIsLoading } = useContext(AppContext);
-  // useEffect(() => {}, [loading]);
+  const { isLoading, setIsLoading } = useContext(AppContext);
   setTimeout(() => {
     setIsLoading(false);
   }, 2000);
-  return <Spinner />;
+  return isLoading && <Spinner />;
 };
 
 export default LoadingComp;

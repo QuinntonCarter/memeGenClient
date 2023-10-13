@@ -1,7 +1,8 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useRef } from "react";
 import axios from "axios";
 
-const { REACT_APP_SERVER_URL, REACT_APP_IMGFLIP_URL } = process.env;
+const { REACT_APP_SERVER_URL, REACT_APP_IMGFLIP_URL, REACT_APP_GET } =
+  process.env;
 
 export const AppContext = createContext();
 export const imgFlipAxios = axios.create();
@@ -25,6 +26,8 @@ export default function AppProvider({ children }) {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const memeRef = useRef(null);
+
   // GET memes from DB
   function getCreatedMemes() {
     // array for grabbing memes still live on the API
@@ -45,9 +48,43 @@ export default function AppProvider({ children }) {
             .catch((err) => console.log("error retrieving memes", err));
         }
         // set live memes to memes
-        return setMemes(liveMemes);
       })
       .catch((err) => console.log("error", err));
+    return setMemes(liveMemes);
+  }
+
+  async function getMemes() {
+    try {
+      setIsLoading(true);
+      console.log("ran get memes function");
+      const {
+        data: {
+          data: { memes },
+        },
+      } = await imgFlipAxios.get(REACT_APP_GET);
+      const memesFit = memes.filter((memes) => memes.box_count <= 2);
+      setAllMemes(memesFit);
+      memeRef.current = memesFit[Math.floor(Math.random() * memesFit.length)];
+      // console.log("memesfit boxes", randomizedMeme.box_count, randomizedMeme);
+      // watch for break **
+      // memeRef.current = randomizedMeme;
+      setRandomMeme({
+        name: memeRef.current?.name,
+        imgSrc: memeRef.current?.url,
+        initialUrl: memeRef.current?.url,
+        id: memeRef.current?.id,
+        box_count: memeRef.current?.box_count,
+        x: memeRef.current?.x,
+        y: memeRef.current?.y,
+        width: memeRef.current?.width,
+        height: memeRef.current?.height,
+      });
+      setIsLoading(false);
+    } catch (err) {
+      console.log("get memes error");
+      setIsLoading(false);
+      setError("Error, please reload and try again");
+    }
   }
 
   // refactor this into submit to db function:
@@ -75,6 +112,13 @@ export default function AppProvider({ children }) {
   // gather initial data
   useEffect(() => {
     getCreatedMemes();
+    if (!memeRef.current) {
+      // ** remove before production **
+      console.log("ran get memes useeffect");
+      getMemes();
+      // ** remove before production **
+      console.log("meme ref context", memeRef);
+    }
   }, []);
 
   return (
@@ -99,6 +143,7 @@ export default function AppProvider({ children }) {
         getCreatedMemes,
         isLoading,
         setIsLoading,
+        memeRef,
       }}
     >
       {children}

@@ -5,10 +5,8 @@ import DBMemes from "./memes/DBMemes";
 import moment from "moment";
 import LoadingComp from "./Loading";
 
-export default memo(function MemesView() {
-  const { memes, setMemes, isLoading, setIsLoading, lostMemes } =
-    useContext(AppContext);
-  // const [lostMemes, setLostMemes] = useState([]);
+export default function MemesView() {
+  const { memes, isLoading, lostMemes } = useContext(AppContext);
 
   const mappedMemes = memes
     ?.map((meme, i) => (
@@ -16,8 +14,6 @@ export default memo(function MemesView() {
         {...meme}
         memes={memes}
         index={i}
-        // lostMemes={lostMemes}
-        // setLostMemes={setLostMemes}
         created={moment(meme.created).format("MM-DD-YY")}
       />
     ))
@@ -29,21 +25,15 @@ export default memo(function MemesView() {
     );
   }, [memes]);
 
-  return (
-    mappedMemes?.length &&
-    (isLoading ? (
-      <LoadingComp />
-    ) : (
-      <Suspense fallback={LoadingComp}>
-        <HStack display={"flex"} flexDir={"row"} flexWrap={"wrap"}>
-          {mappedMemes}
-        </HStack>
-      </Suspense>
-      // )
-      // : (
-      // )
-      // <Text as="p"> Memes will display here </Text>
-      // )
-    ))
-  );
-});
+  if (isLoading) {
+    return <LoadingComp />;
+  } else if (!mappedMemes?.length && !isLoading) {
+    return <Text as="p"> Memes will display here </Text>;
+  } else {
+    return (
+      <HStack display={"flex"} flexDir={"row"} flexWrap={"wrap"}>
+        {mappedMemes}
+      </HStack>
+    );
+  }
+}

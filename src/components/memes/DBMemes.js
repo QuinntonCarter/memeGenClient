@@ -11,10 +11,9 @@ export default memo(function DBMemes({
   initialUrl,
   created,
   index,
-  // lostMemes,
   setLostMemes,
 }) {
-  const { error, memes } = useContext(AppContext);
+  const { error } = useContext(AppContext);
 
   return _id ? (
     <Box className="" key={_id}>
