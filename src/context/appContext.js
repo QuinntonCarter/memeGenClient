@@ -11,7 +11,6 @@ imgFlipAxios.interceptors.request.use((config) => {
   return config;
 });
 export default function AppProvider({ children }) {
-  // const [ errMsg, setErrMsg ] = useState('')
   // all memes from the app's DB
   const [memes, setMemes] = useState();
   // indexes of memes with error response from imgflip API
@@ -65,6 +64,7 @@ export default function AppProvider({ children }) {
       const memesFit = memes.filter((memes) => memes.box_count <= 2);
       setAllMemes(memesFit);
       memeRef.current = memesFit[Math.floor(Math.random() * memesFit.length)];
+      console.log("meme ref from initial get memes", memeRef.current);
       // console.log("memesfit boxes", randomizedMeme.box_count, randomizedMeme);
       // watch for break **
       // memeRef.current = randomizedMeme;
@@ -117,7 +117,6 @@ export default function AppProvider({ children }) {
       console.log("ran get memes useeffect");
       getMemes();
       // ** remove before production **
-      console.log("meme ref context", memeRef);
     }
   }, []);
 

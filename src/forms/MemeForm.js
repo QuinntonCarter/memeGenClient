@@ -37,7 +37,6 @@ export default function MemeForm({
   function getRandom(e) {
     e.preventDefault();
     setIsLoading(true);
-    memeRef.current = null;
     try {
       memeRef.current = allMemes[Math.floor(Math.random() * allMemes.length)];
       setRandomMeme({
@@ -85,39 +84,40 @@ export default function MemeForm({
           </Text>
           <FormLabel>Create Meme Form</FormLabel>
           <FormHelperText>Enter text captions to create a meme</FormHelperText>
-          <Box
-            as="span"
-            display={"flex"}
-            flexDir={"column"}
-            gap={"1.5"}
-            maxWidth={"360px"}
-            width={"360px"}
-            flexWrap={"wrap"}
+          <form
+            method="post"
+            onChange={handleChange}
+            // as="span"
+            // display={"flex"}
+            // flexDir={"column"}
+            // gap={"1.5"}
+            // maxWidth={"360px"}
+            // width={"360px"}
+            // flexWrap={"wrap"}
           >
-            {/* map boxes */}
             <FormLabel>
               text one
-              <Input
+              <input
                 required
                 type="text"
                 name="topText"
                 placeholder="First text"
                 value={inputs.topText}
-                onChange={(e) => handleChange(e)}
+                // onChange={(e) => handleChange(e)}
               />
             </FormLabel>
             <FormLabel>
               text two
-              <Input
+              <input
                 required
                 type="text"
                 name="bottomText"
                 placeholder="Second text"
                 value={inputs.bottomText}
-                onChange={(e) => handleChange(e)}
+                // onChange={(e) => handleChange(e)}
               />
             </FormLabel>
-          </Box>
+          </form>
           <Box
             as="span"
             display={"flex"}

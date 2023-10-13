@@ -4,15 +4,7 @@ import { useContext, memo } from "react";
 import { AppContext } from "../../context/appContext";
 import LoadingComp from "../Loading";
 
-export default memo(function DBMemes({
-  alias,
-  _id,
-  imgSrc,
-  initialUrl,
-  created,
-  index,
-  setLostMemes,
-}) {
+export default memo(function DBMemes({ alias, _id, imgSrc, created }) {
   const { error } = useContext(AppContext);
 
   return _id ? (

@@ -11,7 +11,6 @@ const initInputs = { topText: "", bottomText: "" };
 export default function MemeGenerator() {
   const { userMemes, setUserMemes, randomMeme, setRandomMeme } =
     useContext(AppContext);
-
   const [inputs, setInputs] = useState(initInputs);
 
   function handleChange(e) {
@@ -44,7 +43,6 @@ export default function MemeGenerator() {
   }
 
   useEffect(() => {
-    // grabs edited image source from DB
     imgFlipAxios(REACT_APP_POST, {
       method: "POST",
       params: {
@@ -56,18 +54,18 @@ export default function MemeGenerator() {
         template_id: randomMeme.id,
       },
     })
-      .then((res) => {
-        // sets preview img url to randomMeme imgSrc
+      // sets preview img url to randomMeme imgSrc
+      .then((res) =>
         setRandomMeme((prevInputs) => ({
           ...prevInputs,
-          name: prevInputs.name,
-          imgSrc: res.data.data ? res.data.data.url : prevInputs.imgSrc,
-          tempID: res.data.data ? res.data.data.page_url.slice(22) : "",
-          initialUrl: prevInputs.initialUrl,
-          id: prevInputs.id,
-        }));
-      })
-      .catch((err) => console.error(err));
+          imgSrc:
+            res?.data?.data?.url === randomMeme.imgSrc
+              ? randomMeme.imgSrc
+              : res?.data?.data?.url,
+          tempID: res?.data?.data?.page_url.slice(22),
+        }))
+      )
+      .catch((err) => console.log("error retrieving preview from db", err));
   }, [inputs.topText, inputs.bottomText]);
 
   return (
