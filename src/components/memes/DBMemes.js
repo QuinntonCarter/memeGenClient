@@ -1,14 +1,21 @@
 import { Box, Image, Text } from "@chakra-ui/react";
 import { MdOutlineBrokenImage } from "react-icons/md";
-import { useContext, memo } from "react";
+import { useContext } from "react";
 import { AppContext } from "../../context/appContext";
 import LoadingComp from "../Loading";
 
-export default memo(function DBMemes({ alias, _id, imgSrc, created }) {
+export default function DBMemes({ alias, _id, imgSrc, created }) {
   const { error } = useContext(AppContext);
 
   return _id ? (
-    <Box className="" key={_id}>
+    <Box
+      className=""
+      key={_id}
+      minW={"auto"}
+      height={"auto"}
+      maxH={"fit-content"}
+      padding={"1vw"}
+    >
       <Text as="h5" className="">
         {" "}
         Posted {`${created} by ${alias || _id.slice(14)}`}
@@ -18,10 +25,12 @@ export default memo(function DBMemes({ alias, _id, imgSrc, created }) {
         src={imgSrc}
         alt={`user meme: ${_id}`}
         fallback={<MdOutlineBrokenImage title="Missing Image" size={"60%"} />}
+        min-width={"auto"}
+        width={"600px"}
       />
       <Text> {error && error} </Text>
     </Box>
   ) : (
     <LoadingComp />
   );
-});
+}

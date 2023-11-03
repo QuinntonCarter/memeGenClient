@@ -1,6 +1,6 @@
-import { useContext, useEffect, Suspense, memo } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../context/appContext";
-import { HStack, Text } from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react";
 import DBMemes from "./memes/DBMemes";
 import moment from "moment";
 import LoadingComp from "./Loading";
@@ -31,9 +31,13 @@ export default function MemesView() {
     return <Text as="p"> Memes will display here </Text>;
   } else {
     return (
-      <HStack display={"flex"} flexDir={"row"} flexWrap={"wrap"}>
+      <Box
+        className="memesView"
+        // display={"grid"}
+        // gridTemplateColumns={"repeat(2, 1fr)"}
+      >
         {mappedMemes}
-      </HStack>
+      </Box>
     );
   }
 }

@@ -1,36 +1,54 @@
-@import '/node_modules/tailwindcss/base.css';
-@import '/node_modules/tailwindcss/components.css';
-@import '/node_modules/tailwindcss/utilities.css';
-.keyboardCat {
-  background-image: url('https://media4.giphy.com/media/Hcw7rjsIsHcmk/giphy.gif');
-  /* height: 100px; */
+@import "/node_modules/tailwindcss/base.css";
+@import "/node_modules/tailwindcss/components.css";
+@import "/node_modules/tailwindcss/utilities.css";
+
+.memesView {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 1vw;
 }
 
-.keyboardCat > h1 {
+@media screen and (max-width: 950px) {
+  .memesView {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-self: center;
+  }
+}
+
+/* .keyboardCat {
+  background-image: url('https://media4.giphy.com/media/Hcw7rjsIsHcmk/giphy.gif');
+  height: 100px;
+} */
+
+/* .keyboardCat > h1 {
   align-self: center;
   justify-self: center;
   margin: 0
-}
+} */
 /* 
 .app {
   display: grid;
   position: fixed;
   bottom: 0;
 } */
-
+/* 
 body {
   display: grid;
   grid-template-columns: auto;
-}
+} */
 
 /* tailwind */
-@layer base {
+/* @layer base {
   input {
-    @apply bg-gray-200 rounded m-1 p-1
-  } body {
-    @apply bg-blue-200
-  } nav {
-    @apply bg-blue-300
+    @apply bg-gray-200 rounded m-1 p-1;
+  }
+  body {
+    @apply bg-blue-200;
+  }
+  nav {
+    @apply bg-blue-300;
   }
 }
 
@@ -38,7 +56,7 @@ body {
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom);
   }
-}
+} */
 
 /* @layer base {
   h1 {

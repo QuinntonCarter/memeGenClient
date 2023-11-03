@@ -86,7 +86,7 @@ export default function MemeForm({
           <FormHelperText>Enter text captions to create a meme</FormHelperText>
           <form
             method="post"
-            onChange={handleChange}
+            // onChange={(e) => handleChange(e)}
             // as="span"
             // display={"flex"}
             // flexDir={"column"}
@@ -103,7 +103,7 @@ export default function MemeForm({
                 name="topText"
                 placeholder="First text"
                 value={inputs.topText}
-                // onChange={(e) => handleChange(e)}
+                onChange={(e) => handleChange(e)}
               />
             </FormLabel>
             <FormLabel>
@@ -114,7 +114,7 @@ export default function MemeForm({
                 name="bottomText"
                 placeholder="Second text"
                 value={inputs.bottomText}
-                // onChange={(e) => handleChange(e)}
+                onChange={(e) => handleChange(e)}
               />
             </FormLabel>
           </form>
