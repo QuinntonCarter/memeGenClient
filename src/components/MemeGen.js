@@ -69,30 +69,29 @@ export default function MemeGenerator() {
   }, [inputs.topText, inputs.bottomText]);
 
   return (
-    <>
-      <MemeForm
-        inputs={inputs}
-        setInputs={setInputs}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-      />
-      {userMemes &&
-        userMemes
-          .map((meme) => (
-            <UserMemes
-              key={meme.tempID}
-              {...randomMeme}
-              inputs={inputs}
-              handleEdit={handleSubmit}
-              handleChange={handleChange}
-              tempID={meme.tempID}
-              _api_id={meme._api_id}
-              imgSrc={meme.imgSrc}
-              created={meme.created}
-              initialUrl={meme.initialUrl}
-            />
-          ))
-          .reverse()}
-    </>
+    <MemeForm
+      inputs={inputs}
+      setInputs={setInputs}
+      handleChange={handleChange}
+      handleSubmit={handleSubmit}
+    />
   );
+  //   {userMemes &&
+  //     userMemes
+  //       .map((meme) => (
+  //         <UserMemes
+  //           key={meme.tempID}
+  //           {...randomMeme}
+  //           inputs={inputs}
+  //           handleEdit={handleSubmit}
+  //           handleChange={handleChange}
+  //           tempID={meme.tempID}
+  //           _api_id={meme._api_id}
+  //           imgSrc={meme.imgSrc}
+  //           created={meme.created}
+  //           initialUrl={meme.initialUrl}
+  //         />
+  //       ))
+  //       .reverse()}
+  // {/* </> */}
 }

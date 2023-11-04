@@ -20,8 +20,8 @@ import Navbar from "./components/Navbar.js";
 export default function App() {
   return (
     // CSS // Fix vertical spacing
-    <Box display="block" margin={"auto 2vw 0.5vw"}>
-      <VStack margin="auto">
+    <Box display="block" margin={"auto 2vw 0.5vw"} height={"100%"}>
+      <VStack margin="auto" height={"100%"}>
         <Navbar />
         <Spacer />
         <Routes>

@@ -17,6 +17,10 @@
   }
 }
 
+#root {
+  height: 100vh;
+}
+
 /* .keyboardCat {
   background-image: url('https://media4.giphy.com/media/Hcw7rjsIsHcmk/giphy.gif');
   height: 100px;

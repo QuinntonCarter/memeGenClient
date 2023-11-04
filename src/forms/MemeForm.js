@@ -56,17 +56,19 @@ export default function MemeForm({
 
   return memeRef.current ? (
     <Box
+      className="memePreviewFormContainer"
       height="100%"
-      width="100%"
-      display="flex"
       align-content="center"
       margin="auto"
-      flex-wrap="wrap"
     >
       <FormControl
-        display={"flex"}
-        flexDirection={"row"}
+        className="memeForm"
+        display={"grid"}
+        gridTemplateColumns={"repeat(2, 25vw)"}
+        justifyContent={"center"}
+        alignContent={"center"}
         gap={"4"}
+        position={"relative"}
         isInvalid={error}
         onSubmit={handleSubmit}
       >
@@ -78,7 +80,13 @@ export default function MemeForm({
           src={imgSrcSync}
           alt="initial-meme"
         />
-        <Box display={"flex"} flexDir={"column"} gap={"2"} margin={"auto"}>
+        <Box
+          gap={"2"}
+          margin={"auto"}
+          position={"absolute"}
+          right={"-5vw"}
+          top={"15vh"}
+        >
           <Text as="h2" fontWeight={"bold"} textTransform={"capitalize"}>
             {memeRef.current?.name}
           </Text>
@@ -87,13 +95,6 @@ export default function MemeForm({
           <form
             method="post"
             // onChange={(e) => handleChange(e)}
-            // as="span"
-            // display={"flex"}
-            // flexDir={"column"}
-            // gap={"1.5"}
-            // maxWidth={"360px"}
-            // width={"360px"}
-            // flexWrap={"wrap"}
           >
             <FormLabel>
               text one

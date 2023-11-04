@@ -30,14 +30,6 @@ export default function MemesView() {
   } else if (!mappedMemes?.length && !isLoading) {
     return <Text as="p"> Memes will display here </Text>;
   } else {
-    return (
-      <Box
-        className="memesView"
-        // display={"grid"}
-        // gridTemplateColumns={"repeat(2, 1fr)"}
-      >
-        {mappedMemes}
-      </Box>
-    );
+    return <Box className="memesView">{mappedMemes}</Box>;
   }
 }
