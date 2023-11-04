@@ -45,6 +45,7 @@ export default function Navbar() {
                   padding: "0.7em",
                   color: tabIndex === 0 && "white",
                   backgroundColor: tabIndex === 0 && "black",
+                  fontWeight: tabIndex === 0 && "bold",
                   transition: "background-color 0.2s, color .2s",
                 }}
               >
@@ -61,6 +62,7 @@ export default function Navbar() {
                   padding: "0.7em",
                   color: tabIndex === 1 && "white",
                   backgroundColor: tabIndex === 1 && "black",
+                  fontWeight: tabIndex === 1 && "bold",
                   transition: "background-color 0.2s, color .2s",
                 }}
               >
