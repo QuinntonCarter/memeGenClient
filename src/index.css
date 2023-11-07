@@ -2,18 +2,83 @@
 @import "/node_modules/tailwindcss/components.css";
 @import "/node_modules/tailwindcss/utilities.css";
 
+.appStack {
+  flex-direction: column-reverse;
+}
+
+@media screen and (max-width: 850px) {
+  .appStack {
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+}
+
+.memeForm > img {
+  max-height: 75%;
+}
+
+@media screen and (max-width: 850px) {
+  .memePreviewFormContainer {
+    width: 100%;
+  }
+  .memePreviewForm {
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .memeForm {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100%;
+    justify-content: flex-start;
+    align-content: flex-start;
+    width: 100%;
+    gap: 0px;
+  }
+  .memeForm > img {
+    height: 75%;
+  }
+  /* .memeForm > button {
+    max-width: 275px;
+  } */
+  .memeInputsContainer {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 0px;
+    align-items: center;
+  }
+}
+
 .memesView {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  width: 80vw;
   padding: 1vw;
 }
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 850px) {
   .memesView {
+    position: relative;
     display: flex;
     flex-direction: column;
-    margin: auto;
     align-self: center;
+  }
+  .dBMemeContainer {
+    margin: auto;
+  }
+}
+@media screen and (max-width: 850px) {
+  .buttonContainer {
+    width: 100%;
+  }
+  .buttonContainer > button {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
   }
 }
 

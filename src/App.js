@@ -21,16 +21,20 @@ export default function App() {
   return (
     // CSS // Fix vertical spacing
     <Box display="block" margin={"auto 2vw 0.5vw"} height={"100%"}>
-      <VStack margin="auto" height={"100%"}>
-        <Navbar />
-        <Spacer />
+      <VStack
+        className="appStack"
+        margin="auto"
+        height={"100vh"}
+        width={"90vw"}
+      >
         <Routes>
           <Route path="/" element={<MemeGenerator />} />
           <Route path="/memes" element={<MemesView />} />
         </Routes>
-        <Text as="p" fontSize={13}>
+        <Navbar />
+        {/* <Text as="p" fontSize={13}>
           Quinnton Carter 2023
-        </Text>
+        </Text> */}
       </VStack>
     </Box>
   );

@@ -57,36 +57,28 @@ export default function MemeForm({
   return memeRef.current ? (
     <Box
       className="memePreviewFormContainer"
-      height="100%"
-      align-content="center"
-      margin="auto"
+      margin="1vw 0vw 0vw"
+      display="flex"
+      alignItems={"center"}
     >
       <FormControl
         className="memeForm"
-        display={"grid"}
-        gridTemplateColumns={"repeat(2, 25vw)"}
-        justifyContent={"center"}
-        alignContent={"center"}
-        gap={"4"}
+        // gap={"4"}
         position={"relative"}
         isInvalid={error}
         onSubmit={handleSubmit}
       >
-        <Image
-          maxWidth={"600px"}
-          width={"100%"}
-          margin={"auto"}
-          height={"100%"}
-          src={imgSrcSync}
-          alt="initial-meme"
-        />
-        <Box
-          gap={"2"}
-          margin={"auto"}
-          position={"absolute"}
-          right={"-5vw"}
-          top={"15vh"}
-        >
+        <Box className="memeImgContainer" height={"45vh"} width={"100%"}>
+          <Image
+            width={"100%"}
+            height={"100%"}
+            margin={"auto"}
+            objectFit={"contain"}
+            src={imgSrcSync}
+            alt="initial-meme"
+          />
+        </Box>
+        <Box className="memeInputsContainer" margin={"auto"}>
           <Text as="h2" fontWeight={"bold"} textTransform={"capitalize"}>
             {memeRef.current?.name}
           </Text>
@@ -120,13 +112,15 @@ export default function MemeForm({
             </FormLabel>
           </form>
           <Box
+            className="buttonContainer"
             as="span"
             display={"flex"}
             flexDir={"row"}
             gap={"1.5"}
             maxWidth={"360px"}
-            width={"360px"}
+            width={"auto"}
             flexWrap={"wrap"}
+            height={"10%"}
             justifyContent={"space-evenly"}
           >
             <Button

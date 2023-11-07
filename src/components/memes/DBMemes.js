@@ -9,7 +9,7 @@ export default function DBMemes({ alias, _id, imgSrc, created }) {
 
   return _id ? (
     <Box
-      className=""
+      className="dBMemeContainer"
       key={_id}
       minW={"auto"}
       height={"auto"}
