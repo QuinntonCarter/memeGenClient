@@ -8,6 +8,7 @@ import {
   FormLabel,
   Image,
   Input,
+  SimpleGrid,
   Text,
 } from "@chakra-ui/react";
 import { BiSave, BiShuffle } from "react-icons/bi";
@@ -83,6 +84,7 @@ export default function MemeForm({
           </Text>
           <FormLabel>Create Meme Form</FormLabel>
           <FormHelperText>Enter text captions to create a meme</FormHelperText>
+
           <form
             method="post"
             // onChange={(e) => handleChange(e)}

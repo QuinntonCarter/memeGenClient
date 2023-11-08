@@ -21,6 +21,7 @@ html {
 
 @media screen and (max-width: 850px) {
   .navBar {
+    position: -webkit-sticky;
     position: sticky;
     bottom: 0;
   }
@@ -90,11 +91,13 @@ input {
 }
 .memeInputsContainer > h2 {
   font-size: x-large;
+  height: 72px;
 }
 
 @media screen and (max-width: 850px) {
   .memeInputsContainer > h2 {
     font-size: large;
+    height: auto;
   }
   .memeForm {
     /* padding: 1vw; */
