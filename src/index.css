@@ -4,6 +4,10 @@
 
 #root {
   height: 100vh;
+}
+
+#root,
+html {
   background-color: #5b4fff;
 }
 
