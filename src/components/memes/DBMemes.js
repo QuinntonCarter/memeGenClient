@@ -21,7 +21,6 @@ export default function DBMemes({ alias, _id, imgSrc, created }) {
         Posted {`${created} by ${alias || _id.slice(14)}`}
       </Text>
       <Image
-        className=""
         src={imgSrc}
         alt={`user meme: ${_id}`}
         fallback={<MdOutlineBrokenImage title="Missing Image" size={"60%"} />}

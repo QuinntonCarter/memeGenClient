@@ -19,15 +19,9 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <nav className="">
-      <Box bg={bg}>
-        <Flex
-          alignItems="center"
-          justifyContent="space-between"
-          mx={2}
-          borderWidth={0}
-          overflowX="auto"
-        >
+    <nav className="navBar">
+      <Box bg={bg} paddingTop={"3px"}>
+        <Flex justifyContent="center" borderWidth={0}>
           <Tabs
             defaultIndex={tabIndex}
             borderBottomColor="transparent"

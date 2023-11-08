@@ -57,7 +57,6 @@ export default function MemeForm({
   return memeRef.current ? (
     <Box
       className="memePreviewFormContainer"
-      margin="1vw 0vw 0vw"
       display="flex"
       alignItems={"center"}
     >
@@ -68,7 +67,7 @@ export default function MemeForm({
         isInvalid={error}
         onSubmit={handleSubmit}
       >
-        <Box className="memeImgContainer" height={"45vh"} width={"100%"}>
+        <Box className="memeImgContainer" height={"45vh"}>
           <Image
             width={"100%"}
             height={"100%"}
@@ -88,7 +87,7 @@ export default function MemeForm({
             method="post"
             // onChange={(e) => handleChange(e)}
           >
-            <FormLabel>
+            <FormLabel display={"flex"} gap={"0.5vw"}>
               text one
               <input
                 required
@@ -99,7 +98,7 @@ export default function MemeForm({
                 onChange={(e) => handleChange(e)}
               />
             </FormLabel>
-            <FormLabel>
+            <FormLabel display={"flex"} gap={"0.5vw"}>
               text two
               <input
                 required

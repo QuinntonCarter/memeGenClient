@@ -20,22 +20,17 @@ import Navbar from "./components/Navbar.js";
 export default function App() {
   return (
     // CSS // Fix vertical spacing
-    <Box display="block" margin={"auto 2vw 0.5vw"} height={"100%"}>
-      <VStack
-        className="appStack"
-        margin="auto"
-        height={"100vh"}
-        width={"90vw"}
-      >
+    <Box className={"appContainer"} display="flex">
+      <VStack className="appStack" margin="auto" width={"90vw"}>
         <Routes>
           <Route path="/" element={<MemeGenerator />} />
           <Route path="/memes" element={<MemesView />} />
         </Routes>
-        <Navbar />
         {/* <Text as="p" fontSize={13}>
           Quinnton Carter 2023
         </Text> */}
       </VStack>
+      <Navbar />
     </Box>
   );
 }
