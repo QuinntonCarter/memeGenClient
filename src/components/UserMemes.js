@@ -111,7 +111,7 @@ export default memo(function UserMemes(props) {
               <Box className="">
                 {!toggleSave ? (
                   <>
-                    <Button
+                    {/* <Button
                       className=""
                       onClick={() => {
                         setToggleEdit((prevState) => !prevState);
@@ -119,7 +119,7 @@ export default memo(function UserMemes(props) {
                     >
                       {" "}
                       edit{" "}
-                    </Button>
+                    </Button> */}
                     <Button className="" onClick={() => deleteMeme(tempID)}>
                       {" "}
                       delete{" "}

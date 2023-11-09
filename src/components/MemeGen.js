@@ -3,6 +3,7 @@ import UserMemes from "./UserMemes.js";
 import MemeForm from "../forms/MemeForm.js";
 import { AppContext, imgFlipAxios } from "../context/appContext.js";
 import moment from "moment";
+import { Flex } from "@chakra-ui/react";
 
 const { REACT_APP_POST, REACT_APP_USERNAME, REACT_APP_PASSWORD } = process.env;
 
@@ -38,6 +39,7 @@ export default function MemeGenerator() {
     ]);
     // sets randomMeme key values to match default image's
     setRandomMeme((prevState) => prevState);
+    console.log(userMemes);
     // reset inputs to init
     return setInputs(initInputs);
   }
@@ -69,29 +71,37 @@ export default function MemeGenerator() {
   }, [inputs.topText, inputs.bottomText]);
 
   return (
-    <MemeForm
-      inputs={inputs}
-      setInputs={setInputs}
-      handleChange={handleChange}
-      handleSubmit={handleSubmit}
-    />
+    <>
+      <MemeForm
+        inputs={inputs}
+        setInputs={setInputs}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
+      <Flex
+        className={"userMemesContainer"}
+        flexDir={"row"}
+        flexWrap={"wrap"}
+        gap={"1vw"}
+      >
+        {userMemes &&
+          userMemes
+            .map((meme) => (
+              <UserMemes
+                key={meme.tempID}
+                {...randomMeme}
+                inputs={inputs}
+                handleEdit={handleSubmit}
+                handleChange={handleChange}
+                tempID={meme.tempID}
+                _api_id={meme._api_id}
+                imgSrc={meme.imgSrc}
+                created={meme.created}
+                initialUrl={meme.initialUrl}
+              />
+            ))
+            .reverse()}
+      </Flex>
+    </>
   );
-  //   {userMemes &&
-  //     userMemes
-  //       .map((meme) => (
-  //         <UserMemes
-  //           key={meme.tempID}
-  //           {...randomMeme}
-  //           inputs={inputs}
-  //           handleEdit={handleSubmit}
-  //           handleChange={handleChange}
-  //           tempID={meme.tempID}
-  //           _api_id={meme._api_id}
-  //           imgSrc={meme.imgSrc}
-  //           created={meme.created}
-  //           initialUrl={meme.initialUrl}
-  //         />
-  //       ))
-  //       .reverse()}
-  // {/* </> */}
 }

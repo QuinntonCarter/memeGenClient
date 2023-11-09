@@ -85,10 +85,7 @@ export default function MemeForm({
           <FormLabel>Create Meme Form</FormLabel>
           <FormHelperText>Enter text captions to create a meme</FormHelperText>
 
-          <form
-            method="post"
-            // onChange={(e) => handleChange(e)}
-          >
+          <form onChange={(e) => handleChange(e)}>
             <FormLabel display={"flex"} gap={"0.5vw"}>
               text one
               <input
@@ -150,7 +147,7 @@ export default function MemeForm({
                 </Button> */}
             <Button
               mt={"1"}
-              type="submit"
+              onClick={(e) => handleSubmit(e)}
               width={"165px"}
               backgroundColor={"black"}
               color={"white"}
