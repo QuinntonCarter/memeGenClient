@@ -157,7 +157,7 @@ export default function MemeForm({
               }}
             >
               <BiSave />
-              Share to DB
+              Save Locally
             </Button>
           </Box>
           <FormErrorMessage>
