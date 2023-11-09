@@ -1,34 +1,35 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../context/appContext";
+import { Box, HStack, Text } from "@chakra-ui/react";
+import DBMemes from "./memes/DBMemes";
+import moment from "moment";
+import LoadingComp from "./Loading";
 
 export default function MemesView() {
-  const { getCreatedMemes, memes } = useContext(AppContext);
+  const { memes, isLoading, lostMemes } = useContext(AppContext);
 
   const mappedMemes = memes
-    ? memes
-        .map((meme) => (
-          <div
-            className="p-4 px-5 mx-auto"
-            key={meme._id}
-          >
-            <h5 className="p-1 bg-blue-400 text-white text-xs">
-              {" "}
-              Created {meme.created.slice(0, 10)} by '
-              {meme.alias || meme._id.slice(14)}'
-            </h5>
-            <img
-              className="border-blue-400 border-solid border-4"
-              src={meme.imgSrc}
-              alt={`user meme: ${meme._id}`}
-            />
-          </div>
-        ))
-        .reverse()
-    : getCreatedMemes();
+    ?.map((meme, i) => (
+      <DBMemes
+        {...meme}
+        memes={memes}
+        index={i}
+        created={moment(meme.created).format("MM-DD-YY")}
+      />
+    ))
+    .reverse();
 
-  return mappedMemes ? (
-    <div className="grid grid-cols-2 mx-auto pt-12 pb-16">{mappedMemes}</div>
-  ) : (
-    <h4> Memes will display here </h4>
-  );
+  useEffect(() => {
+    console.log(
+      `found ${memes?.length} memes, ${lostMemes?.length} returned error from imgFlip API`
+    );
+  }, [memes]);
+
+  if (isLoading) {
+    return <LoadingComp />;
+  } else if (!mappedMemes?.length && !isLoading) {
+    return <Text as="p"> Memes will display here </Text>;
+  } else {
+    return <Box className="memesView">{mappedMemes}</Box>;
+  }
 }

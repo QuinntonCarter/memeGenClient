@@ -1,11 +1,13 @@
-import Trollface from '../images/Trollface.svg';
+import { useContext } from "react";
+import { Spinner } from "@chakra-ui/react";
+import { AppContext } from "../context/appContext";
 
 const LoadingComp = () => {
-    return(
-        <div className="flex items-center h-screen justify-center ">
-            <img className='animate-spin h-20' alt='Loading...' src={Trollface}/>
-        </div>
-    )
-}
+  const { isLoading, setIsLoading } = useContext(AppContext);
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 2000);
+  return isLoading && <Spinner />;
+};
 
 export default LoadingComp;

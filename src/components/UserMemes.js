@@ -1,18 +1,28 @@
-import React, { useState, useEffect, useContext } from "react";
-import LoadingComp from "../components/Loading";
+import React, { useState, useEffect, useContext, memo } from "react";
+import LoadingComp from "./Loading";
 import axios from "axios";
 import { AppContext } from "../context/appContext";
+import {
+  Box,
+  Button,
+  Flex,
+  FormLabel,
+  Image,
+  Input,
+  Text,
+} from "@chakra-ui/react";
 
 const { REACT_APP_POST_URL, REACT_APP_USERNAME, REACT_APP_PASSWORD } =
   process.env;
 
-export default function UserMemes(props) {
+export default memo(function UserMemes(props) {
   const { imgSrc, tempID, _api_id, created, initialUrl } = props;
 
   const { setUserMemes, submitMeme, userMemes } = useContext(AppContext);
 
   const [toggleEdit, setToggleEdit] = useState(false);
   const [toggleSave, setToggleSave] = useState(false);
+  // REFACTOR // formData way
   const [inputs, setInputs] = useState({
     topText: "",
     bottomText: "",
@@ -98,120 +108,170 @@ export default function UserMemes(props) {
   return (
     <>
       {imgSrc ? (
-        <div className="bg-cream inline-grid my-3 p-4">
+        <Box className="">
           {!toggleEdit ? (
-            <div className="grid m-auto p-0 h-auto mx-auto w-auto">
-              <p className="text-xs">
+            <Box
+              className="dBMemeContainer"
+              minW={"auto"}
+              height={"auto"}
+              maxH={"fit-content"}
+              padding={"1vw"}
+            >
+              <Text as={"h5"} className="">
                 {" "}
                 Local ID: '{tempID}' created: {created}{" "}
-              </p>
-              <img
+              </Text>
+              <Image
                 src={imgSrc}
                 alt={`user meme: ${tempID}`}
+                min-width={"auto"}
+                width={"600px"}
               />
-              <div className="grid-cols-4 inline-grid mx-auto">
+              <Box className="userMemesButtonsContainer">
                 {!toggleSave ? (
                   <>
-                    <button
-                      className="col-span-1 text-sm m-2 p-1 rounded bg-soot text-white"
+                    {/* <Button
+                      className=""
                       onClick={() => {
                         setToggleEdit((prevState) => !prevState);
                       }}
                     >
                       {" "}
                       edit{" "}
-                    </button>
-                    <button
-                      className="col-span-1 text-sm m-2 p-1 rounded bg-salmon text-gray-700"
+                    </Button> */}
+                    <Button
+                      className="userMemesButtons"
+                      backgroundColor={"black"}
+                      color={"white"}
+                      _hover={{
+                        color: "black",
+                        backgroundColor: "yellow",
+                      }}
                       onClick={() => deleteMeme(tempID)}
                     >
                       {" "}
                       delete{" "}
-                    </button>
-                    <button
-                      className="col-span-2 text-sm m-2 p-1 rounded bg-navy text-white"
+                    </Button>
+                    <Button
+                      className="userMemesButtons"
+                      backgroundColor={"black"}
+                      color={"white"}
+                      _hover={{
+                        color: "black",
+                        backgroundColor: "yellow",
+                      }}
                       onClick={() => {
                         setToggleSave((prevState) => !prevState);
                       }}
                     >
                       {" "}
-                      submit{" "}
-                    </button>
+                      Submit to DB{" "}
+                    </Button>
                   </>
                 ) : (
-                  <>
-                    <button
-                      className="col-span-2 text-sm m-2 p-1 rounded bg-salmon text-white"
+                  <Flex flexDir={"column"}>
+                    <Button
+                      className="userMemesButtons"
+                      backgroundColor={"black"}
+                      color={"white"}
+                      _hover={{
+                        color: "black",
+                        backgroundColor: "yellow",
+                      }}
                       onClick={() => {
                         setToggleSave((prevState) => !prevState);
                       }}
                     >
                       {" "}
-                      cancel{" "}
-                    </button>
-                    <button
-                      className="col-span-2 text-sm m-2 p-1 rounded bg-babyBlue text-white"
-                      onClick={() => {
-                        saveMeme(imgSrc, initialUrl, _api_id, alias);
-                      }}
-                    >
-                      {" "}
-                      submit{" "}
-                    </button>
-                    <label>
-                      {" "}
-                      Enter username to save with image
-                      <input
-                        className="col-span-4 text-sm"
-                        type="text"
-                        maxLength="18"
-                        pattern="[A-Za-z0-9]"
-                        onChange={(e) => setAlias(e.target.value)}
-                        title="Attach alias/username to image or press enter to skip"
-                        placeholder={`${
-                          alias || `A-Z and 0-9 (press submit to skip)`
-                        }`}
-                      />
-                    </label>
-                  </>
+                      Cancel{" "}
+                    </Button>
+                    <Flex flexDir={"column"}>
+                      <Button
+                        className=""
+                        backgroundColor={"black"}
+                        color={"white"}
+                        _hover={{
+                          color: "black",
+                          backgroundColor: "yellow",
+                        }}
+                        onClick={() => {
+                          saveMeme(imgSrc, initialUrl, _api_id, alias);
+                        }}
+                      >
+                        {" "}
+                        Submit{" "}
+                      </Button>
+                      <FormLabel>
+                        {" "}
+                        Enter username to save with image
+                        <Input
+                          className=""
+                          type="text"
+                          maxLength="18"
+                          pattern="[A-Za-z0-9]"
+                          onChange={(e) => setAlias(e.target.value)}
+                          background={"rgb(236, 236, 236)"}
+                          title="Attach alias/username to image or press enter to skip"
+                          placeholder={`${
+                            alias || `A-Z and 0-9 (press submit to skip)`
+                          }`}
+                        />
+                      </FormLabel>
+                    </Flex>
+                  </Flex>
                 )}
-              </div>
-            </div>
+              </Box>
+            </Box>
           ) : (
-            <div className="m-auto p-0 h-auto w-auto">
-              <p className="text-xs">
+            <div className="">
+              <p className="">
                 {" "}
                 Local ID: '{tempID}' created: {created}{" "}
               </p>
-              <img
-                src={imgEditable.imgSrc}
-                alt="editableImage"
-              />
-              <span className="grid grid-cols-4">
-                <button
-                  className="col-span-1 text-sm m-2 p-1 rounded bg-salmon text-white"
+              <img src={imgEditable.imgSrc} alt="editableImage" />
+              <span className="">
+                <Button
+                  className=""
+                  backgroundColor={"black"}
+                  color={"white"}
+                  _hover={{
+                    color: "black",
+                    backgroundColor: "yellow",
+                  }}
                   onClick={() => setToggleEdit((prevState) => !prevState)}
                 >
                   {" "}
                   cancel{" "}
-                </button>
-                <button
-                  className="col-span-1 text-sm m-2 p-1 rounded bg-soot text-white"
+                </Button>
+                <Button
+                  className=""
+                  backgroundColor={"black"}
+                  color={"white"}
+                  _hover={{
+                    color: "black",
+                    backgroundColor: "yellow",
+                  }}
                   onClick={(e) => handleEdit(e, tempID)}
                 >
                   {" "}
                   save{" "}
-                </button>
-                <button
-                  className="col-span-2 text-sm m-2 p-1 rounded bg-salmon text-gray-700"
+                </Button>
+                <Button
+                  className=""
+                  backgroundColor={"black"}
+                  color={"white"}
+                  _hover={{
+                    color: "black",
+                    backgroundColor: "yellow",
+                  }}
                   onClick={() => deleteMeme(tempID)}
                 >
                   {" "}
                   delete{" "}
-                </button>
+                </Button>
                 <input
                   required
-                  className="col-span-4 text-sm"
+                  className=""
                   name="topText"
                   placeholder="Replacement text one"
                   value={inputs.topText}
@@ -219,7 +279,7 @@ export default function UserMemes(props) {
                 />
                 <input
                   required
-                  className="col-span-4 text-sm"
+                  className=""
                   name="bottomText"
                   placeholder="Replacement text two"
                   value={inputs.bottomText}
@@ -228,10 +288,10 @@ export default function UserMemes(props) {
               </span>
             </div>
           )}
-        </div>
+        </Box>
       ) : (
         <LoadingComp />
       )}
     </>
   );
-}
+});

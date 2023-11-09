@@ -1,119 +1,172 @@
-import { useContext, useEffect, useState, useRef } from "react";
-import { BeakerIcon } from "@heroicons/react/outline";
-import { SwitchHorizontalIcon } from "@heroicons/react/outline";
-import LoadingComp from "../components/Loading";
+import { useContext } from "react";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormHelperText,
+  FormLabel,
+  Image,
+  Input,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
+import { BiSave, BiShuffle } from "react-icons/bi";
 import { AppContext } from "../context/appContext";
-import axios from "axios";
-const { REACT_APP_GET_URL } = process.env;
+import LoadingComp from "../components/Loading";
 
-export default function MemeForm(props) {
-  const { randomMeme, setRandomMeme, setAllMemes, allMemes } =
-    useContext(AppContext);
-  const { handleSubmit, handleChange, inputs } = props;
-  const [error, setError] = useState();
-  const memeRef = useRef(null);
-  const imgSrcSync =
-    memeRef.current?.url === randomMeme?.imgSrc
-      ? memeRef.current?.url
-      : randomMeme?.imgSrc;
+export default function MemeForm({
+  handleSubmit,
+  handleChange,
+  inputs,
+  setInputs,
+}) {
+  const {
+    randomMeme,
+    setRandomMeme,
+    allMemes,
+    error,
+    setIsLoading,
+    memeRef,
+    setError,
+  } = useContext(AppContext);
 
-  async function getMemes() {
-    try {
-      const {
-        data: {
-          data: { memes },
-        },
-      } = await axios.get(REACT_APP_GET_URL);
-      const memesFit = memes.filter((memes) => memes.box_count <= 2);
-      setAllMemes(memesFit);
-      const randomizedMeme =
-        memesFit[Math.floor(Math.random() * memesFit.length)];
-      memeRef.current = randomizedMeme;
-      setRandomMeme({
-        name: randomizedMeme?.name,
-        imgSrc: randomizedMeme?.url,
-        initialUrl: randomizedMeme?.url,
-        id: randomizedMeme?.id,
-        boxes: randomizedMeme?.box_count,
-      });
-    } catch (err) {
-      setError("Error, please reload and try again");
-    }
-  }
+  const imgSrcSync = !randomMeme.imgSrc
+    ? memeRef?.current?.url
+    : randomMeme?.imgSrc;
 
   function getRandom(e) {
     e.preventDefault();
-    const randomMeme = allMemes[Math.floor(Math.random() * allMemes.length)];
-    memeRef.current = randomMeme;
-    setRandomMeme({
-      name: randomMeme?.name,
-      imgSrc: randomMeme?.url,
-      initialUrl: randomMeme?.url,
-      id: randomMeme?.id,
-      boxes: randomMeme?.box_count,
-    });
+    setIsLoading(true);
+    try {
+      memeRef.current = allMemes[Math.floor(Math.random() * allMemes.length)];
+      setRandomMeme({
+        name: memeRef.current?.name,
+        imgSrc: memeRef.current?.url,
+        initialUrl: memeRef.current?.url,
+        id: memeRef.current?.id,
+        boxes: memeRef.current?.box_count,
+      });
+      setInputs({ topText: "", bottomText: "" });
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      setError("error randomizing meme, please reload and try again", err);
+    }
   }
 
-  useEffect(() => {
-    if (!memeRef.current) {
-      getMemes();
-    }
-  }, []);
+  return memeRef.current ? (
+    <Box
+      className="memePreviewFormContainer"
+      display="flex"
+      alignItems={"center"}
+    >
+      <FormControl
+        className="memeForm"
+        // gap={"4"}
+        position={"relative"}
+        isInvalid={error}
+        onSubmit={handleSubmit}
+      >
+        <Box className="memeImgContainer" height={"45vh"}>
+          <Image
+            width={"100%"}
+            height={"100%"}
+            margin={"auto"}
+            objectFit={"contain"}
+            src={imgSrcSync}
+            alt="initial-meme"
+          />
+        </Box>
+        <Box className="memeInputsContainer" margin={"auto"}>
+          <Text as="h2" fontWeight={"bold"} textTransform={"capitalize"}>
+            {memeRef.current?.name}
+          </Text>
+          <FormLabel>Create Meme Form</FormLabel>
+          <FormHelperText>Enter text captions to create a meme</FormHelperText>
 
-  return (
-    <>
-      {memeRef.current?.url ? (
-        <div className="rounded pt-3 px-3">
-          <h1 className="border-solid border-2 border-navy p-2 text-center bg-white rounded font-normal text-navy">
-            {memeRef.current.name}
-          </h1>
-          <form
-            className="grid pt-2 grid-cols-4"
-            onSubmit={handleSubmit}
-          >
-            <button
-              className="col-span-2 text-xs px-4 p-1 m-1 mx-auto font-medium rounded-full w-auto bg-cream border-b-4 border-yellow-400 text-indigo-800 inline-flex items-center"
-              type="submit"
-            >
-              Generate
-              <BeakerIcon className="w-5" />
-            </button>
-            <button
-              className="col-span-2 text-xs px-4 p-1 m-1 mx-auto rounded-full font-medium w-auto bg-babyBlue text-indigo-800 border-b-4 border-blue-400 inline-flex items-center"
-              onClick={getRandom}
-            >
-              Randomize
-              <SwitchHorizontalIcon className="w-5" />
-            </button>
-            <img
-              className="col-span-4 max-h-auto mx-auto rounded border-white border-4 m-3"
-              src={imgSrcSync}
-              alt="initial-meme"
-            />
-            <input
-              required
-              className="col-span-4 focus:ring-2 text-xs focus:ring-gray-200"
-              type="text"
-              name="topText"
-              placeholder="First text"
-              value={inputs.topText}
-              onChange={(e) => handleChange(e)}
-            />
-            <input
-              required
-              className="col-span-4 focus:ring-2 text-xs focus:ring-gray-200"
-              type="text"
-              name="bottomText"
-              placeholder="Second text"
-              value={inputs.bottomText}
-              onChange={(e) => handleChange(e)}
-            />
+          <form onChange={(e) => handleChange(e)}>
+            <FormLabel display={"flex"} gap={"0.5vw"}>
+              text one
+              <input
+                required
+                type="text"
+                name="topText"
+                placeholder="First text"
+                value={inputs.topText}
+                onChange={(e) => handleChange(e)}
+              />
+            </FormLabel>
+            <FormLabel display={"flex"} gap={"0.5vw"}>
+              text two
+              <input
+                required
+                type="text"
+                name="bottomText"
+                placeholder="Second text"
+                value={inputs.bottomText}
+                onChange={(e) => handleChange(e)}
+              />
+            </FormLabel>
           </form>
-          {error && error}
-        </div>
-      ) : (
-        <LoadingComp />
-      )}
-    </>
+          <Box
+            className="buttonContainer"
+            as="span"
+            display={"flex"}
+            flexDir={"row"}
+            gap={"1.5"}
+            maxWidth={"360px"}
+            width={"auto"}
+            flexWrap={"wrap"}
+            height={"10%"}
+            justifyContent={"space-evenly"}
+          >
+            <Button
+              mt={"1"}
+              type="button"
+              onClick={getRandom}
+              width={"165px"}
+              backgroundColor={"black"}
+              color={"white"}
+              _hover={{
+                color: "black",
+                backgroundColor: "yellow",
+              }}
+            >
+              <BiShuffle />
+              Randomize
+            </Button>
+            {/* reimplement save to screen later */}
+            {/* <Button
+                  mt={"1"}
+                  type="submit"
+                  width={"165px"}
+                >
+                  <HiPlus />
+                  Generate
+                </Button> */}
+            <Button
+              mt={"1"}
+              onClick={(e) => handleSubmit(e)}
+              width={"165px"}
+              backgroundColor={"black"}
+              color={"white"}
+              _hover={{
+                color: "black",
+                backgroundColor: "yellow",
+              }}
+            >
+              <BiSave />
+              Save Locally
+            </Button>
+          </Box>
+          <FormErrorMessage>
+            Error: {error}, please reload and try again{" "}
+          </FormErrorMessage>
+        </Box>
+      </FormControl>
+    </Box>
+  ) : (
+    <LoadingComp />
   );
 }

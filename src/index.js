@@ -1,14 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-import AppProvider from './context/appContext.js';
+import React from "react";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import AppProvider from "./context/appContext.js";
+import { ChakraProvider } from "@chakra-ui/react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import { theme } from "./theme";
 
-ReactDOM.render(
-<BrowserRouter>
-        <AppProvider>
-                <App />
-        </AppProvider>
-</BrowserRouter>,
-document.getElementById('root'));
+const app = document.getElementById("root");
+const root = createRoot(app);
+
+root.render(
+  <BrowserRouter>
+    <ChakraProvider>
+      <AppProvider>
+        <App />
+      </AppProvider>
+    </ChakraProvider>
+  </BrowserRouter>
+);
