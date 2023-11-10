@@ -204,7 +204,8 @@ input {
 }
 
 .dBMemeContainer {
-  /* background: #fabbff; */
+  display: flex;
+  flex-direction: column;
   background: white;
   font-weight: bold;
   border-radius: 6px;

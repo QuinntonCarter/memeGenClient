@@ -26,6 +26,7 @@ export default function DBMemes({ alias, _id, imgSrc, created }) {
         fallback={<MdOutlineBrokenImage title="Missing Image" size={"60%"} />}
         min-width={"auto"}
         width={"600px"}
+        alignSelf={"center"}
       />
       <Text> {error && error} </Text>
     </Box>
