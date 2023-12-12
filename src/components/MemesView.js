@@ -25,11 +25,16 @@ export default function MemesView() {
     );
   }, [memes]);
 
-  if (isLoading) {
-    return <LoadingComp />;
-  } else if (!mappedMemes?.length && !isLoading) {
-    return <Text as="p"> Memes will display here </Text>;
+  if (!mappedMemes?.length) {
+    return (
+      <Box className="loaderContainer">
+        <LoadingComp />
+      </Box>
+    );
+    // } else if (!mappedMemes?.length) {
+    //   return <Text as="p"> Memes will display here </Text>;
   } else {
+    // return{mappedMemes}
     return <Box className="memesView">{mappedMemes}</Box>;
   }
 }

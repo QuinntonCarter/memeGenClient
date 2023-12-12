@@ -167,6 +167,8 @@ export default function MemeForm({
       </FormControl>
     </Box>
   ) : (
-    <LoadingComp />
+    <Box className="loaderContainer">
+      <LoadingComp />
+    </Box>
   );
 }

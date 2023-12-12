@@ -146,6 +146,16 @@ input {
   padding: 1vw;
 }
 
+.loaderContainer {
+  display: flex;
+  width: 80vw;
+  height: 100vh;
+  padding: 1vw;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
 .buttonContainer {
   align-self: center;
   height: auto;
