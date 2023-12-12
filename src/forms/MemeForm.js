@@ -7,8 +7,6 @@ import {
   FormHelperText,
   FormLabel,
   Image,
-  Input,
-  SimpleGrid,
   Text,
 } from "@chakra-ui/react";
 import { BiSave, BiShuffle } from "react-icons/bi";
