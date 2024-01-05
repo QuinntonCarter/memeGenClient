@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext, memo } from "react";
-import LoadingComp from "./Loading";
 import axios from "axios";
-import { AppContext } from "../context/appContext";
 import {
   Box,
   Button,
@@ -11,14 +9,20 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
+import { useMutation } from "@apollo/client";
+
+import LoadingComp from "./Loading";
+import { AppContext } from "../context/appContext";
+import { ADD_MEME } from "../mutations/meme";
+import { GET_MEMES } from "../queries/meme";
+
+// ** this is mapped memes saved locally **
 
 const { REACT_APP_POST_URL, REACT_APP_USERNAME, REACT_APP_PASSWORD } =
   process.env;
 
-export default memo(function UserMemes(props) {
-  const { imgSrc, tempID, _api_id, created, initialUrl } = props;
-
-  const { setUserMemes, submitMeme, userMemes } = useContext(AppContext);
+export default function UserMemes(props) {
+  const { setUserMemes, userMemes } = useContext(AppContext);
 
   const [toggleEdit, setToggleEdit] = useState(false);
   const [toggleSave, setToggleSave] = useState(false);
@@ -32,11 +36,29 @@ export default memo(function UserMemes(props) {
 
   // create editable img obj
   const [imgEditable, setImgEditable] = useState({
-    imgSrc: initialUrl,
-    initialUrl: initialUrl,
-    tempID: tempID,
-    _api_id: _api_id,
-    created: created,
+    imgSrc: props.initialUrl,
+    initialUrl: props.initialUrl,
+    tempID: props.tempID,
+    _api_id: props._api_id,
+  });
+
+  const [addMeme] = useMutation(ADD_MEME, {
+    variables: {
+      imgSrc: props.imgSrc,
+      tempID: props.tempID,
+      _api_id: props._api_id,
+      // created: props.created,
+      initialUrl: props.initialUrl,
+    },
+    update(cache, { data: { addMeme } }) {
+      const { memes } = cache.readQuery({ query: GET_MEMES });
+      cache.writeQuery({
+        query: GET_MEMES,
+        data: {
+          memes: [...memes, addMeme],
+        },
+      });
+    },
   });
 
   // delete from frontend state
@@ -45,11 +67,12 @@ export default memo(function UserMemes(props) {
     return setUserMemes(newMemes);
   };
 
-  // save to DB
-  function saveMeme(src, initial, id, name) {
-    deleteMeme(tempID);
-    submitMeme(src, initial, id, name);
+  // save to DB ** replace w mutation
+  function onSubmit(src, initial, id, name) {
+    deleteMeme(props.tempID);
+    addMeme(src, initial, id, name);
   }
+  //
 
   function handleChangeEdit(e) {
     const { name, value } = e.target;
@@ -61,17 +84,17 @@ export default memo(function UserMemes(props) {
 
   // submits the edit
   const handleEdit = (e, id) => {
-    const createdDate = JSON.stringify(new Date()).slice(1, 11);
+    // const createdDate = JSON.stringify(new Date()).slice(1, 11);
     e.preventDefault();
     deleteMeme(id);
     setUserMemes((prevState) => [
       ...prevState,
       {
         imgSrc: imgEditable.imgSrc,
-        initialUrl: initialUrl,
+        initialUrl: props.initialUrl,
         tempID: imgEditable.tempID,
-        _api_id: _api_id,
-        created: createdDate,
+        _api_id: props._api_id,
+        // created: createdDate,
       },
     ]);
     setToggleEdit((prevState) => !prevState);
@@ -81,33 +104,34 @@ export default memo(function UserMemes(props) {
     });
   };
 
-  useEffect(() => {
-    axios(REACT_APP_POST_URL, {
-      method: "POST",
-      params: {
-        username: REACT_APP_USERNAME,
-        password: REACT_APP_PASSWORD,
-        font: "arial",
-        text0: inputs.topText,
-        text1: inputs.bottomText,
-        template_id: _api_id,
-      },
-    })
-      .then((res) =>
-        setImgEditable((prevInputs) => ({
-          ...prevInputs,
-          imgSrc: res.data.data ? res.data.data.url : imgEditable.imgSrc,
-          tempID: res.data.data
-            ? res.data.data.page_url.slice(22)
-            : imgEditable.tempID,
-        }))
-      )
-      .catch((err) => console.log(err));
-  }, [inputs.topText, inputs.bottomText]);
+  // refactor **
+  // useEffect(() => {
+  //   axios(REACT_APP_POST_URL, {
+  //     method: "POST",
+  //     params: {
+  //       username: REACT_APP_USERNAME,
+  //       password: REACT_APP_PASSWORD,
+  //       font: "arial",
+  //       text0: inputs.topText,
+  //       text1: inputs.bottomText,
+  //       template_id: props._api_id,
+  //     },
+  //   })
+  //     .then((res) =>
+  //       setImgEditable((prevInputs) => ({
+  //         ...prevInputs,
+  //         imgSrc: res.data.data ? res.data.data.url : imgEditable.imgSrc,
+  //         tempID: res.data.data
+  //           ? res.data.data.page_url.slice(22)
+  //           : imgEditable.tempID,
+  //       }))
+  //     )
+  //     .catch((err) => console.log(err));
+  // }, [inputs.topText, inputs.bottomText]);
 
   return (
     <>
-      {imgSrc ? (
+      {props.imgSrc ? (
         <Box className="">
           {!toggleEdit ? (
             <Box
@@ -118,27 +142,17 @@ export default memo(function UserMemes(props) {
               padding={"1vw"}
             >
               <Text as={"h5"} className="">
-                {" "}
-                Local ID: '{tempID}' created: {created}{" "}
+                Local ID: '{props.tempID}'{/* created: {props.created}{" "} */}
               </Text>
               <Image
-                src={imgSrc}
-                alt={`user meme: ${tempID}`}
+                src={props.imgSrc}
+                alt={`user meme: ${props.tempID}`}
                 min-width={"auto"}
                 width={"600px"}
               />
               <Box className="userMemesButtonsContainer">
                 {!toggleSave ? (
                   <>
-                    {/* <Button
-                      className=""
-                      onClick={() => {
-                        setToggleEdit((prevState) => !prevState);
-                      }}
-                    >
-                      {" "}
-                      edit{" "}
-                    </Button> */}
                     <Button
                       className="userMemesButtons"
                       backgroundColor={"black"}
@@ -147,7 +161,7 @@ export default memo(function UserMemes(props) {
                         color: "black",
                         backgroundColor: "yellow",
                       }}
-                      onClick={() => deleteMeme(tempID)}
+                      onClick={() => deleteMeme(props.tempID)}
                     >
                       {" "}
                       delete{" "}
@@ -195,7 +209,12 @@ export default memo(function UserMemes(props) {
                           backgroundColor: "yellow",
                         }}
                         onClick={() => {
-                          saveMeme(imgSrc, initialUrl, _api_id, alias);
+                          onSubmit(
+                            props.imgSrc,
+                            props.initialUrl,
+                            props._api_id,
+                            alias
+                          );
                         }}
                       >
                         {" "}
@@ -225,8 +244,7 @@ export default memo(function UserMemes(props) {
           ) : (
             <div className="">
               <p className="">
-                {" "}
-                Local ID: '{tempID}' created: {created}{" "}
+                Local ID: '{props.tempID}'{/* created: {props.created}{" "} */}
               </p>
               <img src={imgEditable.imgSrc} alt="editableImage" />
               <span className="">
@@ -240,8 +258,7 @@ export default memo(function UserMemes(props) {
                   }}
                   onClick={() => setToggleEdit((prevState) => !prevState)}
                 >
-                  {" "}
-                  cancel{" "}
+                  cancel
                 </Button>
                 <Button
                   className=""
@@ -251,10 +268,9 @@ export default memo(function UserMemes(props) {
                     color: "black",
                     backgroundColor: "yellow",
                   }}
-                  onClick={(e) => handleEdit(e, tempID)}
+                  onClick={(e) => handleEdit(e, props.tempID)}
                 >
-                  {" "}
-                  save{" "}
+                  save
                 </Button>
                 <Button
                   className=""
@@ -264,10 +280,9 @@ export default memo(function UserMemes(props) {
                     color: "black",
                     backgroundColor: "yellow",
                   }}
-                  onClick={() => deleteMeme(tempID)}
+                  onClick={() => deleteMeme(props.tempID)}
                 >
-                  {" "}
-                  delete{" "}
+                  delete
                 </Button>
                 <input
                   required
@@ -294,4 +309,4 @@ export default memo(function UserMemes(props) {
       )}
     </>
   );
-});
+}
