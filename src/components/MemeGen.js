@@ -16,8 +16,6 @@ export default forwardRef(function MemeGenerator(props, ref) {
   const {
     randomMeme,
     setRandomMeme,
-    memeTemplates,
-    setMemeTemplates,
     setErrors,
     errors,
     isLoading,
@@ -139,12 +137,7 @@ export default forwardRef(function MemeGenerator(props, ref) {
   //     )
   //     .catch((err) => console.log("error retrieving preview from db", err));
   // }, [inputs.topText, inputs.bottomText]);
-  // if (isLoading) return <LoadingComp loading={isLoading} />;
-  // return isLoading ? (
-  //   <>
-  //     <LoadingComp loading={isLoading} />
-  //   </>
-  // ) : (
+
   return (
     <>
       <MemeForm

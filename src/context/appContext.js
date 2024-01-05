@@ -15,8 +15,6 @@ export default function AppProvider({ children }) {
   // const [memes, setMemes] = useState();
   // indexes of memes with error response from imgflip API ** ??
   const [lostMemes, setLostMemes] = useState([]);
-  // all api memes ** try using server for api call **
-  const [memeTemplates, setMemeTemplates] = useState([]);
   // all memes created by current user ** Maybe implement localstorage use here **
   const [userMemes, setUserMemes] = useState([]);
   // initial meme for editing
@@ -66,7 +64,7 @@ export default function AppProvider({ children }) {
         },
       } = await imgFlipAxios.get(REACT_APP_GET);
       const memesFit = memes.filter((memes) => memes.box_count <= 2);
-      setMemeTemplates(memesFit);
+      // setMemeTemplates(memesFit);
       // memeRef.current = memesFit[Math.floor(Math.random() * memesFit.length)];
       // console.log("meme ref from initial get memes", memeRef.current);
       // console.log("memesfit boxes", randomizedMeme.box_count, randomizedMeme);
@@ -134,8 +132,6 @@ export default function AppProvider({ children }) {
         // memes,
         // setMemes,
         lostMemes,
-        memeTemplates,
-        setMemeTemplates,
         userMemes,
         setUserMemes,
         getCreatedMemes,
