@@ -82,14 +82,6 @@ export default forwardRef(function MemeGenerator(props, ref) {
     setIsLoading(false);
   }
 
-  function handleGetRandomMeme() {
-    let random =
-      memeTemplates[Math.floor(Math.random() * memeTemplates.length)];
-    ref.current = random;
-    setRandomMeme(ref.current);
-    setIsLoading(false);
-  }
-
   // grab meme templates on mount
   useEffect(() => {
     // ** watch for bug **
