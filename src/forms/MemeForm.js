@@ -1,4 +1,4 @@
-import { useContext, forwardRef, useState } from "react";
+import { useContext, useState } from "react";
 import {
   Box,
   FormControl,
@@ -20,15 +20,9 @@ import { GET_MEMES } from "../queries/meme.js";
 
 const initInputs = { topText: "", bottomText: "" };
 
-export const MemeForm = forwardRef(function MemeForm(props, ref) {
-  const {
-    isLoading,
-    setIsLoading,
-    errors,
-    setErrors,
-    randomMeme,
-    setRandomMeme,
-  } = useContext(AppContext);
+export default function MemeForm(props) {
+  const { isLoading, errors, setErrors, randomMeme, setRandomMeme } =
+    useContext(AppContext);
   const [inputs, setInputs] = useState(initInputs);
   const [newMeme, setNewMeme] = useState({});
 
@@ -36,7 +30,6 @@ export const MemeForm = forwardRef(function MemeForm(props, ref) {
   let memeTemplateOrPreview = !newMeme.imgSrc ? randomMeme.url : newMeme.imgSrc;
 
   function clickGetRandom(e) {
-    setIsLoading(true);
     e.preventDefault();
     props.getMemeTemplate();
   }
@@ -45,9 +38,9 @@ export const MemeForm = forwardRef(function MemeForm(props, ref) {
     topText: "",
     bottomText: "",
   });
-  // console.log("random meme", randomMeme);
-  async function handlePreviewSubmit() {
-    setIsLoading(true);
+
+  async function handlePreviewSubmit(e) {
+    const created = moment().format("MM-DD-YY hh:mm");
     const { data } = await imgFlipAxios(process.env.REACT_APP_POST, {
       method: "POST",
       params: {
@@ -62,17 +55,14 @@ export const MemeForm = forwardRef(function MemeForm(props, ref) {
     if (!data.success) {
       // set errors
       setErrors("Error contacting imgFlip API, try reloading");
-      setIsLoading(false);
     } else {
       const { url } = data.data;
-      // const created = moment().format("LL LTS");
       setNewMeme({
         imgSrc: url,
         initialUrl: randomMeme.url,
         _api_id: randomMeme.id,
-        // created: created,
+        created: created,
       });
-      setIsLoading(false);
     }
   }
 
@@ -85,15 +75,15 @@ export const MemeForm = forwardRef(function MemeForm(props, ref) {
     // reset inputs to init
     setInputs("");
   }
-  console.log(newMeme, "check");
-  // bad request issues
+
+  // watch for bad request issues **
   // create mutation call to backend
   const [addMeme, { loading, data }] = useMutation(ADD_MEME, {
     variables: {
       imgSrc: newMeme.imgSrc,
       initialUrl: newMeme.initialUrl,
       _api_id: newMeme._api_id,
-      // created: newMeme.created,
+      created: newMeme.created,
     },
     update(cache, { data: { addMeme } }) {
       const { memes } = cache.readQuery({ query: GET_MEMES });
@@ -108,31 +98,6 @@ export const MemeForm = forwardRef(function MemeForm(props, ref) {
       setErrors(graphQLErrors);
     },
   });
-
-  // useEffect(() => {
-  //   imgFlipAxios(REACT_APP_POST, {
-  //     method: "POST",
-  //     params: {
-  //       username: REACT_APP_USERNAME,
-  //       password: REACT_APP_PASSWORD,
-  //       font: "arial",
-  //       text0: inputs.topText,
-  //       text1: inputs.bottomText,
-  //       template_id: randomMeme.id,
-  //     },
-  //   })
-  //     // sets preview img url to randomMeme imgSrc
-  //     .then((res) =>
-  //       setRandomMeme((prevInputs) => ({
-  //         ...prevInputs,
-  //         imgSrc:
-  //           res?.data?.data?.url === randomMeme.imgSrc
-  //             ? randomMeme.imgSrc
-  //             : res?.data?.data?.url,
-  //         tempID: res?.data?.data?.page_url.slice(22),
-  //       }))
-  //     )
-  //     .catch((err) => console.log("error retrieving preview from db", err));
 
   return (
     <Box
@@ -181,7 +146,7 @@ export const MemeForm = forwardRef(function MemeForm(props, ref) {
                     type="text"
                     name="topText"
                     placeholder="First text"
-                    onChange={(e) => onChange(e)}
+                    onChange={onChange}
                   />
                 </FormLabel>
                 <FormLabel
@@ -197,7 +162,7 @@ export const MemeForm = forwardRef(function MemeForm(props, ref) {
                     type="text"
                     name="bottomText"
                     placeholder="Second text"
-                    onChange={(e) => onChange(e)}
+                    onChange={onChange}
                   />
                 </FormLabel>
                 <MemeCreationButtons
@@ -220,4 +185,4 @@ export const MemeForm = forwardRef(function MemeForm(props, ref) {
       </FormControl>
     </Box>
   );
-});
+}

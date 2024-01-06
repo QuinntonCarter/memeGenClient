@@ -1,25 +1,18 @@
 import { useContext, useEffect, useState } from "react";
 import { Box, Image, Text } from "@chakra-ui/react";
-import { MdOutlineBrokenImage } from "react-icons/md";
 import axios from "axios";
-import { AppContext } from "../../context/appContext";
 import moment from "moment";
+import { MdOutlineBrokenImage } from "react-icons/md";
+import { AppContext } from "../../context/appContext";
 
-export default function DBMemes({
-  alias,
-  id,
-  imgSrc,
-  created,
-  endOfMemeArray,
-  index,
-}) {
+export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
   const { setIsLoading, setErrors } = useContext(AppContext);
   const [missing, setMissing] = useState(false);
+
   // check if date object is valid
   const { _isValid } = moment(created);
-  // determine returned string depending on validity
-  const date = _isValid ? moment(created).format("LL") : "I forget";
-  console.log("created date", created, "index", index);
+  const date = _isValid ? moment(created).format("LLL") : "unknown";
+
   // on mount, check meme for error
   useEffect(() => {
     (async function checkMemeAvailaibility() {
@@ -35,7 +28,6 @@ export default function DBMemes({
         .catch((error) => {
           // maybe setup so small error modal returns # of missing memes
           setMissing(true);
-          // console.log(error);
           // setErrors(error);
         });
     })();

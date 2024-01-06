@@ -1,4 +1,4 @@
-import { useContext, forwardRef, useEffect } from "react";
+import { useContext } from "react";
 import { AppContext } from "../context/appContext";
 import { Box } from "@chakra-ui/react";
 import DBMemes from "./memes/DBMemes.jsx";
@@ -6,11 +6,12 @@ import LoadingComp from "./Loading";
 import { GET_MEMES } from "../queries/meme";
 import { useQuery } from "@apollo/client";
 
-export default forwardRef(function MemesView(props, ref) {
+export default function MemesView() {
   const { setErrors, isLoading } = useContext(AppContext);
   const { loading, data, error } = useQuery(GET_MEMES, {
-    onError({ graphQLErrors }) {
-      setErrors(graphQLErrors); // mappable **
+    onError(error) {
+      console.log(error);
+      // setErrors(graphQLErrors); // mappable **
     },
   });
 
@@ -32,4 +33,4 @@ export default forwardRef(function MemesView(props, ref) {
       </Box>
     );
   }
-});
+}

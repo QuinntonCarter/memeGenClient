@@ -4,6 +4,7 @@ import { AppContext } from "../context/appContext";
 
 const LoadingComp = ({ error, loading }) => {
   const { isLoading, errors } = useContext(AppContext);
+  console.error(error);
   // refactor ** CENTER LOADER IN CONTAINER
   if (loading || isLoading)
     return (
@@ -15,7 +16,6 @@ const LoadingComp = ({ error, loading }) => {
     return (
       <p>
         Please try reloading
-        {console.log(error)}
         {errors.map(({ graphQLErrors }, i) => (
           <p> {graphQLErrors.message} </p>
         ))}

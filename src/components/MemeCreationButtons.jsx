@@ -9,8 +9,9 @@ export default function MemeCreationButtons(props) {
   const { setErrors, isLoading } = useContext(AppContext);
   const [toggleButtons, setToggleButtons] = useState(false);
 
-  const toggleButtonView = () => {
-    props.handlePreviewSubmit();
+  const toggleButtonView = (e) => {
+    e.preventDefault();
+    props.handlePreviewSubmit(e);
     setToggleButtons((prevState) => !prevState);
   };
 
