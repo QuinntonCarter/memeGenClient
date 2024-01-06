@@ -32,33 +32,6 @@ export default forwardRef(function MemeGenerator(props, ref) {
     // ** watch for bug **
   }, []);
 
-  // refactoring **
-  // useEffect(() => {
-  //   imgFlipAxios(REACT_APP_POST, {
-  //     method: "POST",
-  //     params: {
-  //       username: REACT_APP_USERNAME,
-  //       password: REACT_APP_PASSWORD,
-  //       font: "arial",
-  //       text0: inputs.topText,
-  //       text1: inputs.bottomText,
-  //       template_id: randomMeme.id,
-  //     },
-  //   })
-  //     // sets preview img url to randomMeme imgSrc
-  //     .then((res) =>
-  //       setRandomMeme((prevInputs) => ({
-  //         ...prevInputs,
-  //         imgSrc:
-  //           res?.data?.data?.url === randomMeme.imgSrc
-  //             ? randomMeme.imgSrc
-  //             : res?.data?.data?.url,
-  //         tempID: res?.data?.data?.page_url.slice(22),
-  //       }))
-  //     )
-  //     .catch((err) => console.log("error retrieving preview from db", err));
-  // }, [inputs.topText, inputs.bottomText]);
-
   return (
     <>
       <MemeForm getMemeTemplate={getMemeTemplate} />

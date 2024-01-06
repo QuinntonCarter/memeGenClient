@@ -13,7 +13,6 @@ html {
 
 .appContainer {
   flex-direction: column-reverse;
-  /* height: 100%; */
 }
 
 .appStack {

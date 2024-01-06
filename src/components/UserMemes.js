@@ -16,7 +16,7 @@ import { AppContext } from "../context/appContext";
 import { ADD_MEME } from "../mutations/meme";
 import { GET_MEMES } from "../queries/meme";
 
-// ** this is mapped memes saved locally **
+// ** unused, this is mapped memes saved locally **
 
 const { REACT_APP_POST_URL, REACT_APP_USERNAME, REACT_APP_PASSWORD } =
   process.env;
@@ -103,31 +103,6 @@ export default function UserMemes(props) {
       bottomText: "",
     });
   };
-
-  // refactor **
-  // useEffect(() => {
-  //   axios(REACT_APP_POST_URL, {
-  //     method: "POST",
-  //     params: {
-  //       username: REACT_APP_USERNAME,
-  //       password: REACT_APP_PASSWORD,
-  //       font: "arial",
-  //       text0: inputs.topText,
-  //       text1: inputs.bottomText,
-  //       template_id: props._api_id,
-  //     },
-  //   })
-  //     .then((res) =>
-  //       setImgEditable((prevInputs) => ({
-  //         ...prevInputs,
-  //         imgSrc: res.data.data ? res.data.data.url : imgEditable.imgSrc,
-  //         tempID: res.data.data
-  //           ? res.data.data.page_url.slice(22)
-  //           : imgEditable.tempID,
-  //       }))
-  //     )
-  //     .catch((err) => console.log(err));
-  // }, [inputs.topText, inputs.bottomText]);
 
   return (
     <>

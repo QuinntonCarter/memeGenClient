@@ -140,7 +140,6 @@ export default function MemeForm(props) {
                   gap={"0.5vw"}
                 >
                   text one
-                  {/* refactor ** */}
                   <Input
                     required
                     type="text"
@@ -156,7 +155,6 @@ export default function MemeForm(props) {
                   gap={"0.5vw"}
                 >
                   text two
-                  {/* refactor ** */}
                   <Input
                     required
                     type="text"

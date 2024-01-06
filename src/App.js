@@ -10,7 +10,6 @@ import client from "./apolloClient.js";
 
 export default function App() {
   const memeTemplateRef = useRef(null);
-  // const [randomMeme, setRandomMeme] = useState([]);
 
   return (
     <ApolloProvider client={client}>
@@ -18,16 +17,7 @@ export default function App() {
       <Box className={"appContainer"} display="flex">
         <VStack className="appStack" margin="auto" width={"90vw"}>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <MemeGenerator
-                  ref={memeTemplateRef}
-                  // randomMeme={randomMeme}
-                  // setRandomMeme={setRandomMeme}
-                />
-              }
-            />
+            <Route path="/" element={<MemeGenerator ref={memeTemplateRef} />} />
             <Route path="/memes" element={<MemesView />} />
           </Routes>
         </VStack>
