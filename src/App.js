@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Box, VStack } from "@chakra-ui/react";
 import { ApolloProvider } from "@apollo/client";

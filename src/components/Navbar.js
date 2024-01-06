@@ -1,5 +1,3 @@
-// import { PlusCircleIcon } from "@heroicons/react/outline";
-// import { ViewListIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
 import { Box, Flex, TabList, Tabs, useColorModeValue } from "@chakra-ui/react";
 import { NavLink, useLocation } from "react-router-dom";

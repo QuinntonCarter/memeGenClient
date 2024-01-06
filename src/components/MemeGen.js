@@ -16,7 +16,6 @@ export default forwardRef(function MemeGenerator(props, ref) {
     } else {
       const { memes } = data.data;
       const memesFit = memes.filter((memes) => memes.box_count <= 2);
-      // setMemeTemplates(memesFit);
       ref.current = memesFit[Math.floor(Math.random() * memesFit.length)];
       setRandomMeme(ref.current);
     }

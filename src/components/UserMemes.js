@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext, memo } from "react";
-import axios from "axios";
+import React, { useState, useContext } from "react";
 import {
   Box,
   Button,
@@ -15,11 +14,6 @@ import LoadingComp from "./Loading";
 import { AppContext } from "../context/appContext";
 import { ADD_MEME } from "../mutations/meme";
 import { GET_MEMES } from "../queries/meme";
-
-// ** unused, this is mapped memes saved locally **
-
-const { REACT_APP_POST_URL, REACT_APP_USERNAME, REACT_APP_PASSWORD } =
-  process.env;
 
 export default function UserMemes(props) {
   const { setUserMemes, userMemes } = useContext(AppContext);

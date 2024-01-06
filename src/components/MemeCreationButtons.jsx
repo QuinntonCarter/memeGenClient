@@ -1,9 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Box, Button } from "@chakra-ui/react";
-// import axios from "axios";
 import { BiSave, BiShuffle } from "react-icons/bi";
-import { AppContext } from "../context/appContext";
-import { useForm } from "../utils/hooks";
 
 export default function MemeCreationButtons(props) {
   const [toggleButtons, setToggleButtons] = useState(false);
