@@ -3,11 +3,23 @@ import { Box, Image, Text } from "@chakra-ui/react";
 import { MdOutlineBrokenImage } from "react-icons/md";
 import axios from "axios";
 import { AppContext } from "../../context/appContext";
+import moment from "moment";
 
-export default function DBMemes({ alias, id, imgSrc, index, endOfMemeArray }) {
+export default function DBMemes({
+  alias,
+  id,
+  imgSrc,
+  created,
+  endOfMemeArray,
+  index,
+}) {
   const { setIsLoading, setErrors } = useContext(AppContext);
   const [missing, setMissing] = useState(false);
-
+  // check if date object is valid
+  const { _isValid } = moment(created);
+  // determine returned string depending on validity
+  const date = _isValid ? moment(created).format("LL") : "I forget";
+  console.log("created date", created, "index", index);
   // on mount, check meme for error
   useEffect(() => {
     (async function checkMemeAvailaibility() {
@@ -23,7 +35,7 @@ export default function DBMemes({ alias, id, imgSrc, index, endOfMemeArray }) {
         .catch((error) => {
           // maybe setup so small error modal returns # of missing memes
           setMissing(true);
-          console.log(error);
+          // console.log(error);
           // setErrors(error);
         });
     })();
@@ -43,10 +55,12 @@ export default function DBMemes({ alias, id, imgSrc, index, endOfMemeArray }) {
       maxH={"fit-content"}
       padding={"1vw"}
     >
-      <Text as="h5" className="">
-        {/* refactoring */}
-        {/* {`${created}   */}
-        {`Posted by ${alias || id.slice(14)}`}
+      <Text
+        as="h5"
+        className=""
+        title={_isValid ? `${date}` : `Error with post date retrieval`}
+      >
+        {`Posted on ${date}`}
       </Text>
       <Image
         src={imgSrc}

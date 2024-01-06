@@ -1,35 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Box, Button } from "@chakra-ui/react";
-import axios from "axios";
+// import axios from "axios";
 import { BiSave, BiShuffle } from "react-icons/bi";
-import { imgFlipAxios } from "../context/appContext";
+import { AppContext } from "../context/appContext";
+import { useForm } from "../utils/hooks";
 
-export default function MemeCreationButtons({
-  getRandom,
-  inputs,
-  topText,
-  bottomText,
-  _api_id,
-}) {
+export default function MemeCreationButtons(props) {
+  const { setErrors, isLoading } = useContext(AppContext);
   const [toggleButtons, setToggleButtons] = useState(false);
 
   const toggleButtonView = () => {
+    props.handlePreviewSubmit();
     setToggleButtons((prevState) => !prevState);
-  };
-
-  const onSubmit = async () => {
-    const res = await imgFlipAxios(process.env.REACT_APP_POST_URL, {
-      method: "POST",
-      params: {
-        username: process.env.REACT_APP_USERNAME,
-        password: process.env.REACT_APP_PASSWORD,
-        font: "arial",
-        text0: topText,
-        text1: bottomText,
-        template_id: _api_id,
-      },
-    });
-    console.log("response from submission", res);
   };
 
   return (
@@ -51,7 +33,7 @@ export default function MemeCreationButtons({
             justifyContent={"space-evenly"}
             mt={"1"}
             type="button"
-            onClick={getRandom}
+            onClick={props.getRandom}
             width={"165px"}
             backgroundColor={"black"}
             color={"white"}
@@ -84,7 +66,7 @@ export default function MemeCreationButtons({
           <Button
             mt={"1"}
             type="button"
-            onClick={getRandom}
+            onClick={props.getRandom}
             width={"165px"}
             backgroundColor={"black"}
             color={"white"}
@@ -97,7 +79,7 @@ export default function MemeCreationButtons({
             Save to Clipboard
           </Button>
           <Button
-            onClick={onSubmit}
+            onClick={props.addMemeCallback}
             mt={"1"}
             width={"165px"}
             backgroundColor={"black"}
@@ -108,7 +90,7 @@ export default function MemeCreationButtons({
             }}
           >
             <BiSave />
-            Save Locally
+            Post
           </Button>
         </>
       )}

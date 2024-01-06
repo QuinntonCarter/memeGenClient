@@ -6,23 +6,14 @@ export const GET_MEMES = gql`
       id
       _api_id
       imgSrc
+      created
     }
   }
 `;
 
-// const GET_PROJECT = gql`
-//   query getProject($id: ID!) {
-//     project(id: $id) {
-//       id
-//       name
-//       description
-//       status
-//       client {
-//         id
-//         name
-//         email
-//         phone
-//       }
+// const GET_MEME = gql`
+//   query getMeme($id: ID!) {
+//     meme(id: $id) {
 //     }
 //   }
 // `;

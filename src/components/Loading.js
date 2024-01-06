@@ -3,7 +3,7 @@ import { Container, Spinner } from "@chakra-ui/react";
 import { AppContext } from "../context/appContext";
 
 const LoadingComp = ({ error, loading }) => {
-  const { isLoading, setIsLoading, errors } = useContext(AppContext);
+  const { isLoading, errors } = useContext(AppContext);
   // refactor ** CENTER LOADER IN CONTAINER
   if (loading || isLoading)
     return (

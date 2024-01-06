@@ -1,67 +1,26 @@
 import React, { useState, useContext, useEffect, forwardRef } from "react";
-import { Flex } from "@chakra-ui/react";
-import LoadingComp from "./Loading";
-import { MemeForm } from "../forms/MemeForm.js";
+import { useMutation } from "@apollo/client";
+import axios from "axios";
+// import { Flex } from "@chakra-ui/react";
+// import LoadingComp from "./Loading";
 import { AppContext } from "../context/appContext.js";
 import { useForm } from "../utils/hooks.js";
-import { useMutation, useQuery } from "@apollo/client";
+import { MemeForm } from "../forms/MemeForm.js";
 import { ADD_MEME } from "../mutations/meme.js";
 import { GET_MEMES } from "../queries/meme.js";
-import axios from "axios";
 
-const initInputs = { topText: "", bottomText: "" };
+// const initInputs = { topText: "", bottomText: "" };
 
 // ** bug maybe **
 export default forwardRef(function MemeGenerator(props, ref) {
   const {
-    randomMeme,
-    setRandomMeme,
     setErrors,
     errors,
     isLoading,
     setIsLoading,
+    randomMeme,
+    setRandomMeme,
   } = useContext(AppContext);
-  const [inputs, setInputs] = useState(initInputs);
-
-  // handle form changes/inputs
-  const { onChange, onSubmit, values } = useForm(addMemeCallback, {
-    imgSrc: "",
-    initialUrl: "",
-    tempID: "",
-    _api_id: "",
-  });
-
-  // call mutation
-  function addMemeCallback() {
-    // calls add meme function pulled from line 36
-    addMeme();
-    // sets randomMeme key values to match default image's
-    setRandomMeme((prevState) => prevState);
-    // reset inputs to init
-    return setInputs(initInputs);
-  }
-
-  // create mutation call to backend
-  const [addMeme] = useMutation(ADD_MEME, {
-    variables: {
-      imgSrc: values.imgSrc,
-      tempID: values.tempID,
-      _api_id: values._api_id,
-      initialUrl: values.initialUrl,
-    },
-    update(cache, { data: { addMeme } }) {
-      const { memes } = cache.readQuery({ query: GET_MEMES });
-      cache.writeQuery({
-        query: GET_MEMES,
-        data: {
-          memes: [...memes, addMeme],
-        },
-      });
-    },
-    onError({ graphQLErrors }) {
-      setErrors(graphQLErrors);
-    },
-  });
 
   async function getMemeTemplate() {
     const { data } = await axios.get("https://api.imgflip.com/get_memes");
@@ -79,6 +38,8 @@ export default forwardRef(function MemeGenerator(props, ref) {
     }
     setIsLoading(false);
   }
+
+  console.log("ref info", ref.current);
 
   // grab meme templates on mount
   useEffect(() => {
@@ -141,12 +102,12 @@ export default forwardRef(function MemeGenerator(props, ref) {
   return (
     <>
       <MemeForm
-        inputs={inputs}
-        setInputs={setInputs}
-        handleChange={onChange}
-        handleSubmit={onSubmit}
-        // ref={ref}
-        randomMeme={randomMeme}
+        // inputs={inputs}
+        // setInputs={setInputs}
+        // handleChange={onChange}
+        // handleSubmit={onSubmit}
+        // randomMeme={props.randomMeme}
+        // initialURL={randomMeme.url}
         getMemeTemplate={getMemeTemplate}
       />
     </>

@@ -1,33 +1,20 @@
 import { gql } from "@apollo/client";
 
-// const DELETE_MESSAGE = gql`
-//   mutation deleteMessage($id: ID!) {
-//     deleteMessage(id: $id) {
-//       id
-//       name
-//       email
-//       phone
+// const DELETE_MEME = gql`
+//   mutation deleteMeme($id: ID!) {
+//     deleteMeme(id: $id) {
 //     }
 //   }
 // `;
 
 const ADD_MEME = gql`
-  mutation addMeme(
-    $imgSrc: String!
-    $intialUrl: String!
-    $_api_id: String!
-    $alias: String!
-  ) {
-    addMeme(
-      imgSrc: $imgSrc
-      intialUrl: $intialUrl
-      _api_id: $_api_id
-      alias: $alias
-    ) {
+  mutation addMeme($imgSrc: String!, $initialUrl: String!, $_api_id: String!) {
+    addMeme(imgSrc: $imgSrc, initialUrl: $initialUrl, _api_id: $_api_id) {
       imgSrc
-      intialUrl
+      initialUrl
       _api_id
-      alias
+      id
+      created
     }
   }
 `;

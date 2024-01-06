@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Box, VStack } from "@chakra-ui/react";
 import { ApolloProvider } from "@apollo/client";
@@ -10,7 +10,7 @@ import client from "./apolloClient.js";
 
 export default function App() {
   const memeTemplateRef = useRef(null);
-  const dbMemesRef = useRef(null);
+  // const [randomMeme, setRandomMeme] = useState([]);
 
   return (
     <ApolloProvider client={client}>
@@ -18,7 +18,16 @@ export default function App() {
       <Box className={"appContainer"} display="flex">
         <VStack className="appStack" margin="auto" width={"90vw"}>
           <Routes>
-            <Route path="/" element={<MemeGenerator ref={memeTemplateRef} />} />
+            <Route
+              path="/"
+              element={
+                <MemeGenerator
+                  ref={memeTemplateRef}
+                  // randomMeme={randomMeme}
+                  // setRandomMeme={setRandomMeme}
+                />
+              }
+            />
             <Route path="/memes" element={<MemesView />} />
           </Routes>
         </VStack>
