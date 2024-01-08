@@ -9,9 +9,7 @@
 
 .appStackContainer {
   flex-direction: column-reverse !important;
-}
-
-.memeInputFormStyles {
+  background: tomato;
 }
 
 .memeImgContainer {

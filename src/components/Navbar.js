@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Box, TabList, Tabs, useColorModeValue } from "@chakra-ui/react";
+import { Box, Image, TabList, Tabs, useColorModeValue } from "@chakra-ui/react";
 import { NavLink, useLocation } from "react-router-dom";
+import Trollface from "../images/Trollface.js";
 
 export default function Navbar() {
   const bg = useColorModeValue("white", "gray.800");
@@ -38,6 +39,7 @@ export default function Navbar() {
             >
               Create
             </NavLink>
+            {/* {Trollface} */}
             <NavLink
               to={"/memes"}
               tabIndex={0}

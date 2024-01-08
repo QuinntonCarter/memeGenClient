@@ -9,6 +9,7 @@ const Trollface = (
     viewBox="0 0 365 290"
     enable-background="new 0 0 365 290"
     xmlns="http://www.w3.org/2000/svg"
+    tabIndex={-1}
   >
     <defs id="defs26" />
     <g id="g26">
