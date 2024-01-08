@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../context/appContext";
-import { Box } from "@chakra-ui/react";
+import { Box, Wrap } from "@chakra-ui/react";
 import DBMemes from "./memes/DBMemes.jsx";
 import LoadingComp from "./Loading";
 import { GET_MEMES } from "../queries/meme";
@@ -19,7 +19,7 @@ export default function MemesView() {
     return <LoadingComp error={error} loading={loading} />;
   } else {
     return (
-      <Box className="memesView">
+      <Wrap margin={"auto"} justify={"center"} spacing={"0.5em"}>
         {data.memes
           .map((meme, i) => (
             <DBMemes
@@ -30,7 +30,7 @@ export default function MemesView() {
             />
           ))
           .reverse()}
-      </Box>
+      </Wrap>
     );
   }
 }

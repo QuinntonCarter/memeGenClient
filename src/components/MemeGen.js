@@ -2,6 +2,7 @@ import React, { useContext, useEffect, forwardRef } from "react";
 import axios from "axios";
 import { AppContext } from "../context/appContext.js";
 import MemeForm from "../forms/MemeForm.js";
+import { Container } from "@chakra-ui/react";
 
 // ** bug maybe **
 export default forwardRef(function MemeGenerator(props, ref) {
@@ -32,8 +33,8 @@ export default forwardRef(function MemeGenerator(props, ref) {
   }, []);
 
   return (
-    <>
+    <Container>
       <MemeForm getMemeTemplate={getMemeTemplate} />
-    </>
+    </Container>
   );
 });

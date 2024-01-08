@@ -103,97 +103,69 @@ export default function UserMemes(props) {
       {props.imgSrc ? (
         <Box className="">
           {!toggleEdit ? (
-            <Box
-              className="dBMemeContainer"
-              minW={"auto"}
-              height={"auto"}
-              maxH={"fit-content"}
-              padding={"1vw"}
-            >
-              <Text as={"h5"} className="">
-                Local ID: '{props.tempID}'{/* created: {props.created}{" "} */}
+            <Box>
+              <Text>
+                Local ID: '{props.tempID}'{/* created: {props.created} */}
               </Text>
-              <Image
-                src={props.imgSrc}
-                alt={`user meme: ${props.tempID}`}
-                min-width={"auto"}
-                width={"600px"}
-              />
-              <Box className="userMemesButtonsContainer">
+              <Image src={props.imgSrc} alt={`user meme: ${props.tempID}`} />
+              <Box>
                 {!toggleSave ? (
                   <>
                     <Button
-                      className="userMemesButtons"
-                      backgroundColor={"black"}
-                      color={"white"}
                       _hover={{
                         color: "black",
                         backgroundColor: "yellow",
                       }}
                       onClick={() => deleteMeme(props.tempID)}
                     >
-                      {" "}
-                      delete{" "}
+                      delete
                     </Button>
                     <Button
-                      className="userMemesButtons"
                       backgroundColor={"black"}
-                      color={"white"}
                       _hover={{
                         color: "black",
                         backgroundColor: "yellow",
                       }}
-                      onClick={() => {
-                        setToggleSave((prevState) => !prevState);
-                      }}
+                      onClick={() => setToggleSave((prevState) => !prevState)}
                     >
-                      {" "}
-                      Submit to DB{" "}
+                      Submit to DB
                     </Button>
                   </>
                 ) : (
-                  <Flex flexDir={"column"}>
+                  <Flex>
                     <Button
-                      className="userMemesButtons"
                       backgroundColor={"black"}
                       color={"white"}
                       _hover={{
                         color: "black",
                         backgroundColor: "yellow",
                       }}
-                      onClick={() => {
-                        setToggleSave((prevState) => !prevState);
-                      }}
+                      onClick={() => setToggleSave((prevState) => !prevState)}
                     >
-                      {" "}
-                      Cancel{" "}
+                      Cancel
                     </Button>
-                    <Flex flexDir={"column"}>
+                    <Flex>
                       <Button
-                        className=""
                         backgroundColor={"black"}
                         color={"white"}
                         _hover={{
                           color: "black",
                           backgroundColor: "yellow",
                         }}
-                        onClick={() => {
+                        onClick={() =>
                           onSubmit(
                             props.imgSrc,
                             props.initialUrl,
                             props._api_id,
                             alias
-                          );
-                        }}
+                          )
+                        }
                       >
-                        {" "}
-                        Submit{" "}
+                        Submit
                       </Button>
                       <FormLabel>
-                        {" "}
                         Enter username to save with image
                         <Input
-                          className=""
                           type="text"
                           maxLength="18"
                           pattern="[A-Za-z0-9]"
@@ -213,12 +185,11 @@ export default function UserMemes(props) {
           ) : (
             <div className="">
               <p className="">
-                Local ID: '{props.tempID}'{/* created: {props.created}{" "} */}
+                Local ID: '{props.tempID}'{/* created: {props.created} */}
               </p>
               <img src={imgEditable.imgSrc} alt="editableImage" />
-              <span className="">
+              <Box as="span" className="">
                 <Button
-                  className=""
                   backgroundColor={"black"}
                   color={"white"}
                   _hover={{
@@ -230,7 +201,6 @@ export default function UserMemes(props) {
                   cancel
                 </Button>
                 <Button
-                  className=""
                   backgroundColor={"black"}
                   color={"white"}
                   _hover={{
@@ -242,7 +212,6 @@ export default function UserMemes(props) {
                   save
                 </Button>
                 <Button
-                  className=""
                   backgroundColor={"black"}
                   color={"white"}
                   _hover={{
@@ -255,7 +224,6 @@ export default function UserMemes(props) {
                 </Button>
                 <input
                   required
-                  className=""
                   name="topText"
                   placeholder="Replacement text one"
                   value={inputs.topText}
@@ -263,13 +231,12 @@ export default function UserMemes(props) {
                 />
                 <input
                   required
-                  className=""
                   name="bottomText"
                   placeholder="Replacement text two"
                   value={inputs.bottomText}
                   onChange={handleChangeEdit}
                 />
-              </span>
+              </Box>
             </div>
           )}
         </Box>

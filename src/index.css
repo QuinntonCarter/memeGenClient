@@ -1,234 +1,35 @@
-@import "/node_modules/tailwindcss/base.css";
-@import "/node_modules/tailwindcss/components.css";
-@import "/node_modules/tailwindcss/utilities.css";
-
-#root {
-  height: 100vh;
+.navbar {
+  display: flex;
+  position: sticky;
+  top: 0;
+  justify-content: center;
+  width: 100%;
+  background-color: white;
 }
 
-#root,
-html {
-  background-color: #5b4fff;
+.appStackContainer {
+  flex-direction: column-reverse !important;
 }
 
-.appContainer {
-  flex-direction: column-reverse;
+.memeInputFormStyles {
 }
 
-.appStack {
-  flex-direction: column-reverse;
-}
-
-@media screen and (max-width: 850px) {
-  .navBar {
-    position: -webkit-sticky;
-    position: sticky;
-    bottom: 0;
-  }
-  .appContainer {
-    flex-direction: column;
-    height: 100%;
-  }
-  .appStack {
-    justify-content: flex-end;
-    flex-direction: column;
-  }
-}
-
-.memeForm {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  /* gap: 1vw; */
-  background: white;
-  padding: 1vw;
-  /* height: 55vh; */
-  border-radius: 6px;
+.memeImgContainer {
+  height: 475px;
+  max-width: 475px;
 }
 
 label {
   text-transform: capitalize;
-  align-items: center;
 }
 
-input {
-  background: rgb(236, 236, 236);
-}
-
-.memeImgContainer {
-  width: 50vw;
-  align-self: center;
-}
-.memeForm > img {
-  max-height: 75%;
-}
-
-.memePreviewFormContainer {
-  height: 75vh;
-}
-
-@media screen and (max-width: 850px) {
-  .memePreviewFormContainer {
-    height: auto;
-    width: 100%;
-    /* margin: 1vw 0vw 0vw; */
+@media screen and (max-width: 1007px) {
+  .appStackContainer {
+    flex-direction: column !important;
+    padding-bottom: 0px !important;
   }
-  .memePreviewForm {
-    width: auto;
+  .navbar {
+    position: sticky !important;
+    bottom: 0;
   }
-}
-
-.memeInputsContainer {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  border-radius: 6px;
-  padding: 2vw;
-  flex-direction: column;
-  gap: 0.5vh;
-  /* background: white; */
-  place-content: center;
-}
-
-.memeInputsContainer > h2 {
-  font-size: x-large;
-  min-height: 72px;
-  max-height: 96px;
-}
-
-@media screen and (max-width: 850px) {
-  .memeInputsContainer > h2 {
-    font-size: large;
-    height: auto;
-  }
-  .memeForm {
-    /* padding: 1vw; */
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1.2fr 1fr;
-    height: 100%;
-    justify-content: flex-start;
-    align-content: flex-start;
-    width: 100%;
-    gap: 0px;
-  }
-  .memeForm > img {
-    height: 75%;
-  }
-  .memeImgContainer {
-    width: 100%;
-  }
-  .memeInputsContainer {
-    /* padding: 2vw; */
-    height: auto;
-    gap: 0px;
-    align-items: center;
-  }
-}
-
-@media screen and (min-width: 1300px) {
-  .memeInputsContainer > h2 {
-    font-size: xx-large;
-  }
-  .memeInputsContainer > label {
-    font-size: larger;
-    margin: 0px !important;
-  }
-  .chakra-form__helper-text {
-    font-size: 17px;
-  }
-}
-
-.memesView {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  width: 80vw;
-  padding: 1vw;
-}
-
-.loaderContainer {
-  display: flex;
-  width: 80vw;
-  height: 100vh;
-  padding: 1vw;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.buttonContainer {
-  align-self: center;
-  height: auto;
-}
-
-@media screen and (min-width: 1300px) {
-  .buttonContainer {
-    height: 50px;
-  }
-}
-
-@media screen and (max-width: 850px) {
-  .memesView {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-  }
-  .dBMemeContainer {
-    margin: auto;
-  }
-}
-@media screen and (max-width: 850px) {
-  .buttonContainer {
-    width: 100%;
-  }
-  .buttonContainer > button {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 1vw;
-  }
-}
-
-@media screen and (min-width: 470px) {
-  .buttonContainer {
-    width: max-content;
-  }
-}
-
-@media screen and (max-width: 470px) {
-  .buttonContainer > button {
-    width: min-content;
-  }
-}
-
-button,
-a {
-  border-radius: 6px;
-}
-
-input {
-  border-radius: 8px;
-}
-
-.memesView {
-  gap: 1vw;
-}
-
-.dBMemeContainer {
-  display: flex;
-  flex-direction: column;
-  background: white;
-  font-weight: bold;
-  border-radius: 6px;
-}
-
-.userMemesButtonsContainer {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.userMemesButtons {
-  width: 100%;
-  margin: 1vw;
 }

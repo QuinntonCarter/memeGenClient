@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Box, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { ApolloProvider } from "@apollo/client";
 
 import MemeGenerator from "./components/MemeGen.js";
@@ -14,15 +14,15 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       {/* // CSS // Fix vertical spacing */}
-      <Box className={"appContainer"} display="flex">
-        <VStack className="appStack" margin="auto" width={"90vw"}>
-          <Routes>
-            <Route path="/" element={<MemeGenerator ref={memeTemplateRef} />} />
-            <Route path="/memes" element={<MemesView />} />
-          </Routes>
-        </VStack>
+      <VStack className={"appStackContainer"} paddingBottom={"2em"}>
+        {/* <Stack> */}
+        <Routes>
+          <Route path="/" element={<MemeGenerator ref={memeTemplateRef} />} />
+          <Route path="/memes" element={<MemesView />} />
+        </Routes>
+        {/* </Stack> */}
         <Navbar />
-      </Box>
+      </VStack>
     </ApolloProvider>
   );
 }

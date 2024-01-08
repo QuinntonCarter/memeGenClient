@@ -100,19 +100,17 @@ export default function MemeForm(props) {
   });
 
   return (
-    <Box
-      className="memePreviewFormContainer"
-      display="flex"
-      alignItems={"center"}
-    >
+    <Box>
       <FormControl
-        className="memeForm"
-        position={"relative"}
         onSubmit={onSubmit}
+        display={"grid"}
+        flexDirection={"column"}
+        justifyContent={"center"}
+        gap={"1vh"}
       >
         {templateAvailable && !isLoading ? (
           <>
-            <Box className="memeImgContainer" height={"45vh"}>
+            <Box className="memeImgContainer" objectFit="contain">
               {data && <p> Meme submitted! </p>}
               <Image
                 width={"100%"}
@@ -123,22 +121,22 @@ export default function MemeForm(props) {
                 alt="initial-meme"
               />
             </Box>
-            <Box className="memeInputsContainer" margin={"auto"}>
-              <Text as="h2" fontWeight={"bold"} textTransform={"capitalize"}>
-                {randomMeme.name}
-              </Text>
-              <FormLabel>Create Meme Form</FormLabel>
-              <FormHelperText>
-                Enter text captions to create a meme
-              </FormHelperText>
-
-              <form>
-                <FormLabel
-                  display={"flex"}
-                  flexDir={"column"}
-                  justifyItems={"left"}
-                  gap={"0.5vw"}
-                >
+            <Box>
+              <form className="memeInputFormStyles">
+                <MemeCreationButtons
+                  randomMeme={randomMeme}
+                  getRandom={clickGetRandom}
+                  inputs={inputs}
+                  setInputs={setInputs}
+                  handlePreviewSubmit={handlePreviewSubmit}
+                  addMemeCallback={addMemeCallback}
+                />
+                <Text>{randomMeme.name}</Text>
+                <FormLabel>Create Meme Form</FormLabel>
+                <FormHelperText>
+                  Enter text captions to create a meme
+                </FormHelperText>
+                <FormLabel>
                   text one
                   <Input
                     required
@@ -148,12 +146,7 @@ export default function MemeForm(props) {
                     onChange={onChange}
                   />
                 </FormLabel>
-                <FormLabel
-                  display={"flex"}
-                  flexDir={"column"}
-                  justifyItems={"left"}
-                  gap={"0.5vw"}
-                >
+                <FormLabel>
                   text two
                   <Input
                     required
@@ -163,14 +156,6 @@ export default function MemeForm(props) {
                     onChange={onChange}
                   />
                 </FormLabel>
-                <MemeCreationButtons
-                  randomMeme={randomMeme}
-                  getRandom={clickGetRandom}
-                  inputs={inputs}
-                  setInputs={setInputs}
-                  handlePreviewSubmit={handlePreviewSubmit}
-                  addMemeCallback={addMemeCallback}
-                />
               </form>
               <FormErrorMessage>
                 Error: {errors.message}, please reload and try again{" "}

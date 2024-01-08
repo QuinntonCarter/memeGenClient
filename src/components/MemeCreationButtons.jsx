@@ -13,25 +13,17 @@ export default function MemeCreationButtons(props) {
 
   return (
     <Box
-      className="buttonContainer"
       as="span"
+      width={"100%"}
       display={"flex"}
-      flexDir={"row"}
-      gap={"1.5"}
-      maxWidth={"360px"}
-      width={"auto"}
-      flexWrap={"wrap"}
-      height={"auto"}
-      justifyContent={"space-evenly"}
+      flexDirection={"row"}
+      justifyContent={"center"}
+      gap={"2vw"}
     >
       {!toggleButtons ? (
         <>
           <Button
-            justifyContent={"space-evenly"}
-            mt={"1"}
-            type="button"
             onClick={props.getRandom}
-            width={"165px"}
             backgroundColor={"black"}
             color={"white"}
             _hover={{
@@ -44,9 +36,6 @@ export default function MemeCreationButtons(props) {
           </Button>
           <Button
             onClick={toggleButtonView}
-            justifyContent={"space-evenly"}
-            mt={"1"}
-            width={"165px"}
             backgroundColor={"black"}
             color={"white"}
             _hover={{
@@ -61,10 +50,7 @@ export default function MemeCreationButtons(props) {
       ) : (
         <>
           <Button
-            mt={"1"}
-            type="button"
             onClick={props.getRandom}
-            width={"165px"}
             backgroundColor={"black"}
             color={"white"}
             _hover={{
@@ -77,8 +63,6 @@ export default function MemeCreationButtons(props) {
           </Button>
           <Button
             onClick={props.addMemeCallback}
-            mt={"1"}
-            width={"165px"}
             backgroundColor={"black"}
             color={"white"}
             _hover={{
