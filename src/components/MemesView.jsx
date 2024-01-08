@@ -19,7 +19,13 @@ export default function MemesView() {
     return <LoadingComp error={error} loading={loading} />;
   } else {
     return (
-      <Wrap margin={"auto"} justify={"center"} spacing={"0.5em"}>
+      <Wrap
+        margin={"auto"}
+        justify={"center"}
+        spacing={"0.5em"}
+        pt={"12px"}
+        pb={"12px"}
+      >
         {data.memes
           .map((meme, i) => (
             <DBMemes

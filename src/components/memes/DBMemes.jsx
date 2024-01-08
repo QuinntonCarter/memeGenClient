@@ -44,8 +44,14 @@ export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
+      backgroundColor={"white"}
+      padding={"12px"}
+      borderRadius={"8px"}
     >
-      <Text title={_isValid ? `${date}` : `Error with post date retrieval`}>
+      <Text
+        width={"100%"}
+        title={_isValid ? `${date}` : `Error with post date retrieval`}
+      >
         {`Posted on ${date}`}
       </Text>
       <Image
