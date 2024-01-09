@@ -25,7 +25,7 @@ export default function MemesView() {
       pt={"12px"}
       pb={"12px"}
     >
-      <Text as="h5"> Under construction </Text>
+      <Text as="h5"> Under construction: server issues </Text>
       {/* {data.memes
           .map((meme, i) => (
             <DBMemes
