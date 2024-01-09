@@ -10,8 +10,7 @@ export default function MemesView() {
   const { setErrors, isLoading } = useContext(AppContext);
   const { loading, data, error } = useQuery(GET_MEMES, {
     onError(error) {
-      console.log(error);
-      // setErrors(graphQLErrors); // mappable **
+      console.log(error); // mappable **
     },
   });
 

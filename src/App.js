@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Routes, Route } from "react-router-dom";
-import { VStack } from "@chakra-ui/react";
 import { ApolloProvider } from "@apollo/client";
+import { VStack } from "@chakra-ui/react";
 
 import MemeGenerator from "./components/MemeGen.js";
 import MemesView from "./components/MemesView.jsx";
