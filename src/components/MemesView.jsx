@@ -14,19 +14,19 @@ export default function MemesView() {
     },
   });
 
-  // if (loading || isLoading || error) {
-  //   return <LoadingComp error={error} loading={loading} />;
-  // } else {
-  return (
-    <Wrap
-      margin={"auto"}
-      justify={"center"}
-      spacing={"0.5em"}
-      pt={"12px"}
-      pb={"12px"}
-    >
-      <Text as="h5"> Under construction: server issues </Text>
-      {/* {data.memes
+  if (loading || isLoading || error) {
+    return <LoadingComp error={error} loading={loading} />;
+  } else {
+    return (
+      <Wrap
+        margin={"auto"}
+        justify={"center"}
+        spacing={"0.5em"}
+        pt={"12px"}
+        pb={"12px"}
+      >
+        {/* <Text as="h5"> Under construction </Text> */}
+        {data.memes
           .map((meme, i) => (
             <DBMemes
               {...meme}
@@ -35,8 +35,8 @@ export default function MemesView() {
               index={i}
             />
           ))
-          .reverse()} */}
-    </Wrap>
-  );
-  // }
+          .reverse()}
+      </Wrap>
+    );
+  }
 }
