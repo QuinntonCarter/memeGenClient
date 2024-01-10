@@ -19,7 +19,7 @@ const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-  uri: `${environmentServer}/db`,
+  uri: `${environmentServer}/graphql`,
   cache: cache,
 });
 
