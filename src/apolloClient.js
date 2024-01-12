@@ -1,8 +1,8 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 const environmentServer =
-  process.env.REACT_APP_NODE_ENV !== "dev"
+  process.env.REACT_APP_NODE_ENV === "dev"
     ? "http://localhost:8080"
-    : "https://memeserverql.onrender.com";
+    : process.env.REACT_APP_SERVER_URL;
 
 const cache = new InMemoryCache({
   typePolicies: {
