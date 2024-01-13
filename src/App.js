@@ -7,6 +7,7 @@ import MemeGenerator from "./components/MemeGen.js";
 import MemesView from "./components/MemesView.jsx";
 import Navbar from "./components/Navbar.js";
 import client from "./apolloClient.js";
+import Header from "./components/Header.js";
 
 export default function App() {
   const memeTemplateRef = useRef(null);
@@ -14,11 +15,21 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       {/* // CSS // Fix vertical spacing */}
-      <VStack className={"appStackContainer"} paddingBottom={"2em"}>
+      <VStack
+        className={"appStackContainer"}
+        // paddingBottom={"2em"}
+      >
+        <Header />
         {/* <Stack> */}
         <Routes>
-          <Route path="/" element={<MemeGenerator ref={memeTemplateRef} />} />
-          <Route path="/memes" element={<MemesView />} />
+          <Route
+            path="/"
+            element={<MemeGenerator ref={memeTemplateRef} />}
+          />
+          <Route
+            path="/memes"
+            element={<MemesView />}
+          />
         </Routes>
         {/* </Stack> */}
         <Navbar />

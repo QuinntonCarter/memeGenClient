@@ -33,7 +33,13 @@ export default forwardRef(function MemeGenerator(props, ref) {
   }, []);
 
   return (
-    <Container borderRadius={"6px"} backgroundColor={"white"}>
+    <Container
+      borderRadius={"6px"}
+      backgroundColor={"white"}
+      height={"100vh"}
+      margin={"1em 1em 0em"}
+      width={"auto"}
+    >
       <MemeForm getMemeTemplate={getMemeTemplate} />
     </Container>
   );

@@ -1,5 +1,5 @@
 {
-  "name": "memegenredo",
+  "name": "memegenqlclient",
   "version": "0.1.0",
   "private": true,
   "proxy": "https://localhost:8080",

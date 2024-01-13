@@ -15,11 +15,16 @@ export default function MemesView() {
   });
 
   if (loading || isLoading || error) {
-    return <LoadingComp error={error} loading={loading} />;
+    return (
+      <LoadingComp
+        error={error}
+        loading={loading}
+      />
+    );
   } else {
     return (
       <Wrap
-        margin={"auto"}
+        margin={"1em 2em 0em"}
         justify={"center"}
         spacing={"0.5em"}
         pt={"12px"}
