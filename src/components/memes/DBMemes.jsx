@@ -65,7 +65,9 @@ export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
             size={"60%"}
           />
         }
-        boxSize="500px"
+        // boxSize="500px"
+        width={"500px"}
+        height={"auto"}
         objectFit="contain"
       />
     </WrapItem>
