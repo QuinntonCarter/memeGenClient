@@ -16,7 +16,7 @@ const Header = () => {
         width={"auto"}
         display={"inline-block"}
         fontWeight={"600"}
-        fontSize={"large"}
+        fontSize={"larger"}
       >
         Whatchumeme? Meme Generator
       </Text>

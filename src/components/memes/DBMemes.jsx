@@ -50,6 +50,8 @@ export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
     >
       <Text
         width={"auto"}
+        fontSize={"large"}
+        fontWeight={"600"}
         title={_isValid ? `${date}` : `Error with post date retrieval`}
       >
         {`Posted on ${date}`}
