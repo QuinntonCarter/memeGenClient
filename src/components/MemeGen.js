@@ -36,7 +36,7 @@ export default forwardRef(function MemeGenerator(props, ref) {
     <Container
       borderRadius={"6px"}
       backgroundColor={"white"}
-      height={"100vh"}
+      height={"auto"}
       margin={"1em 1em 0em"}
       width={"auto"}
     >

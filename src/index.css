@@ -1,9 +1,11 @@
 #root {
-  background: tomato;
   position: fixed;
   width: 100%;
   height: 100%;
   overflow-y: auto;
+  background: #2acaff;
+  grid-template-rows: auto 1fr auto;
+  display: grid;
 }
 
 /* Chrome, Safari and Opera */
@@ -18,21 +20,26 @@ html {
 }
 
 .navbar {
-  display: flex;
-  position: sticky;
   top: 0;
-  justify-content: center;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex-wrap: wrap;
+  position: sticky;
+  justify-content: center;
+  align-items: center;
   background-color: white;
 }
 
 .appStackContainer {
   flex-direction: column-reverse !important;
   height: 100%;
+  gap: 0px;
 }
 
 .memeImgContainer {
-  height: 475px;
+  /* height: 475px; */
   max-width: 475px;
 }
 
@@ -48,5 +55,6 @@ label {
   .navbar {
     position: sticky !important;
     bottom: 0;
+    flex-direction: column-reverse;
   }
 }

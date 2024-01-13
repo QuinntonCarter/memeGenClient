@@ -49,7 +49,7 @@ export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
       borderRadius={"8px"}
     >
       <Text
-        width={"100%"}
+        width={"auto"}
         title={_isValid ? `${date}` : `Error with post date retrieval`}
       >
         {`Posted on ${date}`}
@@ -57,7 +57,12 @@ export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
       <Image
         src={imgSrc}
         alt={`user meme: ${id}`}
-        fallback={<MdOutlineBrokenImage title="Missing Image" size={"60%"} />}
+        fallback={
+          <MdOutlineBrokenImage
+            title="Missing Image"
+            size={"60%"}
+          />
+        }
         boxSize="500px"
         objectFit="contain"
       />

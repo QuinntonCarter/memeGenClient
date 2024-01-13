@@ -18,7 +18,7 @@ export default function MemeCreationButtons(props) {
       display={"flex"}
       flexDirection={"row"}
       justifyContent={"center"}
-      gap={"2vw"}
+      gap={"2ch"}
     >
       {!toggleButtons ? (
         <>

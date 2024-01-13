@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
-import { VStack } from "@chakra-ui/react";
+import { Container, VStack } from "@chakra-ui/react";
 
 import MemeGenerator from "./components/MemeGen.js";
 import MemesView from "./components/MemesView.jsx";
@@ -15,12 +15,13 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       {/* // CSS // Fix vertical spacing */}
+      <Header />
+
       <VStack
         className={"appStackContainer"}
-        // paddingBottom={"2em"}
+        paddingBottom={"2em"}
+        justifyContent={"center"}
       >
-        <Header />
-        {/* <Stack> */}
         <Routes>
           <Route
             path="/"
@@ -31,9 +32,8 @@ export default function App() {
             element={<MemesView />}
           />
         </Routes>
-        {/* </Stack> */}
-        <Navbar />
       </VStack>
+      <Navbar />
     </ApolloProvider>
   );
 }

@@ -110,11 +110,15 @@ export default function MemeForm(props) {
       >
         {templateAvailable && !isLoading ? (
           <>
-            <Box className="memeImgContainer" objectFit="contain">
-              {data && <p> Meme submitted! </p>}
+            <Text textAlign={"center"}>{randomMeme.name}</Text>
+            <Box
+              className="memeImgContainer"
+              objectFit="contain"
+            >
+              <p>{data && "Meme submitted!"}</p>
               <Image
                 width={"100%"}
-                height={"100%"}
+                height={"45ch"}
                 margin={"auto"}
                 objectFit={"contain"}
                 src={memeTemplateOrPreview}
@@ -131,7 +135,6 @@ export default function MemeForm(props) {
                   handlePreviewSubmit={handlePreviewSubmit}
                   addMemeCallback={addMemeCallback}
                 />
-                <Text>{randomMeme.name}</Text>
                 <FormLabel>Create Meme Form</FormLabel>
                 <FormHelperText>
                   Enter text captions to create a meme
