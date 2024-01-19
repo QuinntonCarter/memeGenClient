@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Button } from "@chakra-ui/react";
-import { BiSave, BiShuffle } from "react-icons/bi";
+import { BiSave, BiShuffle, BiTrash } from "react-icons/bi";
 
 export default function MemeCreationButtons(props) {
-  const [toggleButtons, setToggleButtons] = useState(false);
-
-  const toggleButtonView = (e) => {
+  function toggleButtonView(e) {
     e.preventDefault();
     props.handlePreviewSubmit(e);
-    setToggleButtons((prevState) => !prevState);
-  };
+    props.setToggleButtons((prevState) => !prevState);
+  }
+
+  function resetForm() {
+    props.setNewMeme({});
+    props.setToggleButtons(false);
+  }
 
   return (
     <Box
@@ -20,7 +23,7 @@ export default function MemeCreationButtons(props) {
       justifyContent={"center"}
       gap={"2ch"}
     >
-      {!toggleButtons ? (
+      {!props.toggleButtons ? (
         <>
           <Button
             onClick={props.getRandom}
@@ -72,6 +75,18 @@ export default function MemeCreationButtons(props) {
           >
             <BiSave />
             Post
+          </Button>
+          <Button
+            onClick={resetForm}
+            backgroundColor={"black"}
+            color={"white"}
+            _hover={{
+              color: "black",
+              backgroundColor: "yellow",
+            }}
+          >
+            <BiTrash />
+            Reset
           </Button>
         </>
       )}

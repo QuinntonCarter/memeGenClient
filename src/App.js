@@ -14,7 +14,6 @@ export default function App() {
 
   return (
     <ApolloProvider client={client}>
-      {/* // CSS // Fix vertical spacing */}
       <Header />
 
       <VStack
@@ -23,14 +22,8 @@ export default function App() {
         justifyContent={"center"}
       >
         <Routes>
-          <Route
-            path="/"
-            element={<MemeGenerator ref={memeTemplateRef} />}
-          />
-          <Route
-            path="/memes"
-            element={<MemesView />}
-          />
+          <Route path="/" element={<MemeGenerator ref={memeTemplateRef} />} />
+          <Route path="/memes" element={<MemesView />} />
         </Routes>
       </VStack>
       <Navbar />

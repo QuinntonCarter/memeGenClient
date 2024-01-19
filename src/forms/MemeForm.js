@@ -23,7 +23,8 @@ const initInputs = { topText: "", bottomText: "" };
 export default function MemeForm(props) {
   const { isLoading, errors, setErrors, randomMeme, setRandomMeme } =
     useContext(AppContext);
-  const [inputs, setInputs] = useState(initInputs);
+
+  const [toggleButtons, setToggleButtons] = useState(false);
   const [newMeme, setNewMeme] = useState({});
 
   let templateAvailable = Boolean(randomMeme.url);
@@ -33,13 +34,13 @@ export default function MemeForm(props) {
     e.preventDefault();
     props.getMemeTemplate();
   }
+  const { onChange, onSubmit, values, setValues } = useForm(
+    handlePreviewSubmit,
+    initInputs
+  );
 
-  const { onChange, onSubmit, values } = useForm(handlePreviewSubmit, {
-    topText: "",
-    bottomText: "",
-  });
-
-  async function handlePreviewSubmit(e) {
+  async function handlePreviewSubmit() {
+    setValues(initInputs);
     const created = moment().format("MM-DD-YY hh:mm");
     const { data } = await imgFlipAxios(process.env.REACT_APP_POST, {
       method: "POST",
@@ -70,13 +71,10 @@ export default function MemeForm(props) {
   function addMemeCallback() {
     // calls add meme function pulled from line 36
     addMeme();
-    // sets randomMeme key values to match default image's
-    setRandomMeme((prevState) => prevState);
-    // reset inputs to init
-    setInputs("");
+    // resets meme to initial image
+    setNewMeme({});
   }
 
-  // watch for bad request issues **
   // create mutation call to backend
   const [addMeme, { loading, data }] = useMutation(ADD_MEME, {
     variables: {
@@ -111,17 +109,10 @@ export default function MemeForm(props) {
         {templateAvailable && !isLoading ? (
           <>
             {/* <FormLabel textAlign={"center"}>Create a Meme</FormLabel> */}
-            <Text
-              textAlign={"center"}
-              fontWeight={"500"}
-              fontSize={"medium"}
-            >
+            <Text textAlign={"center"} fontWeight={"500"} fontSize={"medium"}>
               {randomMeme.name}
             </Text>
-            <Box
-              className="memeImgContainer"
-              objectFit="contain"
-            >
+            <Box className="memeImgContainer" objectFit="contain">
               <p>{data && "Meme submitted!"}</p>
               <Image
                 width={"100%"}
@@ -137,10 +128,11 @@ export default function MemeForm(props) {
                 <MemeCreationButtons
                   randomMeme={randomMeme}
                   getRandom={clickGetRandom}
-                  inputs={inputs}
-                  setInputs={setInputs}
                   handlePreviewSubmit={handlePreviewSubmit}
                   addMemeCallback={addMemeCallback}
+                  toggleButtons={toggleButtons}
+                  setToggleButtons={setToggleButtons}
+                  setNewMeme={setNewMeme}
                 />
                 <FormHelperText>
                   Enter text captions to create a meme
@@ -149,8 +141,10 @@ export default function MemeForm(props) {
                   Caption one
                   <Input
                     required
+                    isDisabled={toggleButtons}
                     type="text"
                     name="topText"
+                    value={values.topText}
                     placeholder="First caption"
                     onChange={onChange}
                   />
@@ -159,8 +153,10 @@ export default function MemeForm(props) {
                   Caption two
                   <Input
                     required
+                    isDisabled={toggleButtons}
                     type="text"
                     name="bottomText"
+                    value={values.bottomText}
                     placeholder="Second caption"
                     onChange={onChange}
                   />
