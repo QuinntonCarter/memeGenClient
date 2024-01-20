@@ -21,8 +21,7 @@ import { GET_MEMES } from "../queries/meme.js";
 const initInputs = { topText: "", bottomText: "" };
 
 export default function MemeForm(props) {
-  const { isLoading, errors, setErrors, randomMeme, setRandomMeme } =
-    useContext(AppContext);
+  const { isLoading, errors, setErrors, randomMeme } = useContext(AppContext);
 
   const [toggleButtons, setToggleButtons] = useState(false);
   const [newMeme, setNewMeme] = useState({});
