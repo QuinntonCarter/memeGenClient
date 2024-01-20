@@ -1,8 +1,8 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-const environmentServer =
-  process.env.REACT_APP_NODE_ENV === "dev"
-    ? "http://localhost:8080"
-    : process.env.REACT_APP_SERVER_URL;
+// const environmentServer =
+//   process.env.REACT_APP_NODE_ENV === "dev"
+//     ? "http://localhost:8080"
+//     : process.env.REACT_APP_SERVER_URL;
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -19,7 +19,7 @@ const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-  uri: `${environmentServer}/graphql`,
+  uri: `${process.env.REACT_APP_SERVER_URL}/graphql`,
   cache: cache,
 });
 
