@@ -58,3 +58,13 @@ label {
     flex-direction: column-reverse;
   }
 }
+
+.creationButtonsContainer {
+  flex-direction: row;
+}
+
+@media screen and (max-width: 457px) {
+  .creationButtonsContainer {
+    flex-direction: column;
+  }
+}

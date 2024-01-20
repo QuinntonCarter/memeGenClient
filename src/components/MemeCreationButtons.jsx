@@ -19,9 +19,9 @@ export default function MemeCreationButtons(props) {
       as="span"
       width={"100%"}
       display={"flex"}
-      flexDirection={"row"}
       justifyContent={"center"}
       gap={"2ch"}
+      className="creationButtonsContainer"
     >
       {!props.toggleButtons ? (
         <>
