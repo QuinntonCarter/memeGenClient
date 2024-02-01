@@ -107,7 +107,6 @@ export default function MemeForm(props) {
       >
         {templateAvailable && !isLoading ? (
           <>
-            {/* <FormLabel textAlign={"center"}>Create a Meme</FormLabel> */}
             <Text textAlign={"center"} fontWeight={"500"} fontSize={"medium"}>
               {randomMeme.name}
             </Text>

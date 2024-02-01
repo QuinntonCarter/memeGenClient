@@ -26,14 +26,7 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <Stack
-      as={"nav"}
-      className="navbar"
-      gap={"0px"}
-      height={"6ch"}
-    >
-      {/* <Box bg={bg}> */}
-      {/* <Header /> */}
+    <Stack as={"nav"} className="navbar" gap={"0px"} height={"6ch"}>
       <Tabs defaultIndex={tabIndex}>
         <TabList border={"none"}>
           <NavLink
@@ -53,7 +46,7 @@ export default function Navbar() {
           >
             Create
           </NavLink>
-          {/* {Trollface} */}
+
           <NavLink
             to={"/memes"}
             tabIndex={0}
@@ -73,7 +66,6 @@ export default function Navbar() {
           </NavLink>
         </TabList>
       </Tabs>
-      {/* </Box> */}
     </Stack>
   );
 }
