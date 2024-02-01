@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Image, Text, WrapItem } from "@chakra-ui/react";
 import axios from "axios";
 import moment from "moment";
+import dayjs from "dayjs";
 import { MdOutlineBrokenImage } from "react-icons/md";
 import { AppContext } from "../../context/appContext";
 
@@ -10,9 +11,8 @@ export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
   const [missing, setMissing] = useState(false);
 
   // check if date object is valid
-  const { _isValid } = moment(created);
-  const date = _isValid ? moment(created).format("LLL") : "unknown";
-
+  const date = dayjs(created).format("MM-DD-YY hh:mmA");
+  const formatDateForMobile = date !== "Invalid Date" ? date : created;
   // on mount, check meme for error
   useEffect(() => {
     (async function checkMemeAvailaibility() {
@@ -52,20 +52,15 @@ export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
         width={"auto"}
         fontSize={"large"}
         fontWeight={"600"}
-        title={_isValid ? `${date}` : `Error with post date retrieval`}
+        title={formatDateForMobile}
       >
-        {`Posted on ${date}`}
+        {/* problematic 02-01-24; not displaying as expected */}
+        {`Posted on ${formatDateForMobile}`}
       </Text>
       <Image
         src={imgSrc}
         alt={`user meme: ${id}`}
-        fallback={
-          <MdOutlineBrokenImage
-            title="Missing Image"
-            size={"60%"}
-          />
-        }
-        // boxSize="500px"
+        fallback={<MdOutlineBrokenImage title="Missing Image" size={"60%"} />}
         width={"500px"}
         height={"auto"}
         objectFit="contain"
