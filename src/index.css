@@ -4,19 +4,23 @@
   height: 100%;
   overflow-y: auto;
   background: #2acaff;
-  grid-template-rows: auto 1fr auto;
-  display: grid;
 }
 
-/* Chrome, Safari and Opera */
-::-webkit-scrollbar {
-  /* display: none  */
+input,
+button {
+  border-radius: 4px;
 }
-/* Edge, Firefox */
-body,
-html {
-  /* -ms-overflow-style: none;
-  scrollbar-width: none; */
+
+button {
+  justify-content: center;
+  align-items: center;
+  padding: 7.5px 14px !important;
+}
+
+@media screen and (max-width: 980px) {
+  .clipboardButton {
+    display: none !important;
+  }
 }
 
 .navbar {
@@ -26,6 +30,7 @@ html {
   flex-direction: column;
   text-align: center;
   flex-wrap: wrap;
+  position: -webkit-sticky;
   position: sticky;
   justify-content: center;
   align-items: center;
@@ -33,14 +38,63 @@ html {
 }
 
 .appStackContainer {
-  flex-direction: column-reverse !important;
   height: 100%;
+  width: 100%;
+  flex-direction: column-reverse !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   gap: 0px;
+  margin: auto;
+}
+
+.memeGenContainer {
+  border-radius: 6px;
+  background-color: white;
+  width: 95vw;
+  margin: 1vh auto;
+  padding: 1.5vh;
+}
+
+.memeImgTitleContainer {
+  display: grid;
+  grid-template-rows: 35px 475px;
 }
 
 .memeImgContainer {
-  /* height: 475px; */
-  max-width: 475px;
+  height: 100%;
+  max-width: 800px;
+  min-width: 260px;
+  margin: auto;
+  display: flex;
+}
+
+.memeImage {
+  width: 100%;
+  max-height: 95%;
+  margin: auto;
+}
+
+.memeInputForm {
+  justify-content: center;
+  gap: 1vh;
+}
+
+.memeForm-title {
+  font-size: large;
+  font-weight: 600;
+}
+
+.memeInputForm > label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  font-size: medium;
+}
+
+label > input {
+  background-color: #f1f1f1;
+  padding: 2px;
 }
 
 label {
@@ -53,14 +107,43 @@ label {
     padding-bottom: 0px !important;
   }
   .navbar {
+    position: -webkit-sticky;
     position: sticky !important;
     bottom: 0;
     flex-direction: column-reverse;
   }
 }
 
+.memeFormContainer {
+  gap: 1vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.memeForm-memeTitle {
+  text-align: center;
+  font-weight: 500;
+  font-size: x-large;
+}
+
 .creationButtonsContainer {
+  display: flex;
   flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  gap: 1vh;
+}
+
+.creationButtonsContainer > button {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  background-color: black;
+}
+
+.creationButtonsContainer > button:hover {
+  color: black;
+  background: yellow;
 }
 
 @media screen and (max-width: 457px) {

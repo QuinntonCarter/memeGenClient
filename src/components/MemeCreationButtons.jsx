@@ -1,12 +1,11 @@
 import React from "react";
-import { Box, Button } from "@chakra-ui/react";
 import { BiSave, BiShuffle, BiTrash } from "react-icons/bi";
 
 export default function MemeCreationButtons(props) {
   function toggleButtonView(e) {
     e.preventDefault();
-    props.handlePreviewSubmit(e);
-    props.setToggleButtons((prevState) => !prevState);
+    // props.handlePreviewSubmit(e);
+    props.setToggleButtons(true);
   }
 
   function resetForm() {
@@ -14,82 +13,39 @@ export default function MemeCreationButtons(props) {
     props.setToggleButtons(false);
   }
 
+  function handleClipboardCopy() {
+    navigator.clipboard.writeText(props.newMeme.imgSrc);
+  }
+
   return (
-    <Box
-      as="span"
-      width={"100%"}
-      display={"flex"}
-      justifyContent={"center"}
-      gap={"2ch"}
-      className="creationButtonsContainer"
-    >
+    <div className="creationButtonsContainer">
       {!props.toggleButtons ? (
         <>
-          <Button
-            onClick={props.getRandom}
-            backgroundColor={"black"}
-            color={"white"}
-            _hover={{
-              color: "black",
-              backgroundColor: "yellow",
-            }}
-          >
+          <button onClick={props.getRandom}>
             <BiShuffle />
             Randomize
-          </Button>
-          <Button
-            onClick={toggleButtonView}
-            backgroundColor={"black"}
-            color={"white"}
-            _hover={{
-              color: "black",
-              backgroundColor: "yellow",
-            }}
-          >
+          </button>
+          <button type="submit" onClick={toggleButtonView}>
             <BiSave />
             Preview
-          </Button>
+          </button>
         </>
       ) : (
         <>
-          <Button
-            onClick={props.getRandom}
-            backgroundColor={"black"}
-            color={"white"}
-            _hover={{
-              color: "black",
-              backgroundColor: "yellow",
-            }}
-          >
+          <button onClick={handleClipboardCopy} className="clipboardButton">
             <BiShuffle />
             Save to Clipboard
-          </Button>
-          <Button
-            onClick={props.addMemeCallback}
-            backgroundColor={"black"}
-            color={"white"}
-            _hover={{
-              color: "black",
-              backgroundColor: "yellow",
-            }}
-          >
+          </button>
+          <button onClick={props.addMemeCallback}>
             <BiSave />
             Post
-          </Button>
-          <Button
-            onClick={resetForm}
-            backgroundColor={"black"}
-            color={"white"}
-            _hover={{
-              color: "black",
-              backgroundColor: "yellow",
-            }}
-          >
+          </button>
+          <button onClick={resetForm}>
             <BiTrash />
             Reset
-          </Button>
+          </button>
         </>
       )}
-    </Box>
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Image, Text, WrapItem } from "@chakra-ui/react";
 import axios from "axios";
-import moment from "moment";
 import dayjs from "dayjs";
 import { MdOutlineBrokenImage } from "react-icons/md";
 import { AppContext } from "../../context/appContext";
@@ -16,7 +15,6 @@ export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
   // on mount, check meme for error
   useEffect(() => {
     (async function checkMemeAvailaibility() {
-      // if(i === )
       setIsLoading(true);
       await axios
         .get(imgSrc)
@@ -54,7 +52,6 @@ export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
         fontWeight={"600"}
         title={formatDateForMobile}
       >
-        {/* problematic 02-01-24; not displaying as expected */}
         {`Posted on ${formatDateForMobile}`}
       </Text>
       <Image

@@ -14,19 +14,14 @@ export default function App() {
 
   return (
     <ApolloProvider client={client}>
-      <Header />
-
-      <VStack
-        className={"appStackContainer"}
-        paddingBottom={"2em"}
-        justifyContent={"center"}
-      >
+      <div className={"appStackContainer"}>
+        <Header />
         <Routes>
           <Route path="/" element={<MemeGenerator ref={memeTemplateRef} />} />
           <Route path="/memes" element={<MemesView />} />
         </Routes>
-      </VStack>
-      <Navbar />
+        <Navbar />
+      </div>
     </ApolloProvider>
   );
 }

@@ -1,4 +1,4 @@
-import { useState, createContext, useRef } from "react";
+import { useState, createContext } from "react";
 import axios from "axios";
 
 const { REACT_APP_IMGFLIP_URL } = process.env;

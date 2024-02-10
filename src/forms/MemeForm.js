@@ -1,16 +1,6 @@
 import { useContext, useState } from "react";
-import {
-  Box,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  FormLabel,
-  Image,
-  Input,
-  Text,
-} from "@chakra-ui/react";
 import { useMutation } from "@apollo/client";
-import moment from "moment";
+import moment from "moment"; // change to dayjs ** check if this was causing date conversion issues
 import { AppContext, imgFlipAxios } from "../context/appContext";
 import LoadingComp from "../components/Loading";
 import MemeCreationButtons from "../components/MemeCreationButtons.jsx";
@@ -96,79 +86,73 @@ export default function MemeForm(props) {
     },
   });
 
+  // after
+  // if (isLoading) return
   return (
-    <Box>
-      <FormControl
-        onSubmit={onSubmit}
-        display={"grid"}
-        flexDirection={"column"}
-        justifyContent={"center"}
-        gap={"1vh"}
-      >
-        {templateAvailable && !isLoading ? (
-          <>
-            <Text textAlign={"center"} fontWeight={"500"} fontSize={"medium"}>
-              {randomMeme.name}
-            </Text>
-            <Box className="memeImgContainer" objectFit="contain">
-              <p>{data && "Meme submitted!"}</p>
-              <Image
-                width={"100%"}
-                height={"45ch"}
-                margin={"auto"}
-                objectFit={"contain"}
+    <div className="memeFormContainer">
+      {templateAvailable && !isLoading ? (
+        <>
+          <span className="memeImgTitleContainer">
+            <h2 className="memeForm-memeTitle">{randomMeme.name}</h2>
+            <div className="memeImgContainer">
+              {data ? <p> Meme submitted!</p> : <br />}
+              <img
+                className="memeImage"
                 src={memeTemplateOrPreview}
                 alt="initial-meme"
               />
-            </Box>
-            <Box>
-              <form className="memeInputFormStyles">
-                <MemeCreationButtons
-                  randomMeme={randomMeme}
-                  getRandom={clickGetRandom}
-                  handlePreviewSubmit={handlePreviewSubmit}
-                  addMemeCallback={addMemeCallback}
-                  toggleButtons={toggleButtons}
-                  setToggleButtons={setToggleButtons}
-                  setNewMeme={setNewMeme}
+            </div>
+          </span>
+          <div>
+            <form onSubmit={onSubmit} className="memeInputForm">
+              <MemeCreationButtons
+                randomMeme={randomMeme}
+                getRandom={clickGetRandom}
+                handlePreviewSubmit={handlePreviewSubmit}
+                addMemeCallback={addMemeCallback}
+                toggleButtons={toggleButtons}
+                setToggleButtons={setToggleButtons}
+                newMeme={newMeme}
+                setNewMeme={setNewMeme}
+              />
+              <h3 className="memeForm-title">
+                Enter text captions to create a meme
+              </h3>
+              <label>
+                Caption one
+                <input
+                  required
+                  disabled={toggleButtons}
+                  type="text"
+                  name="topText"
+                  value={values.topText}
+                  placeholder="First caption"
+                  onChange={onChange}
                 />
-                <FormHelperText>
-                  Enter text captions to create a meme
-                </FormHelperText>
-                <FormLabel>
-                  Caption one
-                  <Input
-                    required
-                    isDisabled={toggleButtons}
-                    type="text"
-                    name="topText"
-                    value={values.topText}
-                    placeholder="First caption"
-                    onChange={onChange}
-                  />
-                </FormLabel>
-                <FormLabel>
-                  Caption two
-                  <Input
-                    required
-                    isDisabled={toggleButtons}
-                    type="text"
-                    name="bottomText"
-                    value={values.bottomText}
-                    placeholder="Second caption"
-                    onChange={onChange}
-                  />
-                </FormLabel>
-              </form>
-              <FormErrorMessage>
-                Error: {errors.message}, please reload and try again{" "}
-              </FormErrorMessage>
-            </Box>
-          </>
-        ) : (
-          <LoadingComp loading={!templateAvailable} />
-        )}
-      </FormControl>
-    </Box>
+              </label>
+              <label>
+                Caption two
+                <input
+                  required
+                  disabled={toggleButtons}
+                  type="text"
+                  name="bottomText"
+                  value={values.bottomText}
+                  placeholder="Second caption"
+                  onChange={onChange}
+                />
+              </label>
+            </form>
+            {errors.message ? (
+              <p>Error: {errors.message}, please reload and try again </p>
+            ) : (
+              <br />
+            )}
+          </div>
+        </>
+      ) : (
+        <LoadingComp loading={!templateAvailable} />
+      )}
+    </div>
   );
 }
