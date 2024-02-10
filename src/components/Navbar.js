@@ -1,18 +1,8 @@
 import { useEffect, useState } from "react";
-import {
-  Box,
-  Image,
-  Stack,
-  TabList,
-  Tabs,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { TabList, Tabs } from "@chakra-ui/react";
 import { NavLink, useLocation } from "react-router-dom";
-import Trollface from "../images/Trollface.js";
-import Header from "./Header.js";
 
-export default function Navbar() {
-  const bg = useColorModeValue("white", "gray.800");
+const Navbar = () => {
   const [tabIndex, setTabIndex] = useState();
 
   let { pathname } = useLocation();
@@ -26,7 +16,7 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <Stack as={"nav"} className="navbar" gap={"0px"} height={"6ch"}>
+    <nav className="navbar">
       <Tabs defaultIndex={tabIndex}>
         <TabList border={"none"}>
           <NavLink
@@ -66,6 +56,8 @@ export default function Navbar() {
           </NavLink>
         </TabList>
       </Tabs>
-    </Stack>
+    </nav>
   );
-}
+};
+
+export default Navbar;
