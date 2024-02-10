@@ -24,12 +24,10 @@ export default forwardRef(function MemeGenerator(props, ref) {
 
   // grab meme templates on mount
   useEffect(() => {
-    // ** watch for bug **
     if (!ref.current) {
       getMemeTemplate();
     }
     setIsLoading(false);
-    // ** watch for bug **
   }, []);
 
   return (

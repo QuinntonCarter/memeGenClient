@@ -21,6 +21,7 @@ export default function MemeForm(props) {
 
   function clickGetRandom(e) {
     e.preventDefault();
+    setValues(initInputs);
     props.getMemeTemplate();
   }
   const { onChange, onSubmit, values, setValues } = useForm(
@@ -62,6 +63,7 @@ export default function MemeForm(props) {
     addMeme();
     // resets meme to initial image
     setNewMeme({});
+    // toggle button view
   }
 
   // create mutation call to backend
@@ -95,7 +97,6 @@ export default function MemeForm(props) {
           <span className="memeImgTitleContainer">
             <h2 className="memeForm-memeTitle">{randomMeme.name}</h2>
             <div className="memeImgContainer">
-              {data ? <p> Meme submitted!</p> : <br />}
               <img
                 className="memeImage"
                 src={memeTemplateOrPreview}
@@ -104,11 +105,11 @@ export default function MemeForm(props) {
             </div>
           </span>
           <div>
-            <form onSubmit={onSubmit} className="memeInputForm">
+            <form className="memeInputForm">
               <MemeCreationButtons
                 randomMeme={randomMeme}
                 getRandom={clickGetRandom}
-                handlePreviewSubmit={handlePreviewSubmit}
+                onSubmit={onSubmit}
                 addMemeCallback={addMemeCallback}
                 toggleButtons={toggleButtons}
                 setToggleButtons={setToggleButtons}
@@ -116,7 +117,11 @@ export default function MemeForm(props) {
                 setNewMeme={setNewMeme}
               />
               <h3 className="memeForm-title">
-                Enter text captions to create a meme
+                {data ? (
+                  <p> Meme submitted!</p>
+                ) : (
+                  <p>Enter text captions to create a meme</p>
+                )}
               </h3>
               <label>
                 Caption one

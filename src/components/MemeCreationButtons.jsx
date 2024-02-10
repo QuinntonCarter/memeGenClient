@@ -4,7 +4,8 @@ import { BiSave, BiShuffle, BiTrash } from "react-icons/bi";
 export default function MemeCreationButtons(props) {
   function toggleButtonView(e) {
     e.preventDefault();
-    // props.handlePreviewSubmit(e);
+    console.log("toggle button view");
+    props.onSubmit(e);
     props.setToggleButtons(true);
   }
 
@@ -21,21 +22,17 @@ export default function MemeCreationButtons(props) {
     <div className="creationButtonsContainer">
       {!props.toggleButtons ? (
         <>
+          <button onClick={toggleButtonView}>
+            <BiSave />
+            Preview
+          </button>
           <button onClick={props.getRandom}>
             <BiShuffle />
             Randomize
           </button>
-          <button type="submit" onClick={toggleButtonView}>
-            <BiSave />
-            Preview
-          </button>
         </>
       ) : (
         <>
-          <button onClick={handleClipboardCopy} className="clipboardButton">
-            <BiShuffle />
-            Save to Clipboard
-          </button>
           <button onClick={props.addMemeCallback}>
             <BiSave />
             Post
@@ -43,6 +40,10 @@ export default function MemeCreationButtons(props) {
           <button onClick={resetForm}>
             <BiTrash />
             Reset
+          </button>
+          <button onClick={handleClipboardCopy} className="clipboardButton">
+            <BiShuffle />
+            Save to Clipboard
           </button>
         </>
       )}
