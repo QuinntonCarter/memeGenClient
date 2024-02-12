@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { useMutation } from "@apollo/client";
 import moment from "moment"; // change to dayjs ** check if this was causing date conversion issues
 import dayjs from "dayjs";
@@ -21,7 +21,6 @@ export default function MemeForm(props) {
   let memeTemplateOrPreview = !newMeme.imgSrc ? randomMeme.url : newMeme.imgSrc;
 
   function clickGetRandom(e) {
-    // is triggering incorrectly * might need to just prop drill getMemeTemplate down to memeCreationButtons
     e.preventDefault();
     // reset input values
     setValues(initInputs);
@@ -98,8 +97,6 @@ export default function MemeForm(props) {
     },
   });
 
-  // after
-  // if (isLoading) return
   return (
     <div className="memeFormContainer">
       {templateAvailable && !isLoading ? (
@@ -129,11 +126,7 @@ export default function MemeForm(props) {
                 initInputs={initInputs}
               />
               <h3 className="memeForm-title">
-                {data ? (
-                  <p> Meme submitted!</p>
-                ) : (
-                  <p>Enter text captions to create a meme</p>
-                )}
+                Enter text captions to create a meme
               </h3>
               <label>
                 Caption one
