@@ -4,14 +4,17 @@ import { BiSave, BiShuffle, BiTrash } from "react-icons/bi";
 export default function MemeCreationButtons(props) {
   function toggleButtonView(e) {
     e.preventDefault();
-    console.log("toggle button view");
     props.onSubmit(e);
-    props.setToggleButtons(true);
   }
 
-  function resetForm() {
+  function resetForm(e) {
+    e.preventDefault();
+    // reset preview meme
     props.setNewMeme({});
+    // reset toggle buttons
     props.setToggleButtons(false);
+    // reset input values
+    props.setValues(props.initInputs);
   }
 
   function handleClipboardCopy() {

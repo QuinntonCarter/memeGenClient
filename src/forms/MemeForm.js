@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useMutation } from "@apollo/client";
 import moment from "moment"; // change to dayjs ** check if this was causing date conversion issues
+import dayjs from "dayjs";
 import { AppContext, imgFlipAxios } from "../context/appContext";
 import LoadingComp from "../components/Loading";
 import MemeCreationButtons from "../components/MemeCreationButtons.jsx";
@@ -20,40 +21,48 @@ export default function MemeForm(props) {
   let memeTemplateOrPreview = !newMeme.imgSrc ? randomMeme.url : newMeme.imgSrc;
 
   function clickGetRandom(e) {
+    // is triggering incorrectly * might need to just prop drill getMemeTemplate down to memeCreationButtons
     e.preventDefault();
+    // reset input values
     setValues(initInputs);
     props.getMemeTemplate();
   }
+
   const { onChange, onSubmit, values, setValues } = useForm(
     handlePreviewSubmit,
     initInputs
   );
 
   async function handlePreviewSubmit() {
-    setValues(initInputs);
-    const created = moment().format("MM-DD-YY hh:mm");
-    const { data } = await imgFlipAxios(process.env.REACT_APP_POST, {
-      method: "POST",
-      params: {
-        username: process.env.REACT_APP_USERNAME,
-        password: process.env.REACT_APP_PASSWORD,
-        font: "arial",
-        text0: values.topText,
-        text1: values.bottomText,
-        template_id: randomMeme.id,
-      },
-    });
-    if (!data.success) {
-      // set errors
-      setErrors("Error contacting imgFlip API, try reloading");
+    if (values.topText.length === 0 || values.bottomText.length === 0) {
+      setErrors({ message: "Enter captions first" });
+      return;
     } else {
-      const { url } = data.data;
-      setNewMeme({
-        imgSrc: url,
-        initialUrl: randomMeme.url,
-        _api_id: randomMeme.id,
-        created: created,
+      const created = moment().format("MM-DD-YY hh:mm");
+      const { data } = await imgFlipAxios(process.env.REACT_APP_POST, {
+        method: "POST",
+        params: {
+          username: process.env.REACT_APP_USERNAME,
+          password: process.env.REACT_APP_PASSWORD,
+          font: "arial",
+          text0: values.topText,
+          text1: values.bottomText,
+          template_id: randomMeme.id,
+        },
       });
+      if (!data.success) {
+        // set errors
+        setErrors("Error contacting imgFlip API, try reloading");
+      } else {
+        const { url } = data.data;
+        setNewMeme({
+          imgSrc: url,
+          initialUrl: randomMeme.url,
+          _api_id: randomMeme.id,
+          created: created,
+        });
+        setToggleButtons(true);
+      }
     }
   }
 
@@ -63,7 +72,8 @@ export default function MemeForm(props) {
     addMeme();
     // resets meme to initial image
     setNewMeme({});
-    // toggle button view
+    // reset input values
+    setValues(initInputs);
   }
 
   // create mutation call to backend
@@ -115,6 +125,8 @@ export default function MemeForm(props) {
                 setToggleButtons={setToggleButtons}
                 newMeme={newMeme}
                 setNewMeme={setNewMeme}
+                setValues={setValues}
+                initInputs={initInputs}
               />
               <h3 className="memeForm-title">
                 {data ? (
@@ -148,8 +160,10 @@ export default function MemeForm(props) {
                 />
               </label>
             </form>
-            {errors.message ? (
-              <p>Error: {errors.message}, please reload and try again </p>
+            {errors.message && (!values.topText || !values.bottomText) ? (
+              <p className="errorMsg" style={{ color: "red", fontWeight: 600 }}>
+                Error: {errors.message}
+              </p>
             ) : (
               <br />
             )}

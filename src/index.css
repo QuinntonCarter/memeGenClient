@@ -12,6 +12,11 @@ button {
   border-radius: 4px;
 }
 
+input:disabled {
+  color: gray;
+  background-color: rgb(206, 206, 206);
+}
+
 button {
   justify-content: center;
   align-items: center;
@@ -180,6 +185,19 @@ label {
 @media screen and (max-width: 457px) {
   .creationButtonsContainer {
     flex-direction: column;
+  }
+}
+
+.errorMsg {
+  color: red;
+  font-weight: 600;
+  width: 70%;
+  margin: auto;
+}
+
+@media screen and (max-width: 980px) {
+  .errorMsg {
+    width: 100%;
   }
 }
 
