@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, forwardRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import axios from "axios";
 import { AppContext } from "../context/appContext.js";
 import MemeForm from "../forms/MemeForm.js";
-import { Container } from "@chakra-ui/react";
 
-// ** bug maybe **
-export default forwardRef(function MemeGenerator(props, ref) {
+export default function MemeGenerator() {
   const { setErrors, setIsLoading, setRandomMeme } = useContext(AppContext);
+  const memeTemplateRef = useRef(null);
 
   async function getMemeTemplate() {
     const { data } = await axios.get("https://api.imgflip.com/get_memes");
@@ -16,15 +15,16 @@ export default forwardRef(function MemeGenerator(props, ref) {
       setErrors("Error contacting imgFlip API, try reloading");
     } else {
       const { memes } = data.data;
-      const memesFit = memes.filter((memes) => memes.box_count <= 2);
-      ref.current = memesFit[Math.floor(Math.random() * memesFit.length)];
-      setRandomMeme(ref.current);
+      const memesFit = memes.filter((memes) => memes.box_count === 2);
+      memeTemplateRef.current =
+        memesFit[Math.floor(Math.random() * memesFit.length)];
+      setRandomMeme(memeTemplateRef.current);
     }
   }
 
   // grab meme templates on mount
   useEffect(() => {
-    if (!ref.current) {
+    if (!memeTemplateRef.current) {
       getMemeTemplate();
     }
     setIsLoading(false);
@@ -35,4 +35,4 @@ export default forwardRef(function MemeGenerator(props, ref) {
       <MemeForm getMemeTemplate={getMemeTemplate} />
     </div>
   );
-});
+}

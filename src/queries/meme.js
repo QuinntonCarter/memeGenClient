@@ -10,10 +10,3 @@ export const GET_MEMES = gql`
     }
   }
 `;
-
-// const GET_MEME = gql`
-//   query getMeme($id: ID!) {
-//     meme(id: $id) {
-//     }
-//   }
-// `;

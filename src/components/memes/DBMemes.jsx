@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { Image, Text, WrapItem } from "@chakra-ui/react";
 import axios from "axios";
 import dayjs from "dayjs";
 import { MdOutlineBrokenImage } from "react-icons/md";
@@ -37,31 +36,16 @@ export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
 
   // if meme not missing, return component otherwise return null
   return !missing ? (
-    <WrapItem
-      key={id}
-      display={"flex"}
-      flexDirection={"column"}
-      justifyContent={"center"}
-      backgroundColor={"white"}
-      padding={"12px"}
-      borderRadius={"8px"}
-    >
-      <Text
-        width={"auto"}
-        fontSize={"large"}
-        fontWeight={"600"}
-        title={formatDateForMobile}
-      >
+    <div className="dbMemeContainer">
+      <h3 className="dbMemeInfo" title={formatDateForMobile}>
         {`Posted on ${formatDateForMobile}`}
-      </Text>
-      <Image
+      </h3>
+      <img
+        className="dbMemeImg"
         src={imgSrc}
         alt={`user meme: ${id}`}
-        fallback={<MdOutlineBrokenImage title="Missing Image" size={"60%"} />}
-        width={"500px"}
-        height={"auto"}
-        objectFit="contain"
+        fallback={<MdOutlineBrokenImage title="Missing Image" />}
       />
-    </WrapItem>
+    </div>
   ) : null;
 }

@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import moment from "moment"; // change to dayjs ** check if this was causing date conversion issues
 import dayjs from "dayjs";
@@ -8,11 +8,13 @@ import MemeCreationButtons from "../components/MemeCreationButtons.jsx";
 import { useForm } from "../utils/hooks.js";
 import { ADD_MEME } from "../mutations/meme.js";
 import { GET_MEMES } from "../queries/meme.js";
+import { useNavigate } from "react-router-dom";
 
 const initInputs = { topText: "", bottomText: "" };
 
 export default function MemeForm(props) {
   const { isLoading, errors, setErrors, randomMeme } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const [toggleButtons, setToggleButtons] = useState(false);
   const [newMeme, setNewMeme] = useState({});
@@ -66,36 +68,34 @@ export default function MemeForm(props) {
   }
 
   // call mutation
-  function addMemeCallback() {
+  function addMemeCallback(e) {
+    e.preventDefault();
     // calls add meme function pulled from line 36
     addMeme();
+    reset();
     // resets meme to initial image
     setNewMeme({});
     // reset input values
     setValues(initInputs);
+    // button menu toggle
+    setToggleButtons(false);
+    navigate("/memes");
   }
 
   // create mutation call to backend
-  const [addMeme, { loading, data }] = useMutation(ADD_MEME, {
+  const [addMeme, { loading, data, reset }] = useMutation(ADD_MEME, {
     variables: {
       imgSrc: newMeme.imgSrc,
       initialUrl: newMeme.initialUrl,
       _api_id: newMeme._api_id,
       created: newMeme.created,
     },
-    update(cache, { data: { addMeme } }) {
-      const { memes } = cache.readQuery({ query: GET_MEMES });
-      cache.writeQuery({
-        query: GET_MEMES,
-        data: {
-          memes: [...memes, addMeme],
-        },
-      });
-    },
-    onError({ graphQLErrors }) {
-      setErrors(graphQLErrors);
-    },
+    refetchQueries: [GET_MEMES, "getMemes"],
   });
+
+  useEffect(() => {
+    setErrors([]);
+  }, []);
 
   return (
     <div className="memeFormContainer">
@@ -127,6 +127,7 @@ export default function MemeForm(props) {
               />
               <h3 className="memeForm-title">
                 Enter text captions to create a meme
+                {data ? <p> Meme submitted! </p> : <br />}
               </h3>
               <label>
                 Caption one

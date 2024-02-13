@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Container, Spinner } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react"; // import loader from somewhere
 import { AppContext } from "../context/appContext";
 
 const LoadingComp = ({ error, loading }) => {
@@ -7,19 +7,11 @@ const LoadingComp = ({ error, loading }) => {
 
   if (loading || isLoading)
     return (
-      <Container display={"flex"} justifyContent={"center"}>
+      <div className="loaderContainer">
         <Spinner />
-      </Container>
+      </div>
     );
-  if (error || errors)
-    return (
-      <p>
-        Please try reloading
-        {errors.map(({ graphQLErrors }, i) => (
-          <p> {graphQLErrors.message} </p>
-        ))}
-      </p>
-    );
+  if (error || errors) return <p>Please try reloading</p>;
 };
 
 export default LoadingComp;
