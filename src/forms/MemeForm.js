@@ -39,7 +39,7 @@ export default function MemeForm(props) {
       setErrors({ message: "Enter captions first" });
       return;
     } else {
-      const created = moment().format("MM-DD-YY hh:mm");
+      const created = dayjs().format("MM/DD/YYYY, hh:mma");
       const { data } = await imgFlipAxios(process.env.REACT_APP_POST, {
         method: "POST",
         params: {
