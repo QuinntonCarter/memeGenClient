@@ -3,6 +3,7 @@ body,
 #root,
 html {
   height: 100%;
+  font-family: monospace;
 }
 
 body {
@@ -30,6 +31,7 @@ input {
 input,
 button {
   border-radius: 4px;
+  font-family: monospace;
 }
 
 input:disabled {
@@ -41,6 +43,7 @@ button {
   justify-content: center;
   align-items: center;
   padding: 7.5px 14px !important;
+  border: none;
 }
 
 .loaderContainer {
@@ -105,7 +108,7 @@ button {
 
 label > input {
   background-color: #f1f1f1;
-  padding: 2px;
+  padding: 6px 2px;
 }
 
 label {
