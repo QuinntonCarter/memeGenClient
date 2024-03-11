@@ -9,8 +9,11 @@ export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
   const [missing, setMissing] = useState(false);
 
   // check if date object is valid
-  const date = dayjs(created).format("MM-DD-YY hh:mmA");
-  const formatDateForMobile = date !== "Invalid Date" ? date : created;
+  // check if dayjs object already
+  // ** remove for now **
+  // const date = dayjs(created).format("MM-DD-YY hh:mmA");
+  // const formatDateForMobile = date !== "Invalid Date" ? date : created;
+  // ** ** **
   // on mount, check meme for error
   useEffect(() => {
     (async function checkMemeAvailaibility() {
@@ -37,9 +40,11 @@ export default function DBMemes({ id, imgSrc, created, endOfMemeArray }) {
   // if meme not missing, return component otherwise return null
   return !missing ? (
     <div className="dbMemeContainer">
-      <h3 className="dbMemeInfo" title={formatDateForMobile}>
+      {/* remove for now */}
+      {/* <h3 className="dbMemeInfo" title={formatDateForMobile}>
         {`Posted on ${formatDateForMobile}`}
-      </h3>
+      </h3> */}
+      {/* remove for now */}
       <img
         className="dbMemeImg"
         src={imgSrc}
