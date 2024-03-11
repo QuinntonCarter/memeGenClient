@@ -17,8 +17,10 @@ export default function MemeCreationButtons(props) {
     props.setValues(props.initInputs);
   }
 
-  function handleClipboardCopy() {
+  function handleClipboardCopy(e) {
+    e.preventDefault();
     navigator.clipboard.writeText(props.newMeme.imgSrc);
+    alert("Saved meme's link to clipboard!");
   }
 
   return (
@@ -44,10 +46,10 @@ export default function MemeCreationButtons(props) {
             <BiTrash />
             Reset
           </button>
-          {/* <button onClick={handleClipboardCopy} className="clipboardButton">
+          <button onClick={handleClipboardCopy} className="clipboardButton">
             <BiShuffle />
             Save to Clipboard
-          </button> */}
+          </button>
         </>
       )}
     </div>
