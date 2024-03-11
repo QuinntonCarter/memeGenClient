@@ -44,10 +44,10 @@ export default function MemeCreationButtons(props) {
             <BiTrash />
             Reset
           </button>
-          <button onClick={handleClipboardCopy} className="clipboardButton">
+          {/* <button onClick={handleClipboardCopy} className="clipboardButton">
             <BiShuffle />
             Save to Clipboard
-          </button>
+          </button> */}
         </>
       )}
     </div>
